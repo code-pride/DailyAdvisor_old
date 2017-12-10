@@ -3,9 +3,8 @@ package com.advisor.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.advisor.model.entity.User;
+import com.advisor.model.entity.UserEntity;
 import com.advisor.service.UserService;
-import com.advisor.model.entity.Foo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +23,13 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/user" }, method = RequestMethod.GET)
-	public @ResponseBody
-	ResponseEntity<Foo> getUserAndUserData(HttpServletRequest request)
-	{
-		Foo foo = new Foo("Foo");
-		return new ResponseEntity<>(foo, HttpStatus.OK);
-	}
+//	@RequestMapping(value = { "/user" }, method = RequestMethod.GET)
+//	public @ResponseBody
+//	ResponseEntity<Foo> getUserAndUserData(HttpServletRequest request)
+//	{
+//		Foo foo = new Foo("Foo");
+//		return new ResponseEntity<>(foo, HttpStatus.OK);
+//	}
 
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -43,16 +42,16 @@ public class LoginController {
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
 	public ModelAndView registration(){
 		ModelAndView modelAndView = new ModelAndView();
-		User user = new User();
+		UserEntity user = new UserEntity();
 		modelAndView.addObject("user", user);
 		modelAndView.setViewName("registration");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView createNewUser(@Valid UserEntity user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
-		User userExists = userService.findUserByEmail(user.getEmail());
+		UserEntity userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
 			bindingResult
 					.rejectValue("email", "error.user",
@@ -63,7 +62,7 @@ public class LoginController {
 		} else {
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
-			modelAndView.addObject("user", new User());
+			modelAndView.addObject("user", new UserEntity());
 			modelAndView.setViewName("registration");
 			
 		}
@@ -74,7 +73,7 @@ public class LoginController {
 	public ModelAndView home(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
+		UserEntity user = userService.findUserByEmail(auth.getName());
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
 		modelAndView.setViewName("admin/home");
