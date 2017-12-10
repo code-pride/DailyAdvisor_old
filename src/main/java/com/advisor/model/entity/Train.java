@@ -1,6 +1,7 @@
 package com.advisor.model.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -15,7 +16,10 @@ public class Train {
     private User userId;
     @Column(name = "train_text")
     private String trainText;
-
+    @Column(name = "creat_date")
+    private Date createDate;
+    @Column(name = "edit_date")
+    private Date editDate;
 //TODO gettery settery
 
 }

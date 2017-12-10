@@ -4,27 +4,25 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "diet")
-public class Diet {
+@Table(name = "advertisement")
+public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "diet_id")
-    private int dietId;
+    @Column(name = "adv_id")
+    private int advId;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User userId;
-    @Column(name = "diet_text")
-    private String dietText;
-    @Column(name = "cal")
-    private Integer cal;
-    @Column(name = "carbohydrates")
-    private Float carbohydrates;
-    @Column(name = "fat")
-    private Integer fat;
+    @Column(name = "adv_text")
+    private String advText;
     @Column(name = "creat_date")
     private Date createDate;
     @Column(name = "edit_date")
     private Date editDate;
+    @Column
+    private int visits;
+    @Column
+    private int answers;
 
 //TODO gettery settery
 
