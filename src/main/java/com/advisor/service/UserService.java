@@ -1,8 +1,8 @@
 package com.advisor.service;
 
-import com.advisor.model.entity.UserEntity;
+import com.advisor.model.entity.User;
 
 public interface UserService {
-	public UserEntity findUserByEmail(String email);
-	public void saveUser(UserEntity user);
+	public User findUserByEmail(String email);
+	public void saveUser(User user);
 }
