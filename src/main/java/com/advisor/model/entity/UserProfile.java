@@ -11,7 +11,7 @@ public class UserProfile {
     @Column(name = "user_profile_id")
     private Long userProfileId;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(nullable = false, name = "user_id")
     private User user;
     @Column(name = "city")
     private String city;

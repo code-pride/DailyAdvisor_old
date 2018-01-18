@@ -1,6 +1,5 @@
 package com.advisor.controller;
 
-import com.advisor.model.entity.Foo;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.responseClasses.UserProfileResponse;
@@ -48,7 +47,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.POST)
+    @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.PUT)
     public @ResponseBody
     ResponseEntity updateUserProfile(@RequestBody UserProfileRequest userProfileRequest)
     {

@@ -10,11 +10,11 @@ public class RecurringPattern {
     private Event event;
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column (name = "recurring_type_id")
+    @Column (nullable = false, name = "recurring_type_id")
     private Long recurring_type_id;
-    @Column (name = "separation_count")
+    @Column (nullable = false, name = "separation_count")
     private int separation_count;
-    @Column (name = "max_num_of_occurances")
+    @Column (nullable = false, name = "max_num_of_occurances")
     private int max_num_of_occurances;
     @Column (name = "day_of_week")
     private int day_of_week;

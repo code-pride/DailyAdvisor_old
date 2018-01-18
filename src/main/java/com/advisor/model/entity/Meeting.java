@@ -16,10 +16,7 @@ public class Meeting {
     private User userId2;
     @Column(name = "meeting_text")
     private String meetingText;
-    @Column(name = "creat_date")
-    private Date createDate;
-    @Column(name = "edit_date")
-    private Date editDate;
+
 
 //TODO gettery settery
 

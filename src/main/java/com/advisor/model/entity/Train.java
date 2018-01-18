@@ -13,12 +13,9 @@ public class Train {
     private int trainId;
     @OneToOne(cascade = CascadeType.ALL)
     private User userId;
-    @Column(name = "train_text")
+    @Column(nullable = false, name = "train_text")
     private String trainText;
-    @Column(name = "creat_date")
-    private Date createDate;
-    @Column(name = "edit_date")
-    private Date editDate;
+
 //TODO gettery settery
 
 }

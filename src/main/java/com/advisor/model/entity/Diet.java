@@ -13,7 +13,7 @@ public class Diet {
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "user_id")
 //    private User userId;
-    @Column(name = "diet_text")
+    @Column(nullable = false, name = "diet_text")
     private String dietText;
     @Column(name = "cal")
     private Integer cal;
@@ -21,9 +21,11 @@ public class Diet {
     private Float carbohydrates;
     @Column(name = "fat")
     private Integer fat;
-    @Column(name = "creat_date")
+    @Column(nullable = false, name = "create_date", columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
-    @Column(name = "edit_date")
+    @Column(nullable = false, name = "edit_date", columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date editDate;
 
 

@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Integer> {
-	 User findByEmail(String email);
+
+    User findByEmail(String email);
 
     User findById(Long userId);
 
