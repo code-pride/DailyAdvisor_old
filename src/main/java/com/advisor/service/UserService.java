@@ -1,9 +1,9 @@
 package com.advisor.service;
 
 import com.advisor.model.entity.User;
-import com.advisor.model.entity.UserProfile;
-import com.advisor.model.responseClasses.UserProfileRequest;
+import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.responseClasses.UserProfileResponse;
+import com.advisor.model.responseClasses.UserResponse;
 
 public interface UserService {
 	User findUserByEmail(String email);
@@ -13,5 +13,7 @@ public interface UserService {
 	UserProfileResponse createUserProfileResponseByUser(User user);
 
 	void updateUserProfile(UserProfileRequest userProfileRequest, Long userProfileId);
+
+	UserResponse createUserResponseByUser(User user);
 	//UserProfile findUserProfileById(Long id);
 }

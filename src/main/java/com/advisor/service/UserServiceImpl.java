@@ -6,8 +6,9 @@ import java.util.HashSet;
 import com.advisor.model.entity.Role;
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserProfile;
-import com.advisor.model.responseClasses.UserProfileRequest;
+import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.responseClasses.UserProfileResponse;
+import com.advisor.model.responseClasses.UserResponse;
 import com.advisor.repository.RoleRepository;
 import com.advisor.repository.UserProfileRepository;
 import com.advisor.repository.UserRepository;
@@ -60,7 +61,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateUserProfile(UserProfileRequest userProfileRequest, Long userProfileId){
-        userProfileRepository.updateUserProfile(userProfileRequest.getCity(), userProfileId);
+    public void updateUserProfile(UserProfileRequest userProfileRequest, Long userId){
+        userProfileRepository.updateUserProfile(userId, userProfileRequest.getCity(), userProfileRequest.getAbout());
+        userRepository.updateUser(userId, userProfileRequest.getName(), userProfileRequest.getLastName());
+    }
+
+    @Override
+   public UserResponse createUserResponseByUser(User user){
+        return new UserResponse(user);
     }
 }

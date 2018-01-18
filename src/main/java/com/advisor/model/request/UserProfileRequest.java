@@ -1,4 +1,4 @@
-package com.advisor.model.responseClasses;
+package com.advisor.model.request;
 
 public class UserProfileRequest {
     private String name;
