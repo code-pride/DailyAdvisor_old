@@ -5,9 +5,15 @@ import java.util.HashSet;
 
 import com.advisor.model.entity.Role;
 import com.advisor.model.entity.User;
+import com.advisor.model.entity.UserProfile;
+import com.advisor.model.request.UserProfileRequest;
+import com.advisor.model.responseClasses.UserProfileResponse;
+import com.advisor.model.responseClasses.UserResponse;
 import com.advisor.repository.RoleRepository;
+import com.advisor.repository.UserProfileRepository;
 import com.advisor.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +21,13 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
 
 	@Autowired
+    @Qualifier("userRepository")
 	private UserRepository userRepository;
+    @Autowired
+    @Qualifier("userProfileRepository")
+    private UserProfileRepository userProfileRepository;
 	@Autowired
+    @Qualifier("roleRepository")
     private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -32,7 +43,31 @@ public class UserServiceImpl implements UserService{
         user.setActive(1);
         Role userRole = roleRepository.findByRole("ADMIN");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        UserProfile userProfile = new UserProfile(user);
 		userRepository.save(user);
+        userProfileRepository.save(userProfile);
 	}
 
+	@Override
+	public User findUserById(Long userId){
+		return userRepository.findById(userId);
+	}
+
+	@Override
+    public UserProfileResponse createUserProfileResponseByUser(User user){
+        UserProfile userProfile = userProfileRepository.findByUser(user);
+
+        return new UserProfileResponse(user, userProfile);
+    }
+
+    @Override
+    public void updateUserProfile(UserProfileRequest userProfileRequest, Long userId){
+        userProfileRepository.updateUserProfile(userId, userProfileRequest.getCity(), userProfileRequest.getAbout());
+        userRepository.updateUser(userId, userProfileRequest.getName(), userProfileRequest.getLastName());
+    }
+
+    @Override
+   public UserResponse createUserResponseByUser(User user){
+        return new UserResponse(user);
+    }
 }

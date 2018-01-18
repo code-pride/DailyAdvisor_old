@@ -24,14 +24,6 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = { "/user" }, method = RequestMethod.GET)
-	public @ResponseBody
-	ResponseEntity<Foo> getUserAndUserData(HttpServletRequest request)
-	{
-		Foo foo = new Foo("Foo");
-		return new ResponseEntity<>(foo, HttpStatus.OK);
-	}
-
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();
