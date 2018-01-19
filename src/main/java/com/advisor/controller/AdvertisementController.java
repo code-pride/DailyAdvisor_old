@@ -6,6 +6,7 @@ import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.responseClasses.AdvertisementResponse;
 import com.advisor.model.responseClasses.UserProfileResponse;
+import com.advisor.repository.AdvertisementRepository;
 import com.advisor.service.AdvertisementService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class AdvertisementController {
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        if (advertisementService.findAdvertisementByUser(user) == null){
+        if (advertisementService.getAdvertisementByUser(user) == null){
             advertisementService.setAdvertisement(user, advertisementRequest);
 
             return new ResponseEntity(HttpStatus.OK);
@@ -54,12 +55,36 @@ public class AdvertisementController {
         }
     }
 
+    @RequestMapping(value = { "advertisement/get/{userId}" }, method = RequestMethod.GET)
+    public @ResponseBody
+    ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable Long userId)
+    {
+        User user = userService.findUserById(userId);
 
-    //get
+        if(user != null){ //TODO make exception catch
+            AdvertisementResponse advertisementResponse = advertisementService.getAdvertisementByUser(user);
+            if(advertisementResponse != null){
+                return new ResponseEntity(advertisementResponse, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-    //update
+    @RequestMapping(value = { "/advertisement/update" }, method = RequestMethod.PUT)
+    public @ResponseBody
+    ResponseEntity updateAdvertisement(@RequestBody AdvertisementRequest advertisementRequest)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+        advertisementService.updateAdvertisement(user, advertisementRequest);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
 //    wylaczanie ogloszenia
 //    usuwanie ogloszenia
-//    update ogloszenia
 //    zliczanie wejsc
 }

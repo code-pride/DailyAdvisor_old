@@ -34,20 +34,29 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         advertisementRepository.save(advertisement);
     }
 
-    @Override
-    public Advertisement findAdvertisementByUser(User user){
-        return advertisementRepository.findByUser(user);
-    }
 
     @Override
     public List<AdvertisementResponse> selectAll() {
         //TODO how to make it ok?
-        List<Advertisement> advertisementList = advertisementRepository.selectAll();
         List<AdvertisementResponse> advertisementResponseList = new ArrayList<AdvertisementResponse>();
-        for (Advertisement advertisement : advertisementList) {
+        for (Advertisement advertisement : advertisementRepository.selectAll()) {
             advertisementResponseList.add(new AdvertisementResponse(advertisement));
         }
         return advertisementResponseList;
+    }
+
+    @Override
+    public AdvertisementResponse getAdvertisementByUser(User user) {
+        Advertisement advertisement = advertisementRepository.findByUser(user);
+        if (advertisement != null){
+            return new AdvertisementResponse(advertisement);
+        }
+        else return null;
+    }
+
+    @Override
+    public void updateAdvertisement(User user, AdvertisementRequest advertisementRequest) {
+        advertisementRepository.updateAdvertisement(advertisementRequest.getAdvText(), user);
     }
 
 }

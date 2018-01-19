@@ -10,6 +10,10 @@ import java.util.List;
 public interface AdvertisementService {
     void setAdvertisement(User user, AdvertisementRequest advertisementRequest);
 
-    Advertisement findAdvertisementByUser(User user);
+
     List<AdvertisementResponse> selectAll();
+
+    AdvertisementResponse getAdvertisementByUser(User user);
+
+    void updateAdvertisement(User user, AdvertisementRequest advertisementRequest);
 }
