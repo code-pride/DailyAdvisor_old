@@ -11,8 +11,10 @@ public class Train {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "train_id")
     private int trainId;
+
     @OneToOne(cascade = CascadeType.ALL)
     private User userId;
+
     @Column(nullable = false, name = "train_text")
     private String trainText;
 

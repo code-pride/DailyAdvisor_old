@@ -10,11 +10,14 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_profile_id")
     private Long userProfileId;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "about")
     private String about;
 //    @Column(name = "weight")

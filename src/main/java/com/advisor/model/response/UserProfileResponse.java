@@ -1,4 +1,4 @@
-package com.advisor.model.responseClasses;
+package com.advisor.model.response;
 
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserProfile;

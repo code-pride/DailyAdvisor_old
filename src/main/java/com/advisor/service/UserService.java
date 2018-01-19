@@ -2,9 +2,8 @@ package com.advisor.service;
 
 import com.advisor.model.entity.User;
 import com.advisor.model.request.UserProfileRequest;
-import com.advisor.model.responseClasses.UserProfileResponse;
-import com.advisor.model.responseClasses.UserResponse;
-import org.springframework.stereotype.Service;
+import com.advisor.model.response.UserProfileResponse;
+import com.advisor.model.response.UserResponse;
 
 
 public interface UserService {

@@ -3,5 +3,10 @@ UserController
     zwiększenie trudności hasła
     zmiana adresu email
 
+Advertisement
+    wylaczanie ogloszenia
+    usuwanie ogloszenia
+    zliczanie wejsc
+
     add contraint to train in events
 

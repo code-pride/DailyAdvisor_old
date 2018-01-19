@@ -1,5 +1,7 @@
 package com.advisor.model.request;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 
 public class AdvertisementRequest {

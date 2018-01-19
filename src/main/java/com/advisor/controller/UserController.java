@@ -2,8 +2,8 @@ package com.advisor.controller;
 
 import com.advisor.model.entity.User;
 import com.advisor.model.request.UserProfileRequest;
-import com.advisor.model.responseClasses.UserProfileResponse;
-import com.advisor.model.responseClasses.UserResponse;
+import com.advisor.model.response.UserProfileResponse;
+import com.advisor.model.response.UserResponse;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

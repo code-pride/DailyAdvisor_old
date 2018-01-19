@@ -1,12 +1,8 @@
 package com.advisor.controller;
 
-import com.advisor.model.entity.Advertisement;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.AdvertisementRequest;
-import com.advisor.model.request.UserProfileRequest;
-import com.advisor.model.responseClasses.AdvertisementResponse;
-import com.advisor.model.responseClasses.UserProfileResponse;
-import com.advisor.repository.AdvertisementRepository;
+import com.advisor.model.response.AdvertisementResponse;
 import com.advisor.service.AdvertisementService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,9 +78,4 @@ public class AdvertisementController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
-
-//    wylaczanie ogloszenia
-//    usuwanie ogloszenia
-//    zliczanie wejsc
 }
