@@ -1,8 +1,11 @@
 package com.advisor.controller;
 
+import com.advisor.model.entity.Advertisement;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.request.UserProfileRequest;
+import com.advisor.model.responseClasses.AdvertisementResponse;
+import com.advisor.model.responseClasses.UserProfileResponse;
 import com.advisor.service.AdvertisementService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class AdvertisementController {
@@ -31,14 +33,30 @@ public class AdvertisementController {
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        //TODO check if adv exists
-        advertisementService.setAdvertisement(user, advertisementRequest);
+        if (advertisementService.findAdvertisementByUser(user) == null){
+            advertisementService.setAdvertisement(user, advertisementRequest);
 
-        return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.IM_USED);
+        }
     }
-    //create
+
+    @RequestMapping(value = { "advertisement/get" }, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<AdvertisementResponse>> getAllAdvertisement()
+    {
+        List<AdvertisementResponse> advertisementList = advertisementService.selectAll();
+        if (advertisementList != null){
+            return new ResponseEntity(advertisementList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
     //get
-    //getall
+
     //update
 //    wylaczanie ogloszenia
 //    usuwanie ogloszenia

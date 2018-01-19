@@ -42,6 +42,9 @@ public class User {
 	private Set<Event> events;
 //	@OneToMany(mappedBy = "userId")
 //	private Set<Meeting> meetings;
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private UserProfile userProfile;
 
 	public Long getId() {
 		return id;
@@ -99,4 +102,19 @@ public class User {
 		this.roles = roles;
 	}
 
+	public Set<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Event> events) {
+		this.events = events;
+	}
+
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
 }

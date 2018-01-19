@@ -26,7 +26,7 @@ public class EventInstanceException {
     private Boolean is_full_day_event;
     @Column(nullable = false, name = "created_by")
     private String created_by;
-    @Column(nullable = false, name = "created_date", columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created_date;
+    @Column(name="create_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
+    private Date createDate;
 }

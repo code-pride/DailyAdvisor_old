@@ -4,4 +4,4 @@ UserController
     zmiana adresu email
 
     add contraint to train in events
-    poprawic czasy w encjach
+

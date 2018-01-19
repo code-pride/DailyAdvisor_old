@@ -21,11 +21,11 @@ public class Diet {
     private Float carbohydrates;
     @Column(name = "fat")
     private Integer fat;
-    @Column(nullable = false, name = "create_date", columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="create_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createDate;
-    @Column(nullable = false, name = "edit_date", columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="edit_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     private Date editDate;
 
 
