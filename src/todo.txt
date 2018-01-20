@@ -7,6 +7,10 @@ Advertisement
     wylaczanie ogloszenia
     usuwanie ogloszenia
     zliczanie wejsc
+    srtowanie wynikow
+    wyszukiwanie wg zadanych kryteriów
 
     add contraint to train in events
 
+Login
+    walidacja danych przychodzących

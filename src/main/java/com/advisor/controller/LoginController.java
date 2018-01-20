@@ -2,6 +2,7 @@ package com.advisor.controller;
 
 import javax.validation.Valid;
 import com.advisor.model.entity.User;
+import com.advisor.model.request.NewUserRequest;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,10 @@ public class LoginController {
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
     @ResponseBody
-	public ResponseEntity createNewUser(@RequestBody @Valid User user) {
-		User userExists = userService.findUserByEmail(user.getEmail());
+	public ResponseEntity createNewUser(@RequestBody @Valid NewUserRequest newUserRequest) {
+		User userExists = userService.findUserByEmail(newUserRequest.getEmail());
 		if (userExists == null) {
-            userService.saveUser(user);
+            userService.saveUser(newUserRequest);
             return new ResponseEntity(HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.IM_USED);

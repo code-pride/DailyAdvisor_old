@@ -38,7 +38,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public List<AdvertisementResponse> selectAll() {
         //TODO how to make it ok?
         List<AdvertisementResponse> advertisementResponseList = new ArrayList<AdvertisementResponse>();
-        for (Advertisement advertisement : advertisementRepository.selectAll()) {
+        for (Advertisement advertisement : advertisementRepository.findAll()) {
             advertisementResponseList.add(new AdvertisementResponse(advertisement));
         }
         return advertisementResponseList;

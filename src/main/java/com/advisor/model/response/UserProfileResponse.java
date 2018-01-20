@@ -21,16 +21,11 @@ public class UserProfileResponse {
     public UserProfileResponse() {
     }
 
-    public UserProfileResponse(User user) {
-        this.userId=user.getId();
-        this.name=user.getName();
-        this.lastName=user.getLastName();
-    }
 
     public UserProfileResponse(User user, UserProfile userProfile) {
         this.userId=user.getId();
-        this.name=user.getName();
-        this.lastName=user.getLastName();
+        this.name=userProfile.getName();
+        this.lastName=userProfile.getLastName();
         this.about=userProfile.getAbout();
         this.city=userProfile.getCity();
     }

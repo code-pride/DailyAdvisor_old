@@ -13,9 +13,9 @@ public class AdvertisementResponse {
     }
 
     public AdvertisementResponse(Advertisement advertisement) {
-        this.userId = advertisement.getUser().getId();
-        this.name = advertisement.getUser().getName();
-        this.lastName = advertisement.getUser().getLastName();
+        this.userId = advertisement.getUser().getUserProfile().getUser().getId();
+        this.name = advertisement.getUser().getUserProfile().getName();
+        this.lastName = advertisement.getUser().getUserProfile().getLastName();
         this.advertisement = advertisement.getAdvText();
         this.city = advertisement.getUser().getUserProfile().getCity();
     }

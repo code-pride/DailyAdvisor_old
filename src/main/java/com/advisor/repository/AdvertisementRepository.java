@@ -18,12 +18,11 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, In
 
     Advertisement findByUser(User user);
 
-    @Query("select a from Advertisement a")
-    List<Advertisement> selectAll();
-
     @Transactional
     @Modifying
     @Query("update Advertisement a set a.advText = :advText where a.user = :user")
     void updateAdvertisement(@Param("advText") String advText, @Param("user") User user);
+
+    List<Advertisement> findAll();
 
 }

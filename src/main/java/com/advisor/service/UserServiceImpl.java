@@ -6,9 +6,9 @@ import java.util.HashSet;
 import com.advisor.model.entity.Role;
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserProfile;
+import com.advisor.model.request.NewUserRequest;
 import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.response.UserProfileResponse;
-import com.advisor.model.response.UserResponse;
 import com.advisor.repository.RoleRepository;
 import com.advisor.repository.UserProfileRepository;
 import com.advisor.repository.UserRepository;
@@ -37,20 +37,27 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findByEmail(email);
 	}
 
-	@Override
-	public void saveUser(User user) {
+    @Override
+	public void saveUser(NewUserRequest newUserRequest) {
+	    User user = new User(newUserRequest);
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         Role userRole = roleRepository.findByRole("ADMIN");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        UserProfile userProfile = new UserProfile(user);
 		userRepository.save(user);
+
+        UserProfile userProfile = new UserProfile(user, newUserRequest);
         userProfileRepository.save(userProfile);
 	}
 
-	@Override
-	public User findUserById(Long userId){
-		return userRepository.findById(userId);
+    @Override
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+    @Override
+	public UserProfile findUserProfileByUser(User user){
+		return userProfileRepository.findByUser(user);
 	}
 
 	@Override
@@ -62,12 +69,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUserProfile(UserProfileRequest userProfileRequest, Long userId){
-        userProfileRepository.updateUserProfile(userId, userProfileRequest.getCity(), userProfileRequest.getAbout());
-        userRepository.updateUser(userId, userProfileRequest.getName(), userProfileRequest.getLastName());
+        userProfileRepository.updateUserProfile(userId, userProfileRequest.getCity(), userProfileRequest.getAbout(), userProfileRequest.getName(), userProfileRequest.getLastName());
     }
 
     @Override
-   public UserResponse createUserResponseByUser(User user){
-        return new UserResponse(user);
+   public UserProfileResponse createUserResponseByUser(User user){
+        return new UserProfileResponse(user.getId());
     }
 }
