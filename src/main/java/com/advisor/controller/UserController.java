@@ -1,10 +1,9 @@
 package com.advisor.controller;
 
-import com.advisor.model.entity.Foo;
 import com.advisor.model.entity.User;
+import com.advisor.model.entity.UserProfile;
 import com.advisor.model.request.UserProfileRequest;
-import com.advisor.model.responseClasses.UserProfileResponse;
-import com.advisor.model.responseClasses.UserResponse;
+import com.advisor.model.response.UserProfileResponse;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,19 +35,19 @@ public class UserController {
 
     @RequestMapping(value = { "/getUser/{userId}" }, method = RequestMethod.GET)
     public @ResponseBody
-    ResponseEntity<UserResponse> getUserByUserId(@PathVariable Long userId)
+    ResponseEntity<UserProfileResponse> getUserByUserId(@PathVariable Long userId)
     {
         User user = userService.findUserById(userId);
         if(user != null){ //TODO make exception catch
-            UserResponse userResponse = userService.createUserResponseByUser(user);
-            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+            UserProfileResponse userProfileResponse = userService.createUserResponseByUser(user);
+            return new ResponseEntity<>(userProfileResponse, HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.POST)
+    @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.PUT)
     public @ResponseBody
     ResponseEntity updateUserProfile(@RequestBody UserProfileRequest userProfileRequest)
     {

@@ -1,5 +1,8 @@
 package com.advisor.model.entity;
 
+import com.advisor.model.request.NewUserRequest;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,11 +13,19 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_profile_id")
     private Long userProfileId;
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(nullable = false, name = "user_id")
     private User user;
+
+    @Column(name = "name")
+    private String name;
+    @Column(name = "last_name")
+    private String lastName;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "about")
     private String about;
 //    @Column(name = "weight")
@@ -23,16 +34,24 @@ public class UserProfile {
     public UserProfile() {
     }
 
+    public UserProfile(User user, NewUserRequest newUserRequest) {
+        this.user = user;
+        this.name = newUserRequest.getName();
+        this.lastName = newUserRequest.getLastName();
+        this.city = newUserRequest.getCity();
+    }
     public UserProfile(User user) {
         this.user = user;
     }
 
-    public UserProfile(User user, String city, String about, Float weight) {
+    public UserProfile(User user, String name, String lastName, String city, String about) {
         this.user = user;
+        this.name = name;
+        this.lastName = lastName;
         this.city = city;
         this.about = about;
-//        this.weight = weight;
     }
+
 
     public Long getUserProfileId() {
         return userProfileId;
@@ -64,6 +83,22 @@ public class UserProfile {
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
 //    public Float getWeight() {
