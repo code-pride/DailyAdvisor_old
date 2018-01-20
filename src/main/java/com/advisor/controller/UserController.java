@@ -44,20 +44,20 @@ public class UserController {
             return new ResponseEntity<>(userResponse, HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.POST)
     public @ResponseBody
-    ResponseEntity<UserProfileResponse> updateUserProfile(@RequestBody UserProfileRequest userProfileRequest)
+    ResponseEntity updateUserProfile(@RequestBody UserProfileRequest userProfileRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
         userService.updateUserProfile(userProfileRequest, userService.createUserProfileResponseByUser(user).getUserId());
 
-        return new ResponseEntity<UserProfileResponse>(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
