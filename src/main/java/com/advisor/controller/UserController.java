@@ -25,7 +25,6 @@ public class UserController {
     public @ResponseBody
     ResponseEntity<UserProfileResponse> getUserProfileByUserId(@PathVariable Long userId)
     {
-        Date date = new Date();
         User user = userService.findUserById(userId);
         if(user != null){ //TODO make exception catch
             UserProfileResponse userProfileResponse = userService.createUserProfileResponseByUser(user);

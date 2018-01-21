@@ -30,6 +30,14 @@ public class UserProfileResponse {
         this.city=userProfile.getCity();
     }
 
+    public UserProfileResponse(UserProfile userProfile) {
+        this.userId=userProfile.getUser().getId();
+        this.name=userProfile.getName();
+        this.lastName=userProfile.getLastName();
+        this.about=userProfile.getAbout();
+        this.city=userProfile.getCity();
+    }
+
     public UserProfileResponse(Long userId) {
         this.userId = userId;
     }

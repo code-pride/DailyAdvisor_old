@@ -8,10 +8,11 @@ import java.util.Date;
 @Entity
 @Table(name = "meeting")
 public class Meeting {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "meeting_id")
-    private int meetingId;
+    private Long meetingId;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User userId;
@@ -30,14 +31,15 @@ public class Meeting {
     @JoinColumn(name = "id")
     private Event event;
 
+    @Column(name = "is_accepted")
     private boolean isAccepted;
 
     public Meeting() {
     }
 
-    public Meeting(User user, User user2, MeetingRequest meetingRequest, Event event) {
-        this.userId = user;
-        this.userId2 = user2;
+    public Meeting(User userId, User userId2, MeetingRequest meetingRequest, Event event) {
+        this.userId = userId;
+        this.userId2 = userId2;
         this.meetingText = meetingRequest.getMeetingText();
         this.location = meetingRequest.getLocation();
         this.event = event;
@@ -53,11 +55,11 @@ public class Meeting {
         this.isAccepted = isAccepted;
     }
 
-    public int getMeetingId() {
+    public Long getMeetingId() {
         return meetingId;
     }
 
-    public void setMeetingId(int meetingId) {
+    public void setMeetingId(Long meetingId) {
         this.meetingId = meetingId;
     }
 

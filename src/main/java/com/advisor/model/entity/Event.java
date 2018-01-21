@@ -15,8 +15,8 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private User userEvent;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    private User userEvent;
 
     @Column(nullable = false, name = "start_date")
     private Date startDate;
@@ -64,8 +64,7 @@ public class Event {
         this.eventsExceptions = eventRequest.getEventsExceptions();
     }
 
-    public Event(User userEvent, Date startDate, Date endDate, Time startTime, Time endTime, Boolean isFullDayEvent, Boolean isRecurring, User createdBy, Date createDate, Long parentEventId, Set<EventInstanceException> eventsExceptions) {
-        this.userEvent = userEvent;
+    public Event(Date startDate, Date endDate, Time startTime, Time endTime, Boolean isFullDayEvent, Boolean isRecurring, User createdBy, Date createDate, Long parentEventId, Set<EventInstanceException> eventsExceptions) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
@@ -84,14 +83,6 @@ public class Event {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUserEvent() {
-        return userEvent;
-    }
-
-    public void setUserEvent(User userEvent) {
-        this.userEvent = userEvent;
     }
 
     public Date getStartDate() {

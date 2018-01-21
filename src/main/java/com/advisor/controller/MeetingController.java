@@ -1,9 +1,10 @@
 package com.advisor.controller;
 
-import com.advisor.model.entity.Event;
-import com.advisor.model.entity.Location;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
+import com.advisor.model.response.MeetingResponse;
+import com.advisor.model.response.UserProfileResponse;
+import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
 import com.google.gson.Gson;
@@ -13,13 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class MeetingController {
@@ -34,23 +32,62 @@ public class MeetingController {
     @ResponseBody
     public ResponseEntity addMeeting(@RequestBody MeetingRequest meetingRequest)
     {
-
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        Event event = new Event();
-        event.setUserEvent(user);
-        event.setCreateDate(new Date());
-        event.setEndTime(new Time(43200));
-        event.setFullDayEvent(false);
-        MeetingRequest meeting = new MeetingRequest();
-        meeting.setLocation(new Location(50.243788, 50.243788));
-        meeting.setUserId2(new Long(2));
-        Gson gson = new Gson();
-        String json = gson.toJson(event);
         meetingService.addMeeting(user, meetingRequest);
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @RequestMapping(value = { "/meeting/{meetingId}" }, method = RequestMethod.GET)
+    public @ResponseBody
+    ResponseEntity<MeetingResponse> getMeetingById(@PathVariable Long meetingId)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        MeetingResponse meetingResponse = meetingService.findMeetingByIdAndUser(meetingId, user);
+        if(meetingResponse != null){ //TODO make exception catch
+            Gson gson = new Gson();
+            return new ResponseEntity<>(meetingResponse, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = { "/meeting/" }, method = RequestMethod.GET)
+    public @ResponseBody
+    ResponseEntity<List<MeetingResponse>> getMeetingByUser()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        List<MeetingResponse> meetingResponseList = meetingService.findMeetingByUser(user);
+        if(meetingResponseList != null){ //TODO make exception catch
+            return new ResponseEntity<>(meetingResponseList, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = { "/meeting/{meetingId}/accept" }, method = RequestMethod.PUT)
+    public @ResponseBody
+    ResponseEntity acceptMeeting(@PathVariable Long meetingId)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        try {
+            meetingService.acceptMeeting(meetingId, user);
+        } catch (MeetingNotFoundException e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+
+    }
+
+    //delete meeting
+    //move meeting
+    //set as done
+    //update meeting
+    //walidacja
 }
