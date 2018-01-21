@@ -1,13 +1,8 @@
 package com.advisor.model.entity;
 
 import java.util.Set;
-
 import javax.persistence.*;
-
 import com.advisor.model.request.NewUserRequest;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
 @Entity

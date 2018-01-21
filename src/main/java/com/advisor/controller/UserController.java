@@ -13,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @Controller
 public class UserController {
 
@@ -23,6 +25,7 @@ public class UserController {
     public @ResponseBody
     ResponseEntity<UserProfileResponse> getUserProfileByUserId(@PathVariable Long userId)
     {
+        Date date = new Date();
         User user = userService.findUserById(userId);
         if(user != null){ //TODO make exception catch
             UserProfileResponse userProfileResponse = userService.createUserProfileResponseByUser(user);

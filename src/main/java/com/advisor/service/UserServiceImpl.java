@@ -23,12 +23,15 @@ public class UserServiceImpl implements UserService{
 	@Autowired
     @Qualifier("userRepository")
 	private UserRepository userRepository;
+
     @Autowired
     @Qualifier("userProfileRepository")
     private UserProfileRepository userProfileRepository;
+
 	@Autowired
     @Qualifier("roleRepository")
     private RoleRepository roleRepository;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
