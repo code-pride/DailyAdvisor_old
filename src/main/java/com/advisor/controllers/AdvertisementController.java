@@ -1,4 +1,4 @@
-package com.advisor.controller;
+package com.advisor.controllers;
 
 import com.advisor.model.entity.User;
 import com.advisor.model.request.AdvertisementRequest;

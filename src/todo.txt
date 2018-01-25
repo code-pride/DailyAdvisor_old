@@ -9,6 +9,7 @@ Advertisement
     zliczanie wejsc
     srtowanie wynikow
     wyszukiwanie wg zadanych kryteriów
+    różne atrybuty w ogłoszeniu tak by mozna bylo wg nich wyszukiwać najbardziej nas interesujące ogloszenia
 
     add contraint to train in events
 
@@ -18,7 +19,5 @@ Login
 baza danych
     walidacja danych po stronie bazy danych
 
-Spotkania
-    dodawanie
-    usuwanie
-    przesuwanie
+
+
