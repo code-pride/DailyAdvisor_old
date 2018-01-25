@@ -3,6 +3,7 @@ package com.advisor.model.request;
 import com.advisor.model.entity.Location;
 
 public class MeetingRequest {
+    private Long meetingId;
     private Long userId2;
     private String meetingText;
     private Location location;
@@ -16,6 +17,14 @@ public class MeetingRequest {
         this.meetingText = meetingText;
         this.location = location;
         this.eventRequest = event;
+    }
+
+    public MeetingRequest(Long userId2, String meetingText, Location location, EventRequest eventRequest, Long meetingId) {
+        this.meetingId = meetingId;
+        this.userId2 = userId2;
+        this.meetingText = meetingText;
+        this.location = location;
+        this.eventRequest = eventRequest;
     }
 
     public Long getUserId2() {
@@ -49,4 +58,13 @@ public class MeetingRequest {
     public void setEventRequest(EventRequest eventRequest) {
         this.eventRequest = eventRequest;
     }
+
+    public Long getMeetingId() {
+        return meetingId;
+    }
+
+    public void setMeetingId(Long meetingId) {
+        this.meetingId = meetingId;
+    }
+
 }

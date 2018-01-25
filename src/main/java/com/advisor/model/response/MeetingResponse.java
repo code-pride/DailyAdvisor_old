@@ -1,6 +1,5 @@
 package com.advisor.model.response;
 
-import com.advisor.model.entity.Event;
 import com.advisor.model.entity.Location;
 import com.advisor.model.entity.Meeting;
 import com.advisor.model.entity.User;
@@ -24,7 +23,7 @@ public class MeetingResponse {
         this.meetingText = meeting.getMeetingText();
         this.location = meeting.getLocation();
         this.eventResponse = new EventResponse(meeting.getEvent());
-        this.isAccepted = meeting.isAccepted();
+        this.isAccepted = meeting.getAccepted();
     }
 
     public MeetingResponse(Long meetingId, User userId, User userId2, String meetingText, Location location, EventResponse eventResponse, boolean isAccepted) {

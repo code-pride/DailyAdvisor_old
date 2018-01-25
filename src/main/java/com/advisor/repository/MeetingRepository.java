@@ -19,10 +19,21 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
 
     List<Meeting> findMeetingsByUserIdOrUserId2(User user, User user2);
 
+    Meeting findMeetingByMeetingIdAndUserId2(Long meetingId, User user);
+
     @Transactional
     @Modifying
-    @Query("update Meeting m set m.isAccepted = :accepted where m.userId2 = :user")
+    @Query("UPDATE Meeting m SET m.isAccepted = :accepted WHERE m.userId2 = :user")
     void updateMeeting(@Param("user") User user, @Param("accepted") boolean accepted);
 
-    Meeting findMeetingByMeetingIdAndUserId2(Long meetingId, User user);
+    @Transactional
+    @Modifying
+    @Query("SELECT m FROM Meeting m WHERE m.meetingId = :meetingId AND (m.userId2 = :user OR m.userId = :user)")
+    List<Meeting> findMeetingByMeetingIdAndUserId(@Param("meetingId") Long meetingId,@Param("user") User user);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Meeting m SET m = :meeting WHERE m.meetingId = :meeting")
+    void updateMeeting(@Param("meeting") Meeting meeting);
+
 }

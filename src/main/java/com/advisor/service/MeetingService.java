@@ -16,4 +16,6 @@ public interface MeetingService {
     List<MeetingResponse> findMeetingByUser(User user);
 
     void acceptMeeting(Long meetingId, User user) throws MeetingNotFoundException;
+
+    void updateMeeting(MeetingRequest meetingRequest, User user) throws MeetingNotFoundException;
 }

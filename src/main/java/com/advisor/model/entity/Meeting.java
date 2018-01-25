@@ -103,7 +103,7 @@ public class Meeting {
         this.event = event;
     }
 
-    public boolean isAccepted() {
+    public boolean getAccepted() {
         return isAccepted;
     }
 

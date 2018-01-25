@@ -1,5 +1,6 @@
 package com.advisor.model.request;
 
+import com.advisor.model.entity.Event;
 import com.advisor.model.entity.EventInstanceException;
 
 import java.sql.Time;
@@ -13,20 +14,20 @@ public class EventRequest {
     private Time endTime;
     private boolean isFullDayEvent;
     private boolean isRecurring;
-    private Long parentEventId;
+    private Event parentEvent;
     private Set<EventInstanceException> eventsExceptions;
 
     public EventRequest() {
     }
 
-    public EventRequest(Date startDate, Date endDate, Time startTime, Time endTime, boolean isFullDayEvent, boolean isRecurring, Long parentEventId, Set<EventInstanceException> eventsExceptions) {
+    public EventRequest(Date startDate, Date endDate, Time startTime, Time endTime, boolean isFullDayEvent, boolean isRecurring, Event parentEvent, Set<EventInstanceException> eventsExceptions) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isFullDayEvent = isFullDayEvent;
         this.isRecurring = isRecurring;
-        this.parentEventId = parentEventId;
+        this.parentEvent = parentEvent;
         this.eventsExceptions = eventsExceptions;
     }
 
@@ -78,12 +79,12 @@ public class EventRequest {
         isRecurring = recurring;
     }
 
-    public Long getParentEventId() {
-        return parentEventId;
+    public Event getParentEvent() {
+        return parentEvent;
     }
 
-    public void setParentEventId(Long parentEventId) {
-        this.parentEventId = parentEventId;
+    public void setParentEvent(Event parentEvent) {
+        this.parentEvent = parentEvent;
     }
 
     public Set<EventInstanceException> getEventsExceptions() {

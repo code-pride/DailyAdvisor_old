@@ -35,8 +35,13 @@ public class MeetingController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        meetingService.addMeeting(user, meetingRequest);
-        return new ResponseEntity(HttpStatus.OK);
+        if(meetingRequest.getUserId2() == user.getId()){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            meetingService.addMeeting(user, meetingRequest);
+            return new ResponseEntity(HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = { "/meeting/{meetingId}" }, method = RequestMethod.GET)
@@ -47,7 +52,6 @@ public class MeetingController {
         User user = userService.findUserByEmail(auth.getName());
         MeetingResponse meetingResponse = meetingService.findMeetingByIdAndUser(meetingId, user);
         if(meetingResponse != null){ //TODO make exception catch
-            Gson gson = new Gson();
             return new ResponseEntity<>(meetingResponse, HttpStatus.OK);
         }
         else{
@@ -83,6 +87,21 @@ public class MeetingController {
         }
         return new ResponseEntity(HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = { "meeting/update" }, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity updateMeeting(@RequestBody MeetingRequest meetingRequest)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+        try {
+            meetingService.updateMeeting(meetingRequest, user);
+        } catch (MeetingNotFoundException e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //delete meeting

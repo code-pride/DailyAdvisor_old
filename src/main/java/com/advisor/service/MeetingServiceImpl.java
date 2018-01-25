@@ -62,8 +62,28 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public void acceptMeeting(Long meetingId, User user) throws MeetingNotFoundException{
         Meeting meeting = meetingRepository.findMeetingByMeetingIdAndUserId2(meetingId, user);
-        if(meeting != null){
+        if(meeting != null && !meeting.getAccepted()){
             meetingRepository.updateMeeting(user, true);
+        }
+        else {
+            throw new MeetingNotFoundException();
+        }
+    }
+
+    @Override
+    public void updateMeeting(MeetingRequest meetingRequest, User user) throws MeetingNotFoundException {
+        List<Meeting> meetingList = meetingRepository.findMeetingByMeetingIdAndUserId(meetingRequest.getMeetingId(), user);
+
+        if(meetingList != null && meetingList.size() == 1){
+            Meeting meeting = meetingList.get(0);
+            Event event = new Event(meetingRequest.getEventRequest());
+            if (!(event.equals(meeting.getEvent()))){
+                event.setParentEvent(meeting.getEvent());
+                eventRepository.save(event);
+            }
+            meeting.setLocation(meetingRequest.getLocation());
+            meeting.setMeetingText(meetingRequest.getMeetingText());
+          //  meetingRepository.updateMeeting(meeting);
         }
         throw new MeetingNotFoundException();
     }

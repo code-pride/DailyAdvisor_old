@@ -14,7 +14,6 @@ public class EventResponse {
     private Time endTime;
     private boolean isFullDayEvent;
     private boolean isRecurring;
-    private Long parentEventId;
     private Set<EventInstanceException> eventsExceptions;
 
     public EventResponse(Event event) {
@@ -24,21 +23,29 @@ public class EventResponse {
         this.endTime = event.getEndTime();
         this.isFullDayEvent = event.getFullDayEvent();
         this.isRecurring = event.getRecurring();
-        this.parentEventId = event.getParentEventId();
         this.eventsExceptions = event.getEventsExceptions();
     }
 
     public EventResponse() {
     }
 
-    public EventResponse(Date startDate, Date endDate, Time startTime, Time endTime, boolean isFullDayEvent, boolean isRecurring, Long parentEventId, Set<EventInstanceException> eventsExceptions) {
+    public EventResponse(Event event, Event parentEvent) {
+        this.startDate = event.getStartDate();
+        this.endDate = event.getEndDate();
+        this.startTime = event.getStartTime();
+        this.endTime = event.getEndTime();
+        this.isFullDayEvent = event.getFullDayEvent();
+        this.isRecurring = event.getRecurring();
+        this.eventsExceptions = event.getEventsExceptions();
+    }
+
+    public EventResponse(Date startDate, Date endDate, Time startTime, Time endTime, boolean isFullDayEvent, boolean isRecurring, Set<EventInstanceException> eventsExceptions) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isFullDayEvent = isFullDayEvent;
         this.isRecurring = isRecurring;
-        this.parentEventId = parentEventId;
         this.eventsExceptions = eventsExceptions;
     }
 
@@ -88,14 +95,6 @@ public class EventResponse {
 
     public void setRecurring(boolean recurring) {
         isRecurring = recurring;
-    }
-
-    public Long getParentEventId() {
-        return parentEventId;
-    }
-
-    public void setParentEventId(Long parentEventId) {
-        this.parentEventId = parentEventId;
     }
 
     public Set<EventInstanceException> getEventsExceptions() {
