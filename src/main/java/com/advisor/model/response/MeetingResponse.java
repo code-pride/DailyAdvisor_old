@@ -76,7 +76,7 @@ public class MeetingResponse {
         this.location = location;
     }
 
-    public String isStatus() {
+    public String getStatus() {
         return status;
     }
 

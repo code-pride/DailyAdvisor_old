@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class PopulateController {
@@ -43,35 +45,46 @@ public class PopulateController {
     public @ResponseBody
     ResponseEntity getMeetingById()
     {
+        List<Role> roles = new ArrayList();
         Role role = new Role("ADMIN");
-        roleRepository.save(role);
-        //User1register
-        NewUserRequest newUserRequest = new NewUserRequest("m@m.mm", "Marek", "Makowski", "Katowice", "111111");
-        userService.saveUser(newUserRequest);
+        roles.add(role);
+        role = new Role("COACH");
+        roles.add(role);
+        role = new Role("USER");
+        roles.add(role);
+        for (Role r : roles) {
+            roleRepository.save(r);
+        }
+
+        //User1register1
         String email = "m@m.mm";
-        User user = userService.findUserByEmail(email);
-        //User2register
-        newUserRequest = new NewUserRequest("r@r.rr", "Marcin", "Krawczyk", "Gliwice", "111111");
+        NewUserRequest newUserRequest = new NewUserRequest(email, "Marek", "Makowski", "Katowice", "111111");
         userService.saveUser(newUserRequest);
-        //adv
+        User user = userService.findUserByEmail(email);
+
+        //adv1
         AdvertisementRequest advertisementRequest = new AdvertisementRequest("Zajebiste moje ogloszenie");
         advertisementService.setAdvertisement(user, advertisementRequest);
-        //Meeting
+
+        //User2register2
+        email = "r@r.rr";
+        newUserRequest = new NewUserRequest(email, "Marcin", "Krawczyk", "Gliwice", "111111");
+        userService.saveUser(newUserRequest);
+
+        //Meeting1
         MeetingRequest meetingRequest = new MeetingRequest((long) 2, "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null));
         meetingService.addMeeting(user, meetingRequest);
 
         //User2
-        email = "r@r.rr";
         user = userService.findUserByEmail(email);
-        //adv
+
+        //adv2
         advertisementRequest = new AdvertisementRequest("Zajebiste moje ogloszenie");
         advertisementService.setAdvertisement(user, advertisementRequest);
-        //Meeting
+
+        //Meeting2
         meetingRequest = new MeetingRequest((long) 1, "Wieczorowe napierdalanie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null));
         meetingService.addMeeting(user, meetingRequest);
-
-
-        advertisementService.setAdvertisement(user, advertisementRequest);
 
 
         return new ResponseEntity(HttpStatus.OK);

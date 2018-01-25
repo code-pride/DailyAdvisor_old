@@ -4,7 +4,7 @@
     <springProfile name="dev,staging">
         <logger name="com\advisor\controllers" level="DEBUG" additivity="false">
             <appender-ref ref="CONSOLE" />
-        </logger>>
+        </logger>
     </springProfile>
     <springProfile name="production">
         <logger name="com\advisor\controllers" level="WARN" additivity="false">

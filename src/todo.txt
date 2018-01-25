@@ -19,5 +19,5 @@ Login
 baza danych
     walidacja danych po stronie bazy danych
 
-
+tranzakcje spring i spring data
 

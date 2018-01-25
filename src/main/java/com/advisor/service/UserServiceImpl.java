@@ -45,8 +45,9 @@ public class UserServiceImpl implements UserService{
 	    User user = new User(newUserRequest);
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        Role userRole = roleRepository.findByRole("ADMIN");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        Role userRole = roleRepository.findByRole("USER");
+        Role userRole2 = roleRepository.findByRole("ADMIN");
+        user.setRoles(new HashSet<>(Arrays.asList(userRole, userRole2)));
 		userRepository.save(user);
 
         UserProfile userProfile = new UserProfile(user, newUserRequest);
@@ -58,15 +59,14 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(userId);
     }
 
-    @Override
-	public UserProfile findUserProfileByUser(User user){
-		return userProfileRepository.findByUser(user);
-	}
+//    @Override
+//	public UserProfile findUserProfileByUser(User user){
+//		return userProfileRepository.findByUser(user);
+//	}
 
 	@Override
     public UserProfileResponse createUserProfileResponseByUser(User user){
         UserProfile userProfile = userProfileRepository.findByUser(user);
-
         return new UserProfileResponse(user, userProfile);
     }
 
@@ -75,8 +75,21 @@ public class UserServiceImpl implements UserService{
         userProfileRepository.updateUserProfile(userId, userProfileRequest.getCity(), userProfileRequest.getAbout(), userProfileRequest.getName(), userProfileRequest.getLastName());
     }
 
+//    @Override
+//    public UserProfileResponse createUserResponseByUser(User user){
+//        return new UserProfileResponse(user.getId());
+//    }
+
     @Override
-   public UserProfileResponse createUserResponseByUser(User user){
-        return new UserProfileResponse(user.getId());
-    }
+    public void upgradeUserToCoach(User user){
+
+        Role userRole = roleRepository.findByRole("USER");
+        Role userRole2 = roleRepository.findByRole("COACH");
+        HashSet<Role> roles = new HashSet<>(Arrays.asList(userRole, userRole2));
+        if(!user.getRoles().contains(userRole2)) {
+            user.setRoles(roles);
+            userRepository.save(user);}
+        }
+        //throw already coach
+
 }

@@ -12,11 +12,11 @@ public interface UserService {
 	void saveUser(NewUserRequest newUserRequest);
 	User findUserById(Long userId);
 
-	UserProfile findUserProfileByUser(User user);
+//	UserProfile findUserProfileByUser(User user);
 	UserProfileResponse createUserProfileResponseByUser(User user);
 
 	void updateUserProfile(UserProfileRequest userProfileRequest, Long userProfileId);
 
-	UserProfileResponse createUserResponseByUser(User user);
-	//UserProfile findUserProfileById(Long id);
+//	UserProfileResponse createUserResponseByUser(User user);
+	void upgradeUserToCoach(User user);
 }
