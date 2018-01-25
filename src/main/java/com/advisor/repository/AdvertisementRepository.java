@@ -1,6 +1,5 @@
 package com.advisor.repository;
 
-
 import com.advisor.model.entity.Advertisement;
 import com.advisor.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

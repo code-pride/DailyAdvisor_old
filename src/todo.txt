@@ -14,3 +14,11 @@ Advertisement
 
 Login
     walidacja danych przychodzących
+
+baza danych
+    walidacja danych po stronie bazy danych
+
+Spotkania
+    dodawanie
+    usuwanie
+    przesuwanie

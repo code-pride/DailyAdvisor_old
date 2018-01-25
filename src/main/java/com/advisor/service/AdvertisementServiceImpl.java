@@ -21,9 +21,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Qualifier("advertisementRepository")
     private AdvertisementRepository advertisementRepository;
 
-    @Autowired
-    private UserService userService;
-
     @Override
     public void setAdvertisement(User user, AdvertisementRequest advertisementRequest) {
         ZoneId zoneId = ZoneId.of( "Europe/Paris" );

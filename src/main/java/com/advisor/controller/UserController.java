@@ -1,7 +1,6 @@
 package com.advisor.controller;
 
 import com.advisor.model.entity.User;
-import com.advisor.model.entity.UserProfile;
 import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.response.UserProfileResponse;
 import com.advisor.service.UserService;
@@ -12,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 public class UserController {

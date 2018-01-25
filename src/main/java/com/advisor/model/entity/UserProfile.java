@@ -1,8 +1,6 @@
 package com.advisor.model.entity;
 
 import com.advisor.model.request.NewUserRequest;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 
 @Entity
@@ -28,8 +26,6 @@ public class UserProfile {
 
     @Column(name = "about")
     private String about;
-//    @Column(name = "weight")
-//    private Float weight;
 
     public UserProfile() {
     }
@@ -100,15 +96,5 @@ public class UserProfile {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-//    public Float getWeight() {
-//        return weight;
-//    }
-//
-//    public void setWeight(Float weight) {
-//        this.weight = weight;
-//    }
-
-//TODO gettery settery
 
 }
