@@ -3,11 +3,9 @@ package com.advisor.controller;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
-import com.advisor.model.response.UserProfileResponse;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -74,14 +71,26 @@ public class MeetingController {
         }
     }
 
-    @RequestMapping(value = { "/meeting/{meetingId}/accept" }, method = RequestMethod.PUT)
+    @RequestMapping(value = { "/meeting/{meetingId}/{statusChange}" }, method = RequestMethod.PUT)
     public @ResponseBody
-    ResponseEntity acceptMeeting(@PathVariable Long meetingId)
+    ResponseEntity acceptMeeting(@PathVariable Long meetingId, @PathVariable String statusChange)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         try {
-            meetingService.acceptMeeting(meetingId, user);
+            switch (statusChange){
+                case("accept"):{
+                    meetingService.updateMeetingStatus(meetingId, user, "accept");
+                    break;
+                }
+                case("cancel"):{
+                    meetingService.updateMeetingStatus(meetingId, user, "cancel");
+                    break;
+                }
+                default:
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+            meetingService.updateMeetingStatus(meetingId, user, "accept");
         } catch (MeetingNotFoundException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -104,9 +113,7 @@ public class MeetingController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //delete meeting
-    //move meeting
-    //set as done
-    //update meeting
+
+
     //walidacja
 }

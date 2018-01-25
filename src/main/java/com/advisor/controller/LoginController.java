@@ -33,7 +33,7 @@ public class LoginController {
 
     @RequestMapping(value = "/afterLogin", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity createNewUser() {
+    public ResponseEntity afterLogin() {
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -60,10 +60,17 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public void acceptMeeting(Long meetingId, User user) throws MeetingNotFoundException{
+    public void updateMeetingStatus(Long meetingId, User user, String newStatus) throws MeetingNotFoundException{
         Meeting meeting = meetingRepository.findMeetingByMeetingIdAndUserId2(meetingId, user);
-        if(meeting != null && !meeting.getAccepted()){
-            meetingRepository.updateMeeting(user, true);
+        if(meeting != null ) {
+            if (newStatus.equals("accept") && meeting.getStatus().equals("sent")) {
+                meetingRepository.updateMeeting(user, "accepted");
+            }
+            else if(newStatus.equals("cancel")){
+                meetingRepository.updateMeeting(user, "canceled");
+            }
+            else
+                throw new MeetingNotFoundException();
         }
         else {
             throw new MeetingNotFoundException();
@@ -83,7 +90,7 @@ public class MeetingServiceImpl implements MeetingService {
             }
             meeting.setLocation(meetingRequest.getLocation());
             meeting.setMeetingText(meetingRequest.getMeetingText());
-          //  meetingRepository.updateMeeting(meeting);
+            meetingRepository.updateMeeting(meeting);
         }
         throw new MeetingNotFoundException();
     }

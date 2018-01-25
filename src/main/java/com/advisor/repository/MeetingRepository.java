@@ -23,8 +23,8 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Meeting m SET m.isAccepted = :accepted WHERE m.userId2 = :user")
-    void updateMeeting(@Param("user") User user, @Param("accepted") boolean accepted);
+    @Query("UPDATE Meeting m SET m.status = :status WHERE m.userId2 = :user")
+    void updateMeeting(@Param("user") User user, @Param("status") String status);
 
     @Transactional
     @Modifying

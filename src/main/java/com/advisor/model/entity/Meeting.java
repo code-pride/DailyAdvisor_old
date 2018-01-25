@@ -3,7 +3,6 @@ package com.advisor.model.entity;
 import com.advisor.model.request.MeetingRequest;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "meeting")
@@ -31,8 +30,8 @@ public class Meeting {
     @JoinColumn(name = "id")
     private Event event;
 
-    @Column(name = "is_accepted")
-    private boolean isAccepted;
+    @Column(name = "status")
+    private String status;
 
     public Meeting() {
     }
@@ -43,16 +42,16 @@ public class Meeting {
         this.meetingText = meetingRequest.getMeetingText();
         this.location = meetingRequest.getLocation();
         this.event = event;
-        this.isAccepted = false;
+        this.status = "sent";
     }
 
-    public Meeting(User userId, User userId2, String meetingText, Location location, Event event, boolean isAccepted) {
+    public Meeting(User userId, User userId2, String meetingText, Location location, Event event, String status) {
         this.userId = userId;
         this.userId2 = userId2;
         this.meetingText = meetingText;
         this.location = location;
         this.event = event;
-        this.isAccepted = isAccepted;
+        this.status = status;
     }
 
     public Long getMeetingId() {
@@ -103,12 +102,12 @@ public class Meeting {
         this.event = event;
     }
 
-    public boolean getAccepted() {
-        return isAccepted;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAccepted(boolean accepted) {
-        isAccepted = accepted;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

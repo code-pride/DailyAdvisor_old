@@ -11,7 +11,7 @@ public class MeetingResponse {
     private String meetingText;
     private Location location;
     private EventResponse eventResponse;
-    private boolean isAccepted;
+    private String status;
 
     public MeetingResponse() {
     }
@@ -23,17 +23,17 @@ public class MeetingResponse {
         this.meetingText = meeting.getMeetingText();
         this.location = meeting.getLocation();
         this.eventResponse = new EventResponse(meeting.getEvent());
-        this.isAccepted = meeting.getAccepted();
+        this.status = meeting.getStatus();
     }
 
-    public MeetingResponse(Long meetingId, User userId, User userId2, String meetingText, Location location, EventResponse eventResponse, boolean isAccepted) {
+    public MeetingResponse(Long meetingId, User userId, User userId2, String meetingText, Location location, EventResponse eventResponse, String status) {
         this.meetingId = meetingId;
         this.userId = new UserProfileResponse(userId.getUserProfile());
         this.userId2 = new UserProfileResponse(userId2.getUserProfile());
         this.meetingText = meetingText;
         this.location = location;
         this.eventResponse = eventResponse;
-        this.isAccepted = isAccepted;
+        this.status = status;
     }
 
     public Long getMeetingId() {
@@ -76,12 +76,12 @@ public class MeetingResponse {
         this.location = location;
     }
 
-    public boolean isAccepted() {
-        return isAccepted;
+    public String isStatus() {
+        return status;
     }
 
-    public void setAccepted(boolean accepted) {
-        isAccepted = accepted;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public EventResponse getEventResponse() {
