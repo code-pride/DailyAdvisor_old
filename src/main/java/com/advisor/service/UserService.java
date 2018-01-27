@@ -6,6 +6,8 @@ import com.advisor.model.request.NewUserRequest;
 import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.response.UserProfileResponse;
 
+import java.util.List;
+
 
 public interface UserService {
 	User findUserByEmail(String email);
@@ -19,4 +21,6 @@ public interface UserService {
 
 //	UserProfileResponse createUserResponseByUser(User user);
 	void upgradeUserToCoach(User user);
+
+    List<UserProfile> findByUsers(List<User> users);
 }

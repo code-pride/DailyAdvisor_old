@@ -1,7 +1,6 @@
 package com.advisor.service;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 
 import com.advisor.model.entity.Role;
 import com.advisor.model.entity.User;
@@ -59,11 +58,6 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(userId);
     }
 
-//    @Override
-//	public UserProfile findUserProfileByUser(User user){
-//		return userProfileRepository.findByUser(user);
-//	}
-
 	@Override
     public UserProfileResponse createUserProfileResponseByUser(User user){
         UserProfile userProfile = userProfileRepository.findByUser(user);
@@ -75,21 +69,20 @@ public class UserServiceImpl implements UserService{
         userProfileRepository.updateUserProfile(userId, userProfileRequest.getCity(), userProfileRequest.getAbout(), userProfileRequest.getName(), userProfileRequest.getLastName());
     }
 
-//    @Override
-//    public UserProfileResponse createUserResponseByUser(User user){
-//        return new UserProfileResponse(user.getId());
-//    }
-
     @Override
     public void upgradeUserToCoach(User user){
 
-        Role userRole = roleRepository.findByRole("USER");
-        Role userRole2 = roleRepository.findByRole("COACH");
-        HashSet<Role> roles = new HashSet<>(Arrays.asList(userRole, userRole2));
-        if(!user.getRoles().contains(userRole2)) {
-            user.setRoles(roles);
+        Role coachRole = roleRepository.findByRole("COACH");
+        if(!user.getRoles().contains(coachRole)) {
+            user.getRoles().add(coachRole);
             userRepository.save(user);}
         }
-        //throw already coach
+
+    @Override
+    public List<UserProfile> findByUsers(List<User> users) {
+        Set<User> usersSer = new HashSet<User>(users);
+        return new ArrayList<UserProfile>(userProfileRepository.findByUserIn(usersSer));
+    }
+    //TODO throw already coach
 
 }

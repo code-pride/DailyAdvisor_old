@@ -37,7 +37,7 @@ public class MeetingController {
         User user = userService.findUserByEmail(auth.getName());
 
         if(meetingRequest.getUserId2() == user.getId()){
-            logger.info("You can log something");
+            logger.warn("Dad user request");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         else {
