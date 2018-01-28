@@ -13,7 +13,7 @@ public interface CoachingRepository extends JpaRepository<Coaching, Integer> {
 
     Coaching findByCoachAndClient(User coach, User client);
 
-    Coaching findByCoach(User coach);
+    List<Coaching> findByCoach(User coach);
 
     List<Coaching> findByClient(User client);
 

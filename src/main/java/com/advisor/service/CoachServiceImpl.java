@@ -34,4 +34,9 @@ public class CoachServiceImpl implements CoachService {
     public List<Coaching> findByClient(User client) {
         return coachingRepository.findByClient(client);
     }
+
+    @Override
+    public List<Coaching> findByCoach(User coach) {
+        return coachingRepository.findByCoach(coach);
+    }
 }

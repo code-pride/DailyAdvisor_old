@@ -16,4 +16,6 @@ public interface CoachService {
     void addNewCoaching(User coach, User client);
 
     List<Coaching> findByClient(User client);
+
+    List<Coaching> findByCoach(User user);
 }
