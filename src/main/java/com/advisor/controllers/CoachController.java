@@ -6,6 +6,7 @@ import com.advisor.model.entity.UserProfile;
 import com.advisor.model.request.CoachingRequest;
 import com.advisor.model.response.UserProfileResponse;
 import com.advisor.service.CoachService;
+import com.advisor.service.Exceptions.CoachingNotFoundException;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,15 +37,15 @@ public class CoachController {
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        User client = userService.findUserById(coachingRequest.getClient().getId());
-        if (coachService.findByCoachAndClient(user, client) == null){
-            coachService.addNewCoaching(user, client);
-
-
-            return new ResponseEntity(HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.IM_USED);
+        User client = userService.findUserById(coachingRequest.getClientId());
+        try {
+            coachService.findByCoachAndClient(user, client);
         }
+        catch (CoachingNotFoundException e){
+            coachService.addNewCoaching(user, client);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.IM_USED);
     }
 
     @RequestMapping(value = { "coaching/getClientCoaches" }, method = RequestMethod.GET)
@@ -75,6 +76,50 @@ public class CoachController {
         }
     }
 
+    @RequestMapping(value = { "coaching/acceptCoaching" }, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity acceptCoaching(@RequestBody CoachingRequest coachingRequest)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        User coach = userService.findUserById(coachingRequest.getCoachId());
+        try {
+            Coaching coaching = coachService.findByCoachAndClient(coach, user);
+            if (coaching.getStatus().equals("sent")) {
+                coaching.setStatus("accepted");
+                coachService.updateStatus(coaching);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+        } catch (CoachingNotFoundException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = { "coaching/cancelCoaching" }, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity leaveCoach(@RequestBody CoachingRequest coachingRequest)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        User coach = userService.findUserById(coachingRequest.getCoachId());
+        try {
+            Coaching coaching = coachService.findByCoachAndClient(coach, user);
+            if (coaching.getStatus().equals("sent") || coaching.getStatus().equals("accepted")) {
+                coaching.setStatus("canceled");
+                coachService.updateStatus(coaching);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+        } catch (CoachingNotFoundException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
     private List<UserProfileResponse> getUsersProfilesByUsers (List<Coaching> coachingList, String user) {
         if (coachingList != null) {
             List<User> users = new ArrayList<>();
@@ -96,9 +141,9 @@ public class CoachController {
         }
         return null;
     }
-    
-    //accept coaching
-    //
+
+
+
     //leave Coaching
     //status
 

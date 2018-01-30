@@ -1,21 +1,20 @@
 package com.advisor.model.request;
 
-import com.advisor.model.entity.User;
 
 public class CoachingRequest {
 
     private long coachingId;
-    private User coach;
-    private User client;
+    private long coachId;
+    private long clientId;
 
-    public CoachingRequest(long coachingId, User coach, User client) {
-        this.coachingId = coachingId;
-        this.coach = coach;
-        this.client = client;
-    }
 
     public CoachingRequest() {
+    }
 
+    public CoachingRequest(long coachingId, long coachId, long clientId) {
+        this.coachingId = coachingId;
+        this.coachId = coachId;
+        this.clientId = clientId;
     }
 
     public long getCoachingId() {
@@ -26,19 +25,19 @@ public class CoachingRequest {
         this.coachingId = coachingId;
     }
 
-    public User getCoach() {
-        return coach;
+    public long getCoachId() {
+        return coachId;
     }
 
-    public void setCoach(User coach) {
-        this.coach = coach;
+    public void setCoachId(long coachId) {
+        this.coachId = coachId;
     }
 
-    public User getClient() {
-        return client;
+    public long getClientId() {
+        return clientId;
     }
 
-    public void setClient(User client) {
-        this.client = client;
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 }

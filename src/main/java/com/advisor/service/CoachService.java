@@ -18,4 +18,6 @@ public interface CoachService {
     List<Coaching> findByClient(User client);
 
     List<Coaching> findByCoach(User user);
+
+    void updateStatus(Coaching coaching);
 }

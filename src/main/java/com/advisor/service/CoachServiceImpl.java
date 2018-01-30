@@ -19,8 +19,11 @@ public class CoachServiceImpl implements CoachService {
 
     @Override
     public Coaching findByCoachAndClient(User coach, User client) throws CoachingNotFoundException{
-        Coaching coachingList = coachingRepository.findByCoachAndClient(coach, client);
-        return coachingList;
+        List<Coaching>  coachingList = coachingRepository.findByCoachAndClient(coach, client);
+        if(coachingList.size() != 0) {
+            return coachingList.get(0);
+        }
+        else throw new CoachingNotFoundException();
     }
 
     @Override
@@ -39,4 +42,11 @@ public class CoachServiceImpl implements CoachService {
     public List<Coaching> findByCoach(User coach) {
         return coachingRepository.findByCoach(coach);
     }
+
+    @Override
+    public void updateStatus(Coaching coaching) {
+        coachingRepository.save(coaching);
+    }
+
+
 }
