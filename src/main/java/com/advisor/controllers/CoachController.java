@@ -4,6 +4,7 @@ import com.advisor.model.entity.Coaching;
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserProfile;
 import com.advisor.model.request.CoachingRequest;
+import com.advisor.model.response.CoachingResponse;
 import com.advisor.model.response.UserProfileResponse;
 import com.advisor.service.CoachService;
 import com.advisor.service.Exceptions.CoachingNotFoundException;
@@ -50,13 +51,13 @@ public class CoachController {
 
     @RequestMapping(value = { "coaching/getClientCoaches" }, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<UserProfileResponse>> getClientCoaches()
+    public ResponseEntity<List<CoachingResponse>> getClientCoaches()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         List<Coaching> coachingList = coachService.findByClient(user);
         if(coachingList != null) {
-            return new ResponseEntity(getUsersProfilesByUsers(coachingList, "client"), HttpStatus.OK);
+            return new ResponseEntity(getCoachingResponsesByUser(coachingList, "client"), HttpStatus.OK);
         }else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -64,13 +65,13 @@ public class CoachController {
 
     @RequestMapping(value = { "coaching/getCoachClients" }, method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<List<UserProfileResponse>> getCoachClients()
+    public ResponseEntity<List<CoachingResponse>> getCoachClients()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         List<Coaching> coachingList = coachService.findByCoach(user);
         if(coachingList != null) {
-            return new ResponseEntity(getUsersProfilesByUsers(coachingList, "coach"), HttpStatus.OK);
+            return new ResponseEntity(getCoachingResponsesByUser(coachingList, "coach"), HttpStatus.OK);
         }else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -120,7 +121,7 @@ public class CoachController {
         }
     }
 
-    private List<UserProfileResponse> getUsersProfilesByUsers (List<Coaching> coachingList, String user) {
+    private List<CoachingResponse> getCoachingResponsesByUser (List<Coaching> coachingList, String user) {
         if (coachingList != null) {
             List<User> users = new ArrayList<>();
             if(user.equals("coach")){
@@ -133,18 +134,37 @@ public class CoachController {
                 }
             }
             List<UserProfile> userProfileList = userService.findByUsers(users);
-            List<UserProfileResponse> userProfileResponseList = new ArrayList<>();
+            List<CoachingResponse> coachingResponsesList = new ArrayList<>();
+            int i = 0;
             for (UserProfile userProfile : userProfileList) {
-                userProfileResponseList.add(new UserProfileResponse(userProfile));
+                coachingResponsesList.add(new CoachingResponse(userProfile, coachingList.get(i).getStatus()));
+                i++;
             }
-            return userProfileResponseList;
+            return coachingResponsesList;
         }
         return null;
     }
 
-
-
-    //leave Coaching
-    //status
+//    private List<UserProfileResponse> getUsersProfilesByUsers (List<Coaching> coachingList, String user) {
+//        if (coachingList != null) {
+//            List<User> users = new ArrayList<>();
+//            if(user.equals("coach")){
+//                for (Coaching coaching : coachingList) {
+//                    users.add(userService.findUserById(coaching.getClient().getId()));
+//                }
+//            }else if(user.equals("client")){
+//                for (Coaching coaching : coachingList) {
+//                    users.add(userService.findUserById(coaching.getCoach().getId()));
+//                }
+//            }
+//            List<UserProfile> userProfileList = userService.findByUsers(users);
+//            List<UserProfileResponse> userProfileResponseList = new ArrayList<>();
+//            for (UserProfile userProfile : userProfileList) {
+//                userProfileResponseList.add(new UserProfileResponse(userProfile));
+//            }
+//            return userProfileResponseList;
+//        }
+//        return null;
+//    }
 
 }
