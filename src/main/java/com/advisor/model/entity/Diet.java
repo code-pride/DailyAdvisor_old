@@ -2,39 +2,28 @@ package com.advisor.model.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "diet")
 public class Diet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "diet_id")
-    private int dietId;
+    @Column(name = "id")
+    private long id;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "user_id")
-//    private User userId;
-    @Column(nullable = false, name = "diet_text")
-    private String dietText;
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user;
 
-    @Column(name = "cal")
-    private Integer cal;
+    @OneToOne(cascade = CascadeType.ALL)
+    private User createdBy;
 
-    @Column(name = "carbohydrates")
-    private Float carbohydrates;
-
-    @Column(name = "fat")
-    private Integer fat;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "diet_meal", joinColumns = @JoinColumn(name = "id"))
+    private Set<Meal> meals;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="create_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="edit_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
-    private Date editDate;
-
-
-//TODO gettery settery
 
 }
