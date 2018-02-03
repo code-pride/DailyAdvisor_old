@@ -42,6 +42,9 @@ public class Diet {
         this.meals = meals;
     }
 
+    public Diet() {
+    }
+
     public long getId() {
         return id;
     }

@@ -1,9 +1,11 @@
 package com.advisor.controllers;
 
+import com.advisor.model.entity.Diet;
 import com.advisor.model.entity.RecurringPattern;
 import com.advisor.model.entity.RecurringType;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.DietListRequest;
+import com.advisor.model.request.DietShareRequest;
 import com.advisor.model.request.EventRequest;
 import com.advisor.model.request.MealRequest;
 import com.advisor.service.DietService;
@@ -16,10 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
 import java.util.Date;
@@ -34,9 +33,6 @@ public class DietController {
 
     @Autowired
     private DietService dietService;
-
-    @Autowired
-    private EventService eventService;
 
     @RequestMapping(value = { "diet/addDietList" }, method = RequestMethod.POST)
     @ResponseBody
@@ -61,6 +57,28 @@ public class DietController {
         dietService.addDietList(user, dietListRequest);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = { "diet/share" }, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity shareDietPlan(@RequestBody DietShareRequest dietShareRequest)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+        Diet diet = dietService.findByUserAndId(user, dietShareRequest.getDietId());
+        if(diet != null){
+            User user2 = userService.findUserById(dietShareRequest.getShareUser());
+            if(user2.getId() == user.getId()){
+                return new ResponseEntity(HttpStatus.CONFLICT);
+            }
+            if(user2 != null){
+                diet.getUsers().add(user2);
+                dietService.updateDiet(diet);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 }
 

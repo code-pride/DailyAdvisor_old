@@ -7,25 +7,22 @@ import com.advisor.model.request.DietListRequest;
 import com.advisor.repository.DietRepository;
 import com.advisor.repository.EventRepository;
 import com.advisor.repository.RecurringPatternRepository;
-import com.advisor.repository.RecurringTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("dietService")
 public class DietServiceImpl implements DietService {
 
     @Autowired
     @Qualifier("dietRepository")
-    private DietRepository DietRepository;
+    private DietRepository dietRepository;
 
     @Autowired
     @Qualifier("eventRepository")
     private EventRepository eventRepository;
-
-    @Autowired
-    @Qualifier("recurringTypeRepository")
-    private RecurringTypeRepository recurringTypeRepository;
 
     @Autowired
     @Qualifier("recurringPatternRepository")
@@ -38,8 +35,23 @@ public class DietServiceImpl implements DietService {
         for (Meal meal : dietList.getMeals()) {
             recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
             eventRepository.save(meal.getEvent());
-
         }
-        DietRepository.save(dietList);
+        dietRepository.save(dietList);
+    }
+
+    @Override
+    public Diet findByUserAndId(User user, long dietId) {
+        List<Diet> dietList = dietRepository.findByUserAndId(user, dietId);
+        if(dietList.size()>0){
+            return dietList.get(0);
+        }
+        else{
+            return null;
+        }
+    }
+
+    @Override
+    public void updateDiet(Diet diet) {
+        dietRepository.save(diet);
     }
 }
