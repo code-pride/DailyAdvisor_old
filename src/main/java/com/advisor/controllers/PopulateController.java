@@ -1,4 +1,4 @@
-package com.advisor.controller;
+package com.advisor.controllers;
 
 import com.advisor.model.entity.Location;
 import com.advisor.model.entity.Role;
@@ -7,7 +7,6 @@ import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.request.EventRequest;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.request.NewUserRequest;
-import com.advisor.model.response.MeetingResponse;
 import com.advisor.repository.RoleRepository;
 import com.advisor.service.AdvertisementService;
 import com.advisor.service.MeetingService;
@@ -16,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;

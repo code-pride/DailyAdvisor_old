@@ -1,4 +1,4 @@
-package com.advisor.controller;
+package com.advisor.controllers;
 
 import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
@@ -6,6 +6,8 @@ import com.advisor.model.response.MeetingResponse;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ public class MeetingController {
     @Autowired
     private UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(MeetingController.class);
+
     @RequestMapping(value = { "meeting/add" }, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity addMeeting(@RequestBody MeetingRequest meetingRequest)
@@ -33,6 +37,7 @@ public class MeetingController {
         User user = userService.findUserByEmail(auth.getName());
 
         if(meetingRequest.getUserId2() == user.getId()){
+            logger.info("You can log something");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         else {

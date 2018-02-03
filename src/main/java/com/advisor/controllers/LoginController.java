@@ -1,4 +1,4 @@
-package com.advisor.controller;
+package com.advisor.controllers;
 
 import javax.validation.Valid;
 import com.advisor.model.entity.User;
