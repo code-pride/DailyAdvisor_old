@@ -26,8 +26,6 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
     @Query("UPDATE Meeting m SET m.status = :status WHERE m.userId2 = :user")
     void updateMeeting(@Param("user") User user, @Param("status") String status);
 
-    @Transactional
-    @Modifying
     @Query("SELECT m FROM Meeting m WHERE m.meetingId = :meetingId AND (m.userId2 = :user OR m.userId = :user)")
     List<Meeting> findMeetingByMeetingIdAndUserId(@Param("meetingId") Long meetingId,@Param("user") User user);
 

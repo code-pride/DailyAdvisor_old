@@ -19,5 +19,6 @@ Login
 baza danych
     walidacja danych po stronie bazy danych
 
+transakcje spring i spring data
 
-
+przerobic wszystkie listy na sety w encjach

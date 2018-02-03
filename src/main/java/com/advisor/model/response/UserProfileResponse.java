@@ -21,7 +21,6 @@ public class UserProfileResponse {
     public UserProfileResponse() {
     }
 
-
     public UserProfileResponse(User user, UserProfile userProfile) {
         this.userId=user.getId();
         this.name=userProfile.getName();
