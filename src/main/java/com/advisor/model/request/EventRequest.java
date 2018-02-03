@@ -2,6 +2,7 @@ package com.advisor.model.request;
 
 import com.advisor.model.entity.Event;
 import com.advisor.model.entity.EventInstanceException;
+import com.advisor.model.entity.RecurringPattern;
 
 import java.sql.Time;
 import java.util.Date;
@@ -16,11 +17,13 @@ public class EventRequest {
     private boolean isRecurring;
     private Event parentEvent;
     private Set<EventInstanceException> eventsExceptions;
+    private RecurringPattern recurringPattern;
+
 
     public EventRequest() {
     }
 
-    public EventRequest(Date startDate, Date endDate, Time startTime, Time endTime, boolean isFullDayEvent, boolean isRecurring, Event parentEvent, Set<EventInstanceException> eventsExceptions) {
+    public EventRequest(Date startDate, Date endDate, Time startTime, Time endTime, boolean isFullDayEvent, boolean isRecurring, Event parentEvent, Set<EventInstanceException> eventsExceptions, RecurringPattern recurringPattern) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
@@ -29,6 +32,7 @@ public class EventRequest {
         this.isRecurring = isRecurring;
         this.parentEvent = parentEvent;
         this.eventsExceptions = eventsExceptions;
+        this.recurringPattern = recurringPattern;
     }
 
     public Date getStartDate() {
@@ -67,7 +71,7 @@ public class EventRequest {
         return isFullDayEvent;
     }
 
-    public void setFullDayEvent(boolean fullDayEvent) {
+    public void setIsFullDayEvent(boolean fullDayEvent) {
         isFullDayEvent = fullDayEvent;
     }
 
@@ -75,7 +79,7 @@ public class EventRequest {
         return isRecurring;
     }
 
-    public void setRecurring(boolean recurring) {
+    public void setIsRecurring(boolean recurring) {
         isRecurring = recurring;
     }
 
@@ -93,5 +97,13 @@ public class EventRequest {
 
     public void setEventsExceptions(Set<EventInstanceException> eventsExceptions) {
         this.eventsExceptions = eventsExceptions;
+    }
+
+    public RecurringPattern getRecurringPattern() {
+        return recurringPattern;
+    }
+
+    public void setRecurringPattern(RecurringPattern recurringPattern) {
+        this.recurringPattern = recurringPattern;
     }
 }

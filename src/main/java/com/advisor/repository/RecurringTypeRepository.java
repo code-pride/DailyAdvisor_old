@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface RecurringTypeRepository extends JpaRepository<RecurringType, Integer> {
 
 
+    RecurringType findByRecurringName(String type);
 }

@@ -63,6 +63,7 @@ public class Event {
         this.isRecurring = eventRequest.getRecurring();
         this.parentEvent = eventRequest.getParentEvent();
         this.eventsExceptions = eventRequest.getEventsExceptions();
+        this.recurringPattern = eventRequest.getRecurringPattern();
     }
 
 
