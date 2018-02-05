@@ -1,12 +1,8 @@
 package com.advisor.service;
 
-import com.advisor.model.entity.Diet;
-import com.advisor.model.entity.Meal;
-import com.advisor.model.entity.User;
+import com.advisor.model.entity.*;
 import com.advisor.model.request.DietListRequest;
-import com.advisor.repository.DietRepository;
-import com.advisor.repository.EventRepository;
-import com.advisor.repository.RecurringPatternRepository;
+import com.advisor.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,11 +24,29 @@ public class DietServiceImpl implements DietService {
     @Qualifier("recurringPatternRepository")
     private RecurringPatternRepository recurringPatternRepository;
 
+    @Autowired
+    @Qualifier("recurringTypeRepository")
+    private RecurringTypeRepository recurringType;
+
+    @Autowired
+    @Qualifier("userRepository")
+    private UserRepository userRepository;
+
+    @Autowired
+    @Qualifier("userDietRepository")
+    private UserDietRepository userDietRepository;
+
     @Override
     public void addDietList(User user, DietListRequest dietListRequest) {
         Diet dietList = new Diet(user, dietListRequest);
 
         for (Meal meal : dietList.getMeals()) {
+            if(meal.getEvent().getRecurring()){
+                meal.getEvent().getRecurringPattern().setRecurringType(recurringType.findByRecurringName(meal.getEvent().getRecurringPattern().getRecurringType().getRecurringName()));
+            }
+            else {
+                meal.getEvent().setRecurringPattern(null);
+            }
             recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
             eventRepository.save(meal.getEvent());
         }
@@ -40,8 +54,8 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public Diet findByUserAndId(User user, long dietId) {
-        List<Diet> dietList = dietRepository.findByUserAndId(user, dietId);
+    public Diet findByCreatorAndId(User user, long dietId) {
+        List<Diet> dietList = dietRepository.findByCreatorAndId(user, dietId);
         if(dietList.size()>0){
             return dietList.get(0);
         }
@@ -54,4 +68,30 @@ public class DietServiceImpl implements DietService {
     public void updateDiet(Diet diet) {
         dietRepository.save(diet);
     }
+
+    @Override
+    public UserDiet findUserDietByDietIdAndUser(Diet diet, User user) {
+        List<UserDiet> userDiets = userDietRepository.findUserDietByUserAndId(user, diet);
+        if(userDiets.size()!=0){
+            return userDiets.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public void addUserDiet(User user, Diet diet) {
+        userDietRepository.save(new UserDiet(user, diet, "waiting"));
+    }
+
+//    @Override
+//    public Diet findByUserAndId(User user, long dietId) {
+//        List<Diet> dietList = dietRepository.findByUserAndId(user, dietId);
+//        if(dietList.size()>0){
+//            return dietList.get(0);
+//        }
+//        else{
+//            return null;
+//        }
+//    }
+
 }

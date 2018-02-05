@@ -1,17 +1,12 @@
 package com.advisor.controllers;
 
 import com.advisor.model.entity.Diet;
-import com.advisor.model.entity.RecurringPattern;
-import com.advisor.model.entity.RecurringType;
 import com.advisor.model.entity.User;
+import com.advisor.model.entity.UserDiet;
 import com.advisor.model.request.DietListRequest;
 import com.advisor.model.request.DietShareRequest;
-import com.advisor.model.request.EventRequest;
-import com.advisor.model.request.MealRequest;
 import com.advisor.service.DietService;
-import com.advisor.service.EventService;
 import com.advisor.service.UserService;
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Time;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class DietController {
@@ -66,26 +56,48 @@ public class DietController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        Diet diet = dietService.findByUserAndId(user, dietShareRequest.getDietId());
-        if(diet != null){
-            User user2 = userService.findUserById(dietShareRequest.getShareUser());
-            if(user2.getId() == user.getId()){
-                return new ResponseEntity(HttpStatus.CONFLICT);
+        Diet diet = dietService.findByCreatorAndId(user, dietShareRequest.getDietId());
+        User user2 = userService.findUserById(dietShareRequest.getShareUser());
+        if(diet != null && user2 !=null){
+            if(dietService.findUserDietByDietIdAndUser(diet, user2) != null){
+                return new ResponseEntity(HttpStatus.IM_USED);
             }
             if(user2 != null){
-                diet.getUsers().add(user2);
+                dietService.addUserDiet(user2, diet);
                 dietService.updateDiet(diet);
                 return new ResponseEntity(HttpStatus.OK);
             }
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
-}
 
+//    @RequestMapping(value = { "diet/use" }, method = RequestMethod.POST)
+//    @ResponseBody
+//    public ResponseEntity useDietPlan(@RequestBody DietListRequest dietListRequest)
+//    {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        User user = userService.findUserByEmail(auth.getName());
+//
+//        Diet diet = new Diet(dietService.findByUserAndId(dietListRequest.getCreatorId(), dietListRequest.getDiet()));
+//        dietService.addDietList(diet);
+//        if(diet != null ){
+//            User user2 = userService.findUserById(dietShareRequest.getShareUser());
+//            if(user2.getId() == user.getId()){
+//                return new ResponseEntity(HttpStatus.CONFLICT);
+//            }
+//            if(user2 != null){
+//                diet.getUsers().add(user2);
+//                dietService.updateDiet(diet);
+//                return new ResponseEntity(HttpStatus.OK);
+//            }
+//        }
+//        return new ResponseEntity(HttpStatus.NOT_FOUND);
+//    }
+}
+//TODO przeslac caly dietlist wraz z id diety na ktorej sie bazuje
 
 //edit diet plan
 //delete diet plan
-//share diet plan
 //list available plan lists
 //adjust plan list
 //edit diet

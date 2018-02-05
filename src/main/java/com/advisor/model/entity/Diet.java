@@ -16,10 +16,6 @@ public class Diet {
     @Column(name = "id")
     private long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "diet_user", joinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
-
     @OneToOne(cascade = CascadeType.ALL)
     private User createdBy;
 
@@ -45,20 +41,18 @@ public class Diet {
     public Diet() {
     }
 
+    public Diet(Diet diet) {
+        this.createdBy = diet.getCreatedBy();
+        this.meals = diet.getMeals();
+        this.createDate = diet.getCreateDate();
+    }
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     public User getCreatedBy() {
