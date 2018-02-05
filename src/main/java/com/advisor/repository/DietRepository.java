@@ -16,6 +16,6 @@ public interface DietRepository extends JpaRepository<Diet, Integer> {
     @Query("SELECT d FROM Diet d WHERE d.id = :id AND d.createdBy = :creator")
     List<Diet> findByCreatorAndId(@Param("creator") User creator, @Param("id") long id);
 
-
+    Diet findOneById(long dietId);
 
 }

@@ -16,4 +16,5 @@ public interface UserDietRepository extends JpaRepository<UserDiet, Integer> {
     @Query("SELECT u FROM UserDiet u WHERE u.diet = :diet AND u.user = :user")
     List<UserDiet> findUserDietByUserAndId(@Param("user") User user, @Param("diet") Diet diet);
 
+
 }

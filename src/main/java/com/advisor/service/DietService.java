@@ -16,5 +16,9 @@ public interface DietService {
 
     void addUserDiet(User user, Diet diet);
 
+    void useDietList(UserDiet userDiet);
+
+    Diet findDietById(long dietId);
+
 //    Diet findByUserAndId(User user, long dietId);
 }

@@ -83,6 +83,17 @@ public class DietServiceImpl implements DietService {
         userDietRepository.save(new UserDiet(user, diet, "waiting"));
     }
 
+    @Override
+    public void useDietList(UserDiet userDiet) {
+        userDiet.setStatus("used");
+        userDietRepository.save(userDiet);
+    }
+
+    @Override
+    public Diet findDietById(long dietId) {
+        return dietRepository.findOneById(dietId);
+    }
+
 //    @Override
 //    public Diet findByUserAndId(User user, long dietId) {
 //        List<Diet> dietList = dietRepository.findByUserAndId(user, dietId);

@@ -71,28 +71,28 @@ public class DietController {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
-//    @RequestMapping(value = { "diet/use" }, method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResponseEntity useDietPlan(@RequestBody DietListRequest dietListRequest)
-//    {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findUserByEmail(auth.getName());
-//
-//        Diet diet = new Diet(dietService.findByUserAndId(dietListRequest.getCreatorId(), dietListRequest.getDiet()));
-//        dietService.addDietList(diet);
-//        if(diet != null ){
-//            User user2 = userService.findUserById(dietShareRequest.getShareUser());
-//            if(user2.getId() == user.getId()){
-//                return new ResponseEntity(HttpStatus.CONFLICT);
-//            }
-//            if(user2 != null){
-//                diet.getUsers().add(user2);
-//                dietService.updateDiet(diet);
-//                return new ResponseEntity(HttpStatus.OK);
-//            }
-//        }
-//        return new ResponseEntity(HttpStatus.NOT_FOUND);
-//    }
+    @RequestMapping(value = { "diet/use" }, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity useDietPlan(@RequestBody long dietId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+        Diet diet = dietService.findDietById(dietId);
+        UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
+        if(userDiet.getStatus().equals("used")){
+            return new ResponseEntity(HttpStatus.IM_USED);
+        }
+        if (diet != null && user != null) {
+            if (userDiet == null) {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+            else{
+                dietService.useDietList(userDiet);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
 }
 //TODO przeslac caly dietlist wraz z id diety na ktorej sie bazuje
 
