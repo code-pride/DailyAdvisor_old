@@ -30,6 +30,7 @@ public class Diet {
     @Column(name="create_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createDate;
 
+
     public Diet() {
     }
 

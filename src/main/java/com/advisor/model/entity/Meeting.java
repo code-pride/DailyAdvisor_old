@@ -33,6 +33,7 @@ public class Meeting {
     @Column(name = "status")
     private String status;
 
+
     public Meeting() {
     }
 

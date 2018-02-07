@@ -11,6 +11,7 @@ public class RecurringType {
     @Column(nullable = false, name = "recurring_name", unique = true)
     private String recurringName;
 
+
     public RecurringType() {
     }
 

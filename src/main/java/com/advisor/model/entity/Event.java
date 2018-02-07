@@ -51,6 +51,7 @@ public class Event {
     @OneToMany(cascade= CascadeType.ALL, mappedBy="event_exceptions")
     private Set<EventInstanceException> eventsExceptions;
 
+
     public Event() {
     }
 
@@ -66,7 +67,6 @@ public class Event {
 
         if(eventRequest.getRecurring()){
             this.recurringPattern = eventRequest.getRecurringPattern();
-
         }
         else {
             this.recurringPattern = null;
@@ -168,8 +168,6 @@ public class Event {
     public void setEventsExceptions(Set<EventInstanceException> eventsExceptions) {
         this.eventsExceptions = eventsExceptions;
     }
-
-
 
     @Override
     public int hashCode() {

@@ -20,6 +20,7 @@ public class UserDiet {
     @Column(name = "status")
     private String status;
 
+
     public UserDiet() {
     }
 
