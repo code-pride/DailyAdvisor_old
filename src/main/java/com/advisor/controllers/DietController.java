@@ -113,12 +113,25 @@ public class DietController {
             }
             return new ResponseEntity<>(dietResponses, HttpStatus.OK);
         } catch (DietNotFoundException e){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
     }
 
+    @RequestMapping(value = { "diet/remove" }, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity removeDiet(@RequestBody long dietId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+        Diet diet = dietService.findDietById(dietId);
+        UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
+        if(userDiet.getStatus().equals("used")){
+            dietService.removeDiet(userDiet);
+            return new ResponseEntity(HttpStatus.OK);
+        } else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
-
-//delete diet

@@ -27,5 +27,7 @@ public interface DietService {
 
     List<Diet> getAllDietLists(User user);
 
+    void removeDiet(UserDiet userDiet);
+
 //    Diet findByUserAndId(User user, long dietId);
 }

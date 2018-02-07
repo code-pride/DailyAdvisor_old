@@ -114,7 +114,11 @@ public class DietServiceImpl implements DietService {
         return dietList;
     }
 
-
+    @Override
+    public void removeDiet(UserDiet userDiet) {
+        userDiet.setStatus("waiting");
+        userDietRepository.save(userDiet);
+    }
 
 
 }
