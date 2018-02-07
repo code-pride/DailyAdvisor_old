@@ -17,4 +17,8 @@ public interface TrainService {
     UserTrain findUserTrainByTrainIdAndUser(Train train, User user);
 
     void addUserTrain(User user, Train train);
+
+    void useTrainList(UserTrain userTrain);
+
+    Train findTrainById(long trainId);
 }

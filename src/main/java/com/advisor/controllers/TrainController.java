@@ -2,6 +2,7 @@ package com.advisor.controllers;
 
 import com.advisor.model.entity.Train;
 import com.advisor.model.entity.User;
+import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.model.request.TrainShareRequest;
 import com.advisor.service.TrainService;
@@ -57,29 +58,30 @@ public class TrainController {
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
-//
-//    @RequestMapping(value = { "train/use" }, method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResponseEntity useTrainPlan(@RequestBody long trainId) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findUserByEmail(auth.getName());
-//
-//        Train train = trainService.findTrainById(trainId);
-//        UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
-//        if(userTrain.getStatus().equals("used")){
-//            return new ResponseEntity(HttpStatus.IM_USED);
-//        }
-//        if (train != null && user != null) {
-//            if (userTrain == null) {
-//                return new ResponseEntity(HttpStatus.NOT_FOUND);
-//            }
-//            else{
-//                trainService.useTrainList(userTrain);
-//                return new ResponseEntity(HttpStatus.OK);
-//            }
-//        }
-//        return new ResponseEntity(HttpStatus.NOT_FOUND);
-//    }
+
+    @RequestMapping(value = { "train/use" }, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity useTrainPlan(@RequestBody long trainId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+        Train train = trainService.findTrainById(trainId);
+        UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
+        if(userTrain!=null) {
+            if (userTrain.getStatus().equals("used")) {
+                return new ResponseEntity(HttpStatus.IM_USED);
+            }
+            if (train != null && user != null) {
+                if (userTrain == null) {
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                } else {
+                    trainService.useTrainList(userTrain);
+                    return new ResponseEntity(HttpStatus.OK);
+                }
+            }
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
 //
 //    @RequestMapping(value = { "train/disableTrainList" }, method = RequestMethod.PUT)
 //    @ResponseBody

@@ -83,16 +83,16 @@ public class TrainServiceImpl implements TrainService {
         userTrainRepository.save(new UserTrain(user, train, "waiting"));
     }
 
-//    @Override
-//    public void useTrainList(UserTrain userTrain) {
-//        userTrain.setStatus("used");
-//        userTrainRepository.save(userTrain);
-//    }
-//
-//    @Override
-//    public Train findTrainById(long trainId) {
-//        return trainRepository.findOneById(trainId);
-//    }
+    @Override
+    public void useTrainList(UserTrain userTrain) {
+        userTrain.setStatus("used");
+        userTrainRepository.save(userTrain);
+    }
+
+    @Override
+    public Train findTrainById(long trainId) {
+        return trainRepository.findOneById(trainId);
+    }
 //
 //    @Override
 //    public void setStatus(User user, long trainId, String status) throws TrainNotFoundException{
