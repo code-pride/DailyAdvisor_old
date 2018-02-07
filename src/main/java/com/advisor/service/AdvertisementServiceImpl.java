@@ -21,14 +21,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Qualifier("advertisementRepository")
     private AdvertisementRepository advertisementRepository;
 
-    @Autowired
-    private UserService userService;
-
     @Override
     public void setAdvertisement(User user, AdvertisementRequest advertisementRequest) {
-        ZoneId zoneId = ZoneId.of( "Europe/Paris" );
-        ZonedDateTime zdt = ZonedDateTime.now( zoneId );
-        java.util.Date date = java.util.Date.from( zdt.toInstant() );
         Advertisement advertisement = new Advertisement(user, advertisementRequest.getAdvText());
         advertisementRepository.save(advertisement);
     }
@@ -36,7 +30,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public List<AdvertisementResponse> selectAll() {
-        //TODO how to make it ok?
         List<AdvertisementResponse> advertisementResponseList = new ArrayList<AdvertisementResponse>();
         for (Advertisement advertisement : advertisementRepository.findAll()) {
             advertisementResponseList.add(new AdvertisementResponse(advertisement));

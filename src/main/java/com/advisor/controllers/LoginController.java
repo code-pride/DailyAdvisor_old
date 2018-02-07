@@ -1,4 +1,4 @@
-package com.advisor.controller;
+package com.advisor.controllers;
 
 import javax.validation.Valid;
 import com.advisor.model.entity.User;
@@ -33,7 +33,7 @@ public class LoginController {
 
     @RequestMapping(value = "/afterLogin", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity createNewUser() {
+    public ResponseEntity afterLogin() {
         return new ResponseEntity(HttpStatus.OK);
     }
 

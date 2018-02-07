@@ -66,8 +66,6 @@ public class Advertisement {
         this.advText = advText;
     }
 
-
-
     public int getVisits() {
         return visits;
     }
@@ -83,7 +81,5 @@ public class Advertisement {
     public void setAnswers(int answers) {
         this.answers = answers;
     }
-
-//TODO gettery settery
 
 }

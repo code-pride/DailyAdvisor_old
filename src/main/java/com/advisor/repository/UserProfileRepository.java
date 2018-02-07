@@ -9,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Set;
+
 @Repository("userProfileRepository")
 public interface UserProfileRepository extends JpaRepository<UserProfile, Integer> {
 
@@ -18,6 +21,7 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Intege
     @Modifying
     @Query("update UserProfile u set u.city = :city, u.about = :about, u.name = :name, u.lastName = :lastName where u.userProfileId = :userProfileId")
     void updateUserProfile(@Param("userProfileId") Long userProfileId, @Param("city") String city, @Param("about") String about, @Param("name") String name, @Param("lastName") String lastName);
-
+    
+    Set<UserProfile> findByUserIn(Set<User> users);
 
 }

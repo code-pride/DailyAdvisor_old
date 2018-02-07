@@ -1,13 +1,8 @@
 package com.advisor.model.entity;
 
 import java.util.Set;
-
 import javax.persistence.*;
-
 import com.advisor.model.request.NewUserRequest;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
 @Entity
@@ -33,11 +28,6 @@ public class User {
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
-	@OneToMany(cascade= CascadeType.ALL, mappedBy="userEvent")
-	private Set<Event> events;
-
-//	@OneToMany(mappedBy = "userId")
-//	private Set<Meeting> meetings;
 	@OneToOne
 	@PrimaryKeyJoinColumn
 	private UserProfile userProfile;
@@ -90,14 +80,6 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
-	}
-
-	public Set<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(Set<Event> events) {
-		this.events = events;
 	}
 
 	public UserProfile getUserProfile() {
