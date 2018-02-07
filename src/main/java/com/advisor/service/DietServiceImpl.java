@@ -68,7 +68,7 @@ public class DietServiceImpl implements DietService {
 
     @Override
     public UserDiet findUserDietByDietIdAndUser(Diet diet, User user) {
-        List<UserDiet> userDiets = userDietRepository.findUserDietByUserAndId(user, diet);
+        List<UserDiet> userDiets = userDietRepository.findUserDietByUserAndDiet(user, diet);
         if(userDiets.size()!=0){
             return userDiets.get(0);
         }
@@ -118,6 +118,22 @@ public class DietServiceImpl implements DietService {
     public void removeDiet(UserDiet userDiet) {
         userDiet.setStatus("waiting");
         userDietRepository.save(userDiet);
+    }
+
+    @Override
+    public Diet findDietByUserAndDietId(User user, long dietId) throws DietNotFoundException{
+        Diet diet = dietRepository.findOneById(dietId);
+        if(diet != null) {
+            if (diet.getCreatedBy().equals(user)) {
+                return diet;
+            } else {
+                List<UserDiet> userDiets = userDietRepository.findUserDietByUserAndDiet(user, diet);
+                if (userDiets.size() == 1) {
+                    return userDiets.get(0).getDiet();
+                }
+            }
+        }
+        throw new DietNotFoundException();
     }
 
 
