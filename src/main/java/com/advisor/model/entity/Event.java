@@ -63,21 +63,14 @@ public class Event {
         this.isRecurring = eventRequest.getRecurring();
         this.parentEvent = eventRequest.getParentEvent();
         this.eventsExceptions = eventRequest.getEventsExceptions();
-    }
 
+        if(eventRequest.getRecurring()){
+            this.recurringPattern = eventRequest.getRecurringPattern();
 
-    public Event(RecurringPattern recurringPattern, Date startDate, Date endDate, Time startTime, Time endTime, boolean isFullDayEvent, boolean isRecurring, User createdBy, Date createDate, Event parentEvent, Set<EventInstanceException> eventsExceptions) {
-        this.recurringPattern = recurringPattern;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.isFullDayEvent = isFullDayEvent;
-        this.isRecurring = isRecurring;
-        this.createdBy = createdBy;
-        this.createDate = createDate;
-        this.parentEvent = parentEvent;
-        this.eventsExceptions = eventsExceptions;
+        }
+        else {
+            this.recurringPattern = null;
+        }
     }
 
     public Long getId() {

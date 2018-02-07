@@ -1,12 +1,14 @@
 package com.advisor.controllers;
 
 import com.advisor.model.entity.Location;
+import com.advisor.model.entity.RecurringType;
 import com.advisor.model.entity.Role;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.request.EventRequest;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.request.NewUserRequest;
+import com.advisor.repository.RecurringTypeRepository;
 import com.advisor.repository.RoleRepository;
 import com.advisor.service.AdvertisementService;
 import com.advisor.service.MeetingService;
@@ -41,10 +43,15 @@ public class PopulateController {
     @Qualifier("roleRepository")
     private RoleRepository roleRepository;
 
+    @Autowired
+    @Qualifier("recurringTypeRepository")
+    private RecurringTypeRepository recurringTypeRepository;
+
     @RequestMapping(value = { "/populate" }, method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity getMeetingById()
     {
+        //save roles
         List<Role> roles = new ArrayList();
         Role role = new Role("ADMIN");
         roles.add(role);
@@ -55,6 +62,18 @@ public class PopulateController {
         for (Role r : roles) {
             roleRepository.save(r);
         }
+
+        //save recurrence types
+        List<RecurringType> recurringTypes = new ArrayList();
+        recurringTypes.add(new RecurringType("daily"));
+        recurringTypes.add(new RecurringType("weekly"));
+        recurringTypes.add(new RecurringType("monthly"));
+        recurringTypes.add(new RecurringType("yearly"));
+        for (RecurringType rt : recurringTypes) {
+            recurringTypeRepository.save(rt);
+        }
+
+
 
         //User1register1
         String email = "m@m.mm";
@@ -72,7 +91,7 @@ public class PopulateController {
         userService.saveUser(newUserRequest);
 
         //Meeting1
-        MeetingRequest meetingRequest = new MeetingRequest((long) 2, "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null));
+        MeetingRequest meetingRequest = new MeetingRequest((long) 2, "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
         meetingService.addMeeting(user, meetingRequest);
 
         //User2
@@ -83,7 +102,7 @@ public class PopulateController {
         advertisementService.setAdvertisement(user, advertisementRequest);
 
         //Meeting2
-        meetingRequest = new MeetingRequest((long) 1, "Wieczorowe napierdalanie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null));
+        meetingRequest = new MeetingRequest((long) 1, "Wieczorowe napierdalanie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
         meetingService.addMeeting(user, meetingRequest);
 
 

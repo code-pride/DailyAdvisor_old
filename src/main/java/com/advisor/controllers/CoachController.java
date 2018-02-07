@@ -5,7 +5,6 @@ import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserProfile;
 import com.advisor.model.request.CoachingRequest;
 import com.advisor.model.response.CoachingResponse;
-import com.advisor.model.response.UserProfileResponse;
 import com.advisor.service.CoachService;
 import com.advisor.service.Exceptions.CoachingNotFoundException;
 import com.advisor.service.UserService;
@@ -144,27 +143,5 @@ public class CoachController {
         }
         return null;
     }
-
-//    private List<UserProfileResponse> getUsersProfilesByUsers (List<Coaching> coachingList, String user) {
-//        if (coachingList != null) {
-//            List<User> users = new ArrayList<>();
-//            if(user.equals("coach")){
-//                for (Coaching coaching : coachingList) {
-//                    users.add(userService.findUserById(coaching.getClient().getId()));
-//                }
-//            }else if(user.equals("client")){
-//                for (Coaching coaching : coachingList) {
-//                    users.add(userService.findUserById(coaching.getCoach().getId()));
-//                }
-//            }
-//            List<UserProfile> userProfileList = userService.findByUsers(users);
-//            List<UserProfileResponse> userProfileResponseList = new ArrayList<>();
-//            for (UserProfile userProfile : userProfileList) {
-//                userProfileResponseList.add(new UserProfileResponse(userProfile));
-//            }
-//            return userProfileResponseList;
-//        }
-//        return null;
-//    }
 
 }
