@@ -1,6 +1,5 @@
 package com.advisor.model.entity;
 
-import com.advisor.model.request.MealRequest;
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.model.request.TrainingRequest;
 

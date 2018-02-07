@@ -106,37 +106,37 @@ public class TrainServiceImpl implements TrainService {
         }
     }
 
-//    @Override
-//    public List<Train> getAllTrainLists(User user) {
-//        List<Train> trainList = trainRepository.findByCreatedBy(user);
-//        List<UserTrain> trainList2 = userTrainRepository.findByUser(user);
-//        for (UserTrain userTrain : trainList2) {
-//            if(!trainList.contains(userTrain.getTrain())){
-//                trainList.add(userTrain.getTrain());
-//            }
-//        }
-//        return trainList;
-//    }
-//
-//    @Override
-//    public void removeTrain(UserTrain userTrain) {
-//        userTrain.setStatus("waiting");
-//        userTrainRepository.save(userTrain);
-//    }
-//
-//    @Override
-//    public Train findTrainByUserAndTrainId(User user, long trainId) throws TrainNotFoundException{
-//        Train train = trainRepository.findOneById(trainId);
-//        if(train != null) {
-//            if (train.getCreatedBy().equals(user)) {
-//                return train;
-//            } else {
-//                List<UserTrain> userTrains = userTrainRepository.findUserTrainByUserAndTrain(user, train);
-//                if (userTrains.size() == 1) {
-//                    return userTrains.get(0).getTrain();
-//                }
-//            }
-//        }
-//        throw new TrainNotFoundException();
-//    }
+    @Override
+    public List<Train> getAllTrainLists(User user) {
+        List<Train> trainList = trainRepository.findByCreatedBy(user);
+        List<UserTrain> trainList2 = userTrainRepository.findByUser(user);
+        for (UserTrain userTrain : trainList2) {
+            if(!trainList.contains(userTrain.getTrain())){
+                trainList.add(userTrain.getTrain());
+            }
+        }
+        return trainList;
+    }
+
+    @Override
+    public void removeTrain(UserTrain userTrain) {
+        userTrain.setStatus("waiting");
+        userTrainRepository.save(userTrain);
+    }
+
+    @Override
+    public Train findTrainByUserAndTrainId(User user, long trainId) throws TrainNotFoundException{
+        Train train = trainRepository.findOneById(trainId);
+        if(train != null) {
+            if (train.getCreatedBy().equals(user)) {
+                return train;
+            } else {
+                List<UserTrain> userTrains = userTrainRepository.findByUserAndTrain(user, train);
+                if (userTrains.size() == 1) {
+                    return userTrains.get(0).getTrain();
+                }
+            }
+        }
+        throw new TrainNotFoundException();
+    }
 }

@@ -6,6 +6,8 @@ import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.service.Exceptions.TrainNotFoundException;
 
+import java.util.List;
+
 public interface TrainService {
 
 
@@ -24,4 +26,10 @@ public interface TrainService {
     Train findTrainById(long trainId);
 
     void setStatus(User user, long trainId, String status) throws TrainNotFoundException;
+
+    List<Train> getAllTrainLists(User user);
+
+    void removeTrain(UserTrain userTrain);
+
+    Train findTrainByUserAndTrainId(User user, long trainId) throws TrainNotFoundException;
 }
