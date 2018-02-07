@@ -25,4 +25,6 @@ przerobic wszystkie listy na sety w encjach
 
 sprawdzanie wyjątków bazy danych
 
+TODO
 pobieranie calego kalendarza
+
