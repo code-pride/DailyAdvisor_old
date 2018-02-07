@@ -33,7 +33,6 @@ public class User {
 	private UserProfile userProfile;
 
 
-
     public User(NewUserRequest newUserRequest) {
         this.setPassword(newUserRequest.getPassword());
         this.setEmail(newUserRequest.getEmail());

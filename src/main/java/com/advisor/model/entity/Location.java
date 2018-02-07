@@ -17,6 +17,7 @@ public class Location {
     @Column(nullable = false, name = "latitude")
     private Double latitude;
 
+
     public Location() {
     }
 

@@ -27,6 +27,7 @@ public class UserProfile {
     @Column(name = "about")
     private String about;
 
+
     public UserProfile() {
     }
 
@@ -36,6 +37,7 @@ public class UserProfile {
         this.lastName = newUserRequest.getLastName();
         this.city = newUserRequest.getCity();
     }
+
     public UserProfile(User user) {
         this.user = user;
     }
@@ -47,7 +49,6 @@ public class UserProfile {
         this.city = city;
         this.about = about;
     }
-
 
     public Long getUserProfileId() {
         return userProfileId;

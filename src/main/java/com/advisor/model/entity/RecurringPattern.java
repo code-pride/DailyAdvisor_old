@@ -31,6 +31,7 @@ public class RecurringPattern {
     @ManyToOne(cascade=CascadeType.ALL)
     private RecurringType recurringType;
 
+
     public RecurringPattern() {
     }
 
