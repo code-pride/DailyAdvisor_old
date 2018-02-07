@@ -17,4 +17,5 @@ public interface UserDietRepository extends JpaRepository<UserDiet, Integer> {
     List<UserDiet> findUserDietByUserAndId(@Param("user") User user, @Param("diet") Diet diet);
 
 
+    List<UserDiet> findByUser(User user);
 }

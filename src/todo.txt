@@ -24,3 +24,5 @@ transakcje spring i spring data
 przerobic wszystkie listy na sety w encjach
 
 sprawdzanie wyjątków bazy danych
+
+pobieranie calego kalendarza

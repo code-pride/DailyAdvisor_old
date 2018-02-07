@@ -23,9 +23,15 @@ public class Diet {
     @JoinTable(name = "diet_meal", joinColumns = @JoinColumn(name = "id"))
     private Set<Meal> meals;
 
+    @Column(name = "status")
+    private String status;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="create_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createDate;
+
+    public Diet() {
+    }
 
     public Diet(User creator, DietListRequest dietListRequest) {
         this.createdBy = creator;
@@ -36,15 +42,7 @@ public class Diet {
             meals.add(meal);
         }
         this.meals = meals;
-    }
-
-    public Diet() {
-    }
-
-    public Diet(Diet diet) {
-        this.createdBy = diet.getCreatedBy();
-        this.meals = diet.getMeals();
-        this.createDate = diet.getCreateDate();
+        this.status = "published";
     }
 
     public long getId() {
@@ -77,6 +75,14 @@ public class Diet {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
 

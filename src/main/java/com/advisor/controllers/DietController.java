@@ -5,7 +5,9 @@ import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserDiet;
 import com.advisor.model.request.DietListRequest;
 import com.advisor.model.request.DietShareRequest;
+import com.advisor.model.response.DietResponse;
 import com.advisor.service.DietService;
+import com.advisor.service.Exceptions.DietNotFoundException;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class DietController {
@@ -30,20 +35,6 @@ public class DietController {
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-//        DietListRequest dietListRequest1 = new DietListRequest();
-//
-//        dietListRequest1.setId(1);
-//
-//        Set<MealRequest> meals = new HashSet<>();
-//
-//        RecurringType recurringType = eventService.findByRecurringName("weekly");
-//        RecurringPattern recurringPattern = new RecurringPattern(1, null, 2, null, null, null, recurringType);
-//        EventRequest event = new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, true, null, null, recurringPattern);
-//        MealRequest meal = new MealRequest(event, "Stejk wielki jak tur", 999, (float) 0.123, 1213);
-//        meals.add(meal);
-//        dietListRequest1.setMeals(meals);
-//        Gson gson = new Gson();
-//        String json = gson.toJson(dietListRequest1);
         dietService.addDietList(user, dietListRequest);
 
         return new ResponseEntity(HttpStatus.OK);
@@ -58,7 +49,7 @@ public class DietController {
 
         Diet diet = dietService.findByCreatorAndId(user, dietShareRequest.getDietId());
         User user2 = userService.findUserById(dietShareRequest.getShareUser());
-        if(diet != null && user2 !=null){
+        if(diet != null && user2 !=null && diet.getStatus() != "disabled"){
             if(dietService.findUserDietByDietIdAndUser(diet, user2) != null){
                 return new ResponseEntity(HttpStatus.IM_USED);
             }
@@ -93,12 +84,41 @@ public class DietController {
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
-}
-//TODO przeslac caly dietlist wraz z id diety na ktorej sie bazuje
 
-//edit diet plan
-//delete diet plan
-//list available plan lists
-//adjust plan list
-//edit diet
+    @RequestMapping(value = { "diet/disableDietList" }, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity disableDietList(@RequestBody long dietId)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        try{
+            dietService.setStatus(user, dietId, "disabled");
+        } catch (DietNotFoundException e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = { "diet/getAllDietLists" }, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<DietResponse>> getAllDietLists()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        try{
+            List<Diet> diets = dietService.getAllDietLists(user);
+            List<DietResponse> dietResponses = new ArrayList<>();
+            for (Diet diet : diets) {
+                dietResponses.add(new DietResponse(diet));
+            }
+            return new ResponseEntity<>(dietResponses, HttpStatus.OK);
+        } catch (DietNotFoundException e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+
+}
+
 //delete diet

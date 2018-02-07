@@ -18,4 +18,5 @@ public interface DietRepository extends JpaRepository<Diet, Integer> {
 
     Diet findOneById(long dietId);
 
+    List<Diet> findByCreatedBy(User user);
 }
