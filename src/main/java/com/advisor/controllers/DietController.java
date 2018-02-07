@@ -115,7 +115,20 @@ public class DietController {
         } catch (DietNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
 
+    @RequestMapping(value = { "diet/getDietList/{dietId}" }, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<DietResponse> getDietList(@PathVariable long dietId)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        try{
+            Diet diet = dietService.findDietByUserAndDietId(user, dietId);
+            return new ResponseEntity<>(new DietResponse(diet), HttpStatus.OK);
+        } catch (DietNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = { "diet/remove" }, method = RequestMethod.POST)

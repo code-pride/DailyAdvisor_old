@@ -82,7 +82,7 @@ public class PopulateController {
         User user = userService.findUserByEmail(email);
 
         //adv1
-        AdvertisementRequest advertisementRequest = new AdvertisementRequest("Zajebiste moje ogloszenie");
+        AdvertisementRequest advertisementRequest = new AdvertisementRequest("Genialne moje ogloszenie");
         advertisementService.setAdvertisement(user, advertisementRequest);
 
         //User2register2
@@ -98,11 +98,11 @@ public class PopulateController {
         user = userService.findUserByEmail(email);
 
         //adv2
-        advertisementRequest = new AdvertisementRequest("Zajebiste moje ogloszenie");
+        advertisementRequest = new AdvertisementRequest("WYśmienite moje ogloszenie");
         advertisementService.setAdvertisement(user, advertisementRequest);
 
         //Meeting2
-        meetingRequest = new MeetingRequest((long) 1, "Wieczorowe napierdalanie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+        meetingRequest = new MeetingRequest((long) 1, "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
         meetingService.addMeeting(user, meetingRequest);
 
 

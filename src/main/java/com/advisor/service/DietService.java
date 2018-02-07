@@ -29,5 +29,7 @@ public interface DietService {
 
     void removeDiet(UserDiet userDiet);
 
+    Diet findDietByUserAndDietId(User user, long dietId) throws DietNotFoundException;
+
 //    Diet findByUserAndId(User user, long dietId);
 }
