@@ -15,7 +15,7 @@ import java.util.Set;
 public class Train {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     private User createdBy;
@@ -54,11 +54,12 @@ public class Train {
         this.trainName = trainListRequest.getTrainName();
         this.trainText = trainListRequest.getTrainText();
     }
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

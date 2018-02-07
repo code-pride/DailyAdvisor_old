@@ -3,15 +3,14 @@ package com.advisor.service;
 import com.advisor.model.entity.Train;
 import com.advisor.model.entity.Training;
 import com.advisor.model.entity.User;
+import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
-import com.advisor.repository.EventRepository;
-import com.advisor.repository.RecurringPatternRepository;
-import com.advisor.repository.RecurringTypeRepository;
-import com.advisor.repository.TrainRepository;
+import com.advisor.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service("trainService")
@@ -20,6 +19,10 @@ public class TrainServiceImpl implements TrainService {
     @Autowired
     @Qualifier("trainRepository")
     private TrainRepository trainRepository;
+
+    @Autowired
+    @Qualifier("userTrainRepository")
+    private UserTrainRepository userTrainRepository;
 
     @Autowired
     @Qualifier("eventRepository")
@@ -50,36 +53,36 @@ public class TrainServiceImpl implements TrainService {
         trainRepository.save(trainList);
     }
 
-//    @Override
-//    public Train findByCreatorAndId(User user, long trainId) {
-//        List<Train> trainList = trainRepository.findByCreatorAndId(user, trainId);
-//        if(trainList.size()>0){
-//            return trainList.get(0);
-//        }
-//        else{
-//            return null;
-//        }
-//    }
-//
-//    @Override
-//    public void updateTrain(Train train) {
-//        trainRepository.save(train);
-//    }
-//
-//    @Override
-//    public UserTrain findUserTrainByTrainIdAndUser(Train train, User user) {
-//        List<UserTrain> userTrains = userTrainRepository.findUserTrainByUserAndTrain(user, train);
-//        if(userTrains.size()!=0){
-//            return userTrains.get(0);
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public void addUserTrain(User user, Train train) {
-//        userTrainRepository.save(new UserTrain(user, train, "waiting"));
-//    }
-//
+    @Override
+    public Train findByCreatorAndId(User user, long trainId) {
+        List<Train> trainList = trainRepository.findByCreatorAndId(user, 1);
+        if(trainList.size()>0){
+            return trainList.get(0);
+        }
+        else{
+            return null;
+        }
+    }
+
+    @Override
+    public void updateTrain(Train train) {
+        trainRepository.save(train);
+    }
+
+    @Override
+    public UserTrain findUserTrainByTrainIdAndUser(Train train, User user) {
+        List<UserTrain> userTrains = userTrainRepository.findByUserAndTrain(user, train);
+        if(userTrains.size()!=0){
+            return userTrains.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public void addUserTrain(User user, Train train) {
+        userTrainRepository.save(new UserTrain(user, train, "waiting"));
+    }
+
 //    @Override
 //    public void useTrainList(UserTrain userTrain) {
 //        userTrain.setStatus("used");

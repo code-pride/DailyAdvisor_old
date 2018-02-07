@@ -1,7 +1,9 @@
 package com.advisor.controllers;
 
+import com.advisor.model.entity.Train;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.TrainListRequest;
+import com.advisor.model.request.TrainShareRequest;
 import com.advisor.service.TrainService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,108 +35,108 @@ public class TrainController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @RequestMapping(value = { "train/share" }, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity shareTrainPlan(@RequestBody TrainShareRequest trainShareRequest)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+
+        Train train = trainService.findByCreatorAndId(user, trainShareRequest.getTrainId());
+        User user2 = userService.findUserById(trainShareRequest.getShareUser());
+        if(train != null && user2 !=null && train.getStatus() != "disabled"){
+            if(trainService.findUserTrainByTrainIdAndUser(train, user2) != null){
+                return new ResponseEntity(HttpStatus.IM_USED);
+            }
+            if(user2 != null){
+                trainService.addUserTrain(user2, train);
+                trainService.updateTrain(train);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
 //
-//    @RequestMapping(value = { "diet/share" }, method = RequestMethod.PUT)
+//    @RequestMapping(value = { "train/use" }, method = RequestMethod.POST)
 //    @ResponseBody
-//    public ResponseEntity shareDietPlan(@RequestBody DietShareRequest dietShareRequest)
-//    {
+//    public ResponseEntity useTrainPlan(@RequestBody long trainId) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        User user = userService.findUserByEmail(auth.getName());
 //
-//        Diet diet = dietService.findByCreatorAndId(user, dietShareRequest.getDietId());
-//        User user2 = userService.findUserById(dietShareRequest.getShareUser());
-//        if(diet != null && user2 !=null && diet.getStatus() != "disabled"){
-//            if(dietService.findUserDietByDietIdAndUser(diet, user2) != null){
-//                return new ResponseEntity(HttpStatus.IM_USED);
-//            }
-//            if(user2 != null){
-//                dietService.addUserDiet(user2, diet);
-//                dietService.updateDiet(diet);
-//                return new ResponseEntity(HttpStatus.OK);
-//            }
-//        }
-//        return new ResponseEntity(HttpStatus.NOT_FOUND);
-//    }
-//
-//    @RequestMapping(value = { "diet/use" }, method = RequestMethod.POST)
-//    @ResponseBody
-//    public ResponseEntity useDietPlan(@RequestBody long dietId) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findUserByEmail(auth.getName());
-//
-//        Diet diet = dietService.findDietById(dietId);
-//        UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
-//        if(userDiet.getStatus().equals("used")){
+//        Train train = trainService.findTrainById(trainId);
+//        UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
+//        if(userTrain.getStatus().equals("used")){
 //            return new ResponseEntity(HttpStatus.IM_USED);
 //        }
-//        if (diet != null && user != null) {
-//            if (userDiet == null) {
+//        if (train != null && user != null) {
+//            if (userTrain == null) {
 //                return new ResponseEntity(HttpStatus.NOT_FOUND);
 //            }
 //            else{
-//                dietService.useDietList(userDiet);
+//                trainService.useTrainList(userTrain);
 //                return new ResponseEntity(HttpStatus.OK);
 //            }
 //        }
 //        return new ResponseEntity(HttpStatus.NOT_FOUND);
 //    }
 //
-//    @RequestMapping(value = { "diet/disableDietList" }, method = RequestMethod.PUT)
+//    @RequestMapping(value = { "train/disableTrainList" }, method = RequestMethod.PUT)
 //    @ResponseBody
-//    public ResponseEntity disableDietList(@RequestBody long dietId)
+//    public ResponseEntity disableTrainList(@RequestBody long trainId)
 //    {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        User user = userService.findUserByEmail(auth.getName());
 //        try{
-//            dietService.setStatus(user, dietId, "disabled");
-//        } catch (DietNotFoundException e){
+//            trainService.setStatus(user, trainId, "disabled");
+//        } catch (TrainNotFoundException e){
 //            return new ResponseEntity(HttpStatus.NOT_FOUND);
 //        }
 //        return new ResponseEntity(HttpStatus.OK);
 //    }
 //
-//    @RequestMapping(value = { "diet/getAllDietLists" }, method = RequestMethod.GET)
+//    @RequestMapping(value = { "train/getAllTrainLists" }, method = RequestMethod.GET)
 //    @ResponseBody
-//    public ResponseEntity<List<DietResponse>> getAllDietLists()
+//    public ResponseEntity<List<TrainResponse>> getAllTrainLists()
 //    {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        User user = userService.findUserByEmail(auth.getName());
 //        try{
-//            List<Diet> diets = dietService.getAllDietLists(user);
-//            List<DietResponse> dietResponses = new ArrayList<>();
-//            for (Diet diet : diets) {
-//                dietResponses.add(new DietResponse(diet));
+//            List<Train> trains = trainService.getAllTrainLists(user);
+//            List<TrainResponse> trainResponses = new ArrayList<>();
+//            for (Train train : trains) {
+//                trainResponses.add(new TrainResponse(train));
 //            }
-//            return new ResponseEntity<>(dietResponses, HttpStatus.OK);
-//        } catch (DietNotFoundException e){
+//            return new ResponseEntity<>(trainResponses, HttpStatus.OK);
+//        } catch (TrainNotFoundException e){
 //            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //        }
 //    }
 //
-//    @RequestMapping(value = { "diet/getDietList/{dietId}" }, method = RequestMethod.GET)
+//    @RequestMapping(value = { "train/getTrainList/{trainId}" }, method = RequestMethod.GET)
 //    @ResponseBody
-//    public ResponseEntity<DietResponse> getDietList(@PathVariable long dietId)
+//    public ResponseEntity<TrainResponse> getTrainList(@PathVariable long trainId)
 //    {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        User user = userService.findUserByEmail(auth.getName());
 //        try{
-//            Diet diet = dietService.findDietByUserAndDietId(user, dietId);
-//            return new ResponseEntity<>(new DietResponse(diet), HttpStatus.OK);
-//        } catch (DietNotFoundException e){
+//            Train train = trainService.findTrainByUserAndTrainId(user, trainId);
+//            return new ResponseEntity<>(new TrainResponse(train), HttpStatus.OK);
+//        } catch (TrainNotFoundException e){
 //            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 //        }
 //    }
 //
-//    @RequestMapping(value = { "diet/remove" }, method = RequestMethod.POST)
+//    @RequestMapping(value = { "train/remove" }, method = RequestMethod.POST)
 //    @ResponseBody
-//    public ResponseEntity removeDiet(@RequestBody long dietId) {
+//    public ResponseEntity removeTrain(@RequestBody long trainId) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        User user = userService.findUserByEmail(auth.getName());
 //
-//        Diet diet = dietService.findDietById(dietId);
-//        UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
-//        if(userDiet.getStatus().equals("used")){
-//            dietService.removeDiet(userDiet);
+//        Train train = trainService.findTrainById(trainId);
+//        UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
+//        if(userTrain.getStatus().equals("used")){
+//            trainService.removeTrain(userTrain);
 //            return new ResponseEntity(HttpStatus.OK);
 //        } else{
 //            return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -144,4 +146,4 @@ public class TrainController {
 }
 
 //TODO
-//to samo co w diet
+//to samo co w train
