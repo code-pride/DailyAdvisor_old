@@ -5,6 +5,7 @@ import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.model.request.TrainShareRequest;
+import com.advisor.service.Exceptions.TrainNotFoundException;
 import com.advisor.service.TrainService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,20 +83,20 @@ public class TrainController {
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
-//
-//    @RequestMapping(value = { "train/disableTrainList" }, method = RequestMethod.PUT)
-//    @ResponseBody
-//    public ResponseEntity disableTrainList(@RequestBody long trainId)
-//    {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findUserByEmail(auth.getName());
-//        try{
-//            trainService.setStatus(user, trainId, "disabled");
-//        } catch (TrainNotFoundException e){
-//            return new ResponseEntity(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
+
+    @RequestMapping(value = { "train/disableTrainList" }, method = RequestMethod.PUT)
+    @ResponseBody
+    public ResponseEntity disableTrainList(@RequestBody long trainId)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        try{
+            trainService.setStatus(user, trainId, "disabled");
+        } catch (TrainNotFoundException e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
 //
 //    @RequestMapping(value = { "train/getAllTrainLists" }, method = RequestMethod.GET)
 //    @ResponseBody

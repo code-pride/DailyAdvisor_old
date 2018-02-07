@@ -6,6 +6,7 @@ import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.repository.*;
+import com.advisor.service.Exceptions.TrainNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -93,18 +94,18 @@ public class TrainServiceImpl implements TrainService {
     public Train findTrainById(long trainId) {
         return trainRepository.findOneById(trainId);
     }
-//
-//    @Override
-//    public void setStatus(User user, long trainId, String status) throws TrainNotFoundException{
-//        Train train = findByCreatorAndId(user, trainId);
-//        if(train != null && train.getStatus().equals("published")){
-//            train.setStatus(status);
-//            trainRepository.save(train);
-//        } else {
-//            throw new TrainNotFoundException();
-//        }
-//    }
-//
+
+    @Override
+    public void setStatus(User user, long trainId, String status) throws TrainNotFoundException {
+        Train train = findByCreatorAndId(user, trainId);
+        if(train != null && train.getStatus().equals("published")){
+            train.setStatus(status);
+            trainRepository.save(train);
+        } else {
+            throw new TrainNotFoundException();
+        }
+    }
+
 //    @Override
 //    public List<Train> getAllTrainLists(User user) {
 //        List<Train> trainList = trainRepository.findByCreatedBy(user);
