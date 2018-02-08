@@ -1,6 +1,7 @@
 package com.advisor.service;
 
 import com.advisor.model.entity.Train;
+import com.advisor.model.entity.Training;
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
@@ -32,4 +33,8 @@ public interface TrainService {
     void removeTrain(UserTrain userTrain);
 
     Train findTrainByUserAndTrainId(User user, long trainId) throws TrainNotFoundException;
+
+    List<Train> getAllTrainings(User user);
+
+    List<Train> getAllActiveTrainings(User user);
 }

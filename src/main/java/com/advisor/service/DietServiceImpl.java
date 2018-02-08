@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("dietService")
@@ -136,5 +137,26 @@ public class DietServiceImpl implements DietService {
         throw new DietNotFoundException();
     }
 
+    @Override
+    public List<Diet> getAllDiets(User user) {
+        List<UserDiet> userDiets = userDietRepository.findByUser(user);
+        List<Diet> dietList = new ArrayList<>();
+        for (UserDiet userDiet : userDiets) {
+            dietList.add(userDiet.getDiet());
+        }
+        return dietList;
+    }
+
+    @Override
+    public List<Diet> getAllActiveDiets(User user) {
+        List<UserDiet> userDiets = userDietRepository.findByUser(user);
+        List<Diet> dietList = new ArrayList<>();
+        for (UserDiet userDiet : userDiets) {
+            if(userDiet.getStatus().equals("used")) {
+                dietList.add(userDiet.getDiet());
+            }
+        }
+        return dietList;
+    }
 
 }

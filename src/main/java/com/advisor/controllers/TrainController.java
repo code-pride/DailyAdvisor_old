@@ -1,6 +1,7 @@
 package com.advisor.controllers;
 
 import com.advisor.model.entity.Train;
+import com.advisor.model.entity.Training;
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
@@ -109,9 +110,9 @@ public class TrainController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         try{
-            List<Train> trains = trainService.getAllTrainLists(user);
+            List<Train> trainList = trainService.getAllTrainLists(user);
             List<TrainResponse> trainResponses = new ArrayList<>();
-            for (Train train : trains) {
+            for (Train train : trainList) {
                 trainResponses.add(new TrainResponse(train));
             }
             return new ResponseEntity<>(trainResponses, HttpStatus.OK);
@@ -129,6 +130,24 @@ public class TrainController {
         try{
             Train train = trainService.findTrainByUserAndTrainId(user, trainId);
             return new ResponseEntity<>(new TrainResponse(train), HttpStatus.OK);
+        } catch (TrainNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = { "train/getAllTrainings" }, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<TrainResponse>> getAllTrainings()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        try{
+            List<Train> trainList = trainService.getAllTrainings(user);
+            List<TrainResponse> trainResponses = new ArrayList<>();
+            for (Train train : trainList) {
+                trainResponses.add(new TrainResponse(train));
+            }
+            return new ResponseEntity<>(trainResponses, HttpStatus.OK);
         } catch (TrainNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
