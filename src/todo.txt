@@ -17,7 +17,7 @@ baza danych
 transakcje spring i spring data
 
 przerobic wszystkie listy na sety w encjach
-
+d
 sprawdzanie wyjątków bazy danych
 
 TODO
