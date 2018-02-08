@@ -4,14 +4,9 @@ UserController
     zmiana adresu email
 
 Advertisement
-    wylaczanie ogloszenia
-    usuwanie ogloszenia
-    zliczanie wejsc
     sortowanie wynikow
     wyszukiwanie wg zadanych kryteriów
     różne atrybuty w ogłoszeniu tak by mozna bylo wg nich wyszukiwać najbardziej nas interesujące ogloszenia
-
-    add contraint to train in event
 
 Login
     walidacja danych przychodzących
@@ -22,9 +17,15 @@ baza danych
 transakcje spring i spring data
 
 przerobic wszystkie listy na sety w encjach
-
+d
 sprawdzanie wyjątków bazy danych
 
 TODO
 pobieranie calego kalendarza
 
+train i dietlist powinny byc udostepniane autorowi
+
+wiadomosci...
+
+QUESTIONS
+czy przed updatem powinno się sprawdzać czy update jest potrzebny?

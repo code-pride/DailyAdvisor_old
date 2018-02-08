@@ -53,7 +53,7 @@ public class MeetingController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         MeetingResponse meetingResponse = meetingService.findMeetingByIdAndUser(meetingId, user);
-        if(meetingResponse != null){ //TODO make exception catch
+        if(meetingResponse != null){
             return new ResponseEntity<>(meetingResponse, HttpStatus.OK);
         }
         else{
@@ -68,7 +68,7 @@ public class MeetingController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         List<MeetingResponse> meetingResponseList = meetingService.findMeetingByUser(user);
-        if(meetingResponseList != null){ //TODO make exception catch
+        if(meetingResponseList != null){
             return new ResponseEntity<>(meetingResponseList, HttpStatus.OK);
         }
         else{

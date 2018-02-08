@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -138,5 +139,27 @@ public class TrainServiceImpl implements TrainService {
             }
         }
         throw new TrainNotFoundException();
+    }
+
+    @Override
+    public List<Train> getAllTrainings(User user) {
+        List<UserTrain> userTrains = userTrainRepository.findByUser(user);
+        List<Train> trainList = new ArrayList<>();
+        for (UserTrain userTrain : userTrains) {
+            trainList.add(userTrain.getTrain());
+        }
+        return trainList;
+    }
+
+    @Override
+    public List<Train> getAllActiveTrainings(User user) {
+        List<UserTrain> userTrains = userTrainRepository.findByUser(user);
+        List<Train> trainList = new ArrayList<>();
+        for (UserTrain userTrain : userTrains) {
+            if(userTrain.getStatus().equals("used")) {
+                trainList.add(userTrain.getTrain());
+            }
+        }
+        return trainList;
     }
 }
