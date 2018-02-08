@@ -2,6 +2,8 @@ package com.advisor.controllers;
 
 import com.advisor.model.entity.Advertisement;
 import com.advisor.model.entity.User;
+import com.advisor.model.entity.UserProfile;
+import com.advisor.model.request.AdvCriteriaRequest;
 import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.response.AdvertisementResponse;
 import com.advisor.service.AdvertisementService;
@@ -15,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -111,7 +114,21 @@ public class AdvertisementController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //disable
-    //active
+    @RequestMapping(value = { "advertisement/getByCriteria" }, method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<List<AdvertisementResponse>> getByCriteria(@RequestBody AdvCriteriaRequest advCriteriaRequest)
+    {
+        List<UserProfile> userProfiles = userService.findByCity(advCriteriaRequest.getCity());
+        List<User> users = new ArrayList<>();
+        userProfiles.forEach(userProfile->users.add(userProfile.getUser()));
+        List<Advertisement> advertisementList = advertisementService.getByCriteria(users, advCriteriaRequest.getCoachType());
+        List<AdvertisementResponse> advertisementResponses = new ArrayList<>();
+        advertisementList.forEach(advertisement->advertisementResponses.add(new AdvertisementResponse(advertisement)));
+        if (advertisementList.size() != 0){
+            return new ResponseEntity<>(advertisementResponses, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

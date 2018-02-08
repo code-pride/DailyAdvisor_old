@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "train_list")
+@Table(name = "train")
 public class Train {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

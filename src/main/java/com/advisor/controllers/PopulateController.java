@@ -1,13 +1,12 @@
 package com.advisor.controllers;
 
-import com.advisor.model.entity.Location;
-import com.advisor.model.entity.RecurringType;
-import com.advisor.model.entity.Role;
-import com.advisor.model.entity.User;
+import com.advisor.model.entity.*;
 import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.request.EventRequest;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.request.NewUserRequest;
+import com.advisor.repository.AdvertisementRepository;
+import com.advisor.repository.CoachTypeRepository;
 import com.advisor.repository.RecurringTypeRepository;
 import com.advisor.repository.RoleRepository;
 import com.advisor.service.AdvertisementService;
@@ -47,20 +46,29 @@ public class PopulateController {
     @Qualifier("recurringTypeRepository")
     private RecurringTypeRepository recurringTypeRepository;
 
+    @Autowired
+    @Qualifier("coachTypeRepository")
+    private CoachTypeRepository coachTypeRepository;
+
     @RequestMapping(value = { "/populate" }, method = RequestMethod.GET)
     public @ResponseBody
     ResponseEntity getMeetingById()
     {
         //save roles
         List<Role> roles = new ArrayList();
-        Role role = new Role("ADMIN");
-        roles.add(role);
-        role = new Role("COACH");
-        roles.add(role);
-        role = new Role("USER");
-        roles.add(role);
+        roles.add(new Role("ADMIN"));
+        roles.add(new Role("COACH"));
+        roles.add(new Role("USER"));
         for (Role r : roles) {
             roleRepository.save(r);
+        }
+
+        //save CoachTypes
+        List<CoachType> coachTypes = new ArrayList();
+        coachTypes.add(new CoachType("bodybuilding"));
+        coachTypes.add(new CoachType("fitness"));
+        for (CoachType c : coachTypes) {
+            coachTypeRepository.save(c);
         }
 
         //save recurrence types
@@ -82,7 +90,7 @@ public class PopulateController {
         User user = userService.findUserByEmail(email);
 
         //adv1
-        AdvertisementRequest advertisementRequest = new AdvertisementRequest("Genialne moje ogloszenie");
+        AdvertisementRequest advertisementRequest = new AdvertisementRequest("Genialne moje ogloszenie", "bodybuilding");
         advertisementService.setAdvertisement(user, advertisementRequest);
 
         //User2register2
@@ -98,7 +106,7 @@ public class PopulateController {
         user = userService.findUserByEmail(email);
 
         //adv2
-        advertisementRequest = new AdvertisementRequest("WYśmienite moje ogloszenie");
+        advertisementRequest = new AdvertisementRequest("WYśmienite moje ogloszenie", "fitness");
         advertisementService.setAdvertisement(user, advertisementRequest);
 
         //Meeting2

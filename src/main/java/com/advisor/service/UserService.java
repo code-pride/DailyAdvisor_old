@@ -23,4 +23,6 @@ public interface UserService {
 	void upgradeUserToCoach(User user);
 
     List<UserProfile> findByUsers(List<User> users);
+
+	List<UserProfile> findByCity(String city);
 }
