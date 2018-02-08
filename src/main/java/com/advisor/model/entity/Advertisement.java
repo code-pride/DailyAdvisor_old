@@ -32,6 +32,7 @@ public class Advertisement {
     @Column(nullable = false)
     private int answers;
 
+
     public Advertisement() {
     }
 

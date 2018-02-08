@@ -31,5 +31,9 @@ public interface DietService {
 
     Diet findDietByUserAndDietId(User user, long dietId) throws DietNotFoundException;
 
+    List<Diet> getAllDiets(User user);
+
+    List<Diet> getAllActiveDiets(User user);
+
 //    Diet findByUserAndId(User user, long dietId);
 }

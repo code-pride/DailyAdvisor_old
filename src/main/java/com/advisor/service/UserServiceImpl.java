@@ -80,9 +80,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserProfile> findByUsers(List<User> users) {
-        Set<User> usersSer = new HashSet<User>(users);
-        return new ArrayList<UserProfile>(userProfileRepository.findByUserIn(usersSer));
+        Set<User> usersSer = new HashSet<>(users);
+        return new ArrayList<>(userProfileRepository.findByUserIn(usersSer));
     }
-    //TODO throw already coach
 
 }

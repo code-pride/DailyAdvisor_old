@@ -2,10 +2,10 @@ package com.advisor.model.entity;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "user_diet")
-public class UserDiet {
 
+@Entity
+@Table(name = "user_train")
+public class UserTrain {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -15,18 +15,18 @@ public class UserDiet {
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Diet diet;
+    private Train train;
 
     @Column(name = "status")
     private String status;
 
 
-    public UserDiet() {
+    public UserTrain() {
     }
 
-    public UserDiet(User user, Diet dietId, String status) {
+    public UserTrain(User user, Train train, String status) {
         this.user = user;
-        this.diet = dietId;
+        this.train = train;
         this.status = status;
     }
 
@@ -46,12 +46,12 @@ public class UserDiet {
         this.user = user;
     }
 
-    public Diet getDiet() {
-        return diet;
+    public Train getTrain() {
+        return train;
     }
 
-    public void setDiet(Diet diet) {
-        this.diet = diet;
+    public void setTrain(Train train) {
+        this.train = train;
     }
 
     public String getStatus() {
@@ -62,5 +62,3 @@ public class UserDiet {
         this.status = status;
     }
 }
-
-

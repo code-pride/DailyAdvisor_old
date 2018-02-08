@@ -19,6 +19,7 @@ public class Coaching {
     @Column(name = "status")
     private String status;
 
+
     public Coaching() {
     }
 

@@ -28,3 +28,4 @@ sprawdzanie wyjątków bazy danych
 TODO
 pobieranie calego kalendarza
 
+train i dietlist powinny byc udostepniane autorowi

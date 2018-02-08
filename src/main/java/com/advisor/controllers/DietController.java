@@ -106,7 +106,7 @@ public class DietController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         try{
-            List<Diet> diets = dietService.getAllDietLists(user);
+            List<Diet> diets = dietService.getAllDiets(user);
             List<DietResponse> dietResponses = new ArrayList<>();
             for (Diet diet : diets) {
                 dietResponses.add(new DietResponse(diet));
@@ -131,6 +131,24 @@ public class DietController {
         }
     }
 
+    @RequestMapping(value = { "train/getAllDiets" }, method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<DietResponse>> getAllDiets()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        try{
+            List<Diet> trainList = dietService.getAllDietLists(user);
+            List<DietResponse> trainResponses = new ArrayList<>();
+            for (Diet train : trainList) {
+                trainResponses.add(new DietResponse(train));
+            }
+            return new ResponseEntity<>(trainResponses, HttpStatus.OK);
+        } catch (DietNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @RequestMapping(value = { "diet/remove" }, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity removeDiet(@RequestBody long dietId) {

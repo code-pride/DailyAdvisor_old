@@ -28,6 +28,7 @@ public class Meal {
     @Column(name = "fat")
     private int fat;
 
+
     public Meal() {
     }
 

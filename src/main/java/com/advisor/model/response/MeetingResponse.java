@@ -26,16 +26,6 @@ public class MeetingResponse {
         this.status = meeting.getStatus();
     }
 
-    public MeetingResponse(Long meetingId, User userId, User userId2, String meetingText, Location location, EventResponse eventResponse, String status) {
-        this.meetingId = meetingId;
-        this.userId = new UserProfileResponse(userId.getUserProfile());
-        this.userId2 = new UserProfileResponse(userId2.getUserProfile());
-        this.meetingText = meetingText;
-        this.location = location;
-        this.eventResponse = eventResponse;
-        this.status = status;
-    }
-
     public Long getMeetingId() {
         return meetingId;
     }
