@@ -22,6 +22,12 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, In
     @Query("update Advertisement a set a.advText = :advText where a.user = :user")
     void updateAdvertisement(@Param("advText") String advText, @Param("user") User user);
 
-    List<Advertisement> findAll();
+    Advertisement findByUserAndStatus(User user, String active);
 
+    List<Advertisement> findByStatus(String active);
+
+    @Transactional
+    @Modifying
+    @Query("update Advertisement a set a.status = :status where a.user = :user AND a.advId = :advId")
+    int updateStatus(@Param("advId") long advId, @Param("user") User user, @Param("status") String status);
 }
