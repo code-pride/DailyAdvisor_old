@@ -2,6 +2,7 @@ package com.advisor.model.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "advertisement")
@@ -26,6 +27,13 @@ public class Advertisement {
     @Column(name="edit_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     private Date edit_date = new Date();
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "adv_coach_types", joinColumns = @JoinColumn(name = "adv_id"), inverseJoinColumns = @JoinColumn(name = "coach_type_id"))
+    private CoachType coachType;
+
+    @Column(nullable = false)
+    private String status;
+
     @Column(nullable = false)
     private int visits;
 
@@ -36,11 +44,13 @@ public class Advertisement {
     public Advertisement() {
     }
 
-    public Advertisement(User user, String advText) {
+    public Advertisement(User user, String advText, CoachType coachType) {
         this.user = user;
         this.advText = advText;
         this.visits = 0;
         this.answers = 0;
+        this.status = "disabled";
+        this.coachType = coachType;
     }
 
     public Long getAdvId() {
@@ -83,4 +93,35 @@ public class Advertisement {
         this.answers = answers;
     }
 
+    public Date getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
+    }
+
+    public Date getEdit_date() {
+        return edit_date;
+    }
+
+    public void setEdit_date(Date edit_date) {
+        this.edit_date = edit_date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public CoachType getCoachType() {
+        return coachType;
+    }
+
+    public void setCoachType(CoachType coachType) {
+        this.coachType = coachType;
+    }
 }

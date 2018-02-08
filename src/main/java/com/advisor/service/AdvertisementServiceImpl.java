@@ -1,10 +1,13 @@
 package com.advisor.service;
 
 import com.advisor.model.entity.Advertisement;
+import com.advisor.model.entity.CoachType;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.response.AdvertisementResponse;
 import com.advisor.repository.AdvertisementRepository;
+import com.advisor.repository.CoachTypeRepository;
+import com.advisor.service.Exceptions.AdvertisementNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,17 +24,21 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Qualifier("advertisementRepository")
     private AdvertisementRepository advertisementRepository;
 
+    @Autowired
+    @Qualifier("coachTypeRepository")
+    private CoachTypeRepository coachTypeRepository;
+
     @Override
     public void setAdvertisement(User user, AdvertisementRequest advertisementRequest) {
-        Advertisement advertisement = new Advertisement(user, advertisementRequest.getAdvText());
+        CoachType coachType = coachTypeRepository.findByType(advertisementRequest.getCoachType());
+        Advertisement advertisement = new Advertisement(user, advertisementRequest.getAdvText(), coachType);
         advertisementRepository.save(advertisement);
     }
 
-
     @Override
     public List<AdvertisementResponse> selectAll() {
-        List<AdvertisementResponse> advertisementResponseList = new ArrayList<AdvertisementResponse>();
-        for (Advertisement advertisement : advertisementRepository.findAll()) {
+        List<AdvertisementResponse> advertisementResponseList = new ArrayList<>();
+        for (Advertisement advertisement : advertisementRepository.findByStatus("active")) {
             advertisementResponseList.add(new AdvertisementResponse(advertisement));
         }
         return advertisementResponseList;
@@ -47,8 +54,32 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
+    public Advertisement getActiveAdvertisementByUser(User user) {
+        return advertisementRepository.findByUserAndStatus(user, "active");
+    }
+
+    @Override
+    public void addVisit(Advertisement advertisement) {
+
+        advertisement.setVisits(advertisement.getVisits()+1);
+        advertisementRepository.save(advertisement);
+    }
+
+    @Override
     public void updateAdvertisement(User user, AdvertisementRequest advertisementRequest) {
         advertisementRepository.updateAdvertisement(advertisementRequest.getAdvText(), user);
     }
 
+    @Override
+    public void updateStatus(long advId, User user, String status) throws AdvertisementNotFound{
+        if(advertisementRepository.updateStatus(advId, user, status) == 0){
+            throw new AdvertisementNotFound();
+        }
+    }
+
+    @Override
+    public List<Advertisement> getByCriteria(List<User> users, String type) {
+        CoachType coachType = coachTypeRepository.findByType(type);
+        return advertisementRepository.findByUserInAndCoachType(users, coachType);
+    }
 }
