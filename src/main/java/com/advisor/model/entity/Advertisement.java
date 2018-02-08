@@ -27,9 +27,9 @@ public class Advertisement {
     @Column(name="edit_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
     private Date edit_date = new Date();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "adv_coach_types", joinColumns = @JoinColumn(name = "adv_id"), inverseJoinColumns = @JoinColumn(name = "coach_type_id"))
-    private Set<CoachType> coachTypes;
+    private CoachType coachType;
 
     @Column(nullable = false)
     private String status;
@@ -44,12 +44,13 @@ public class Advertisement {
     public Advertisement() {
     }
 
-    public Advertisement(User user, String advText) {
+    public Advertisement(User user, String advText, CoachType coachType) {
         this.user = user;
         this.advText = advText;
         this.visits = 0;
         this.answers = 0;
         this.status = "disabled";
+        this.coachType = coachType;
     }
 
     public Long getAdvId() {
@@ -114,5 +115,13 @@ public class Advertisement {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public CoachType getCoachType() {
+        return coachType;
+    }
+
+    public void setCoachType(CoachType coachType) {
+        this.coachType = coachType;
     }
 }

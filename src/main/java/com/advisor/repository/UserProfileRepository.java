@@ -24,4 +24,5 @@ public interface UserProfileRepository extends JpaRepository<UserProfile, Intege
     
     Set<UserProfile> findByUserIn(Set<User> users);
 
+    List<UserProfile> findByCity(String city);
 }

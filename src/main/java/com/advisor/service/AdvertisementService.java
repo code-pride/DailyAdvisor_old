@@ -11,7 +11,6 @@ import java.util.List;
 public interface AdvertisementService {
     void setAdvertisement(User user, AdvertisementRequest advertisementRequest);
 
-
     List<AdvertisementResponse> selectAll();
 
     AdvertisementResponse getAdvertisementByUser(User user);
@@ -23,4 +22,6 @@ public interface AdvertisementService {
     void updateAdvertisement(User user, AdvertisementRequest advertisementRequest);
 
     void updateStatus(long advId, User user, String status) throws AdvertisementNotFound;
+
+    List<Advertisement> getByCriteria(List<User> user, String coachType);
 }

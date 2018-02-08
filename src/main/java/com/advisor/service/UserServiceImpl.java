@@ -84,4 +84,9 @@ public class UserServiceImpl implements UserService{
         return new ArrayList<>(userProfileRepository.findByUserIn(usersSer));
     }
 
+    @Override
+    public List<UserProfile> findByCity(String city) {
+        return userProfileRepository.findByCity(city);
+    }
+
 }
