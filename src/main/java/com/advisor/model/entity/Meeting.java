@@ -46,15 +46,6 @@ public class Meeting {
         this.status = "sent";
     }
 
-    public Meeting(User userId, User userId2, String meetingText, Location location, Event event, String status) {
-        this.userId = userId;
-        this.userId2 = userId2;
-        this.meetingText = meetingText;
-        this.location = location;
-        this.event = event;
-        this.status = status;
-    }
-
     public Long getMeetingId() {
         return meetingId;
     }

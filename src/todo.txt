@@ -5,8 +5,6 @@ UserController
 
 Advertisement
     sortowanie wynikow
-    wyszukiwanie wg zadanych kryteriów
-    różne atrybuty w ogłoszeniu tak by mozna bylo wg nich wyszukiwać najbardziej nas interesujące ogloszenia
 
 Login
     walidacja danych przychodzących
@@ -20,12 +18,11 @@ przerobic wszystkie listy na sety w encjach
 d
 sprawdzanie wyjątków bazy danych
 
-TODO
-pobieranie calego kalendarza
+
 
 train i dietlist powinny byc udostepniane autorowi
 
-wiadomosci...
+kiedy user próbuje pobrac wiadomosci z samym sobą powinien leciec wyjątek
 
 QUESTIONS
 czy przed updatem powinno się sprawdzać czy update jest potrzebny?
