@@ -36,10 +36,6 @@ public class Event {
     @Column(nullable = false, name = "is_recurring")
     private boolean isRecurring;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User createdBy;
-
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="create_date", columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createDate;
@@ -137,14 +133,6 @@ public class Event {
         isRecurring = recurring;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public Date getCreateDate() {
         return createDate;
     }
@@ -179,7 +167,6 @@ public class Event {
         result = 31 * result + getEndTime().hashCode();
         result = 31 * result + (getFullDayEvent() ? 1 : 0);
         result = 31 * result + (getRecurring() ? 1 : 0);
-        result = 31 * result + getCreatedBy().hashCode();
         result = 31 * result + (getCreateDate() != null ? getCreateDate().hashCode() : 0);
         result = 31 * result + (getParentEvent() != null ? getParentEvent().hashCode() : 0);
         result = 31 * result + (getEventsExceptions() != null ? getEventsExceptions().hashCode() : 0);
@@ -204,8 +191,6 @@ public class Event {
         if (getStartTime() != null ? !getStartTime().equals(event.getStartTime()) : event.getStartTime() != null)
             return false;
         if (getEndTime() != null ? !getEndTime().equals(event.getEndTime()) : event.getEndTime() != null) return false;
-        if (getCreatedBy() != null ? !getCreatedBy().equals(event.getCreatedBy()) : event.getCreatedBy() != null)
-            return false;
         if (getCreateDate() != null ? !getCreateDate().equals(event.getCreateDate()) : event.getCreateDate() != null)
             return false;
         if (getParentEvent() != null ? !getParentEvent().equals(event.getParentEvent()) : event.getParentEvent() != null)

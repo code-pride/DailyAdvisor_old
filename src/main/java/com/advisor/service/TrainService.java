@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface TrainService {
 
-
     void addTrainList(User user, TrainListRequest trainListRequest);
 
     Train findByCreatorAndId(User user, long trainId);
