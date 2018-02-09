@@ -34,7 +34,6 @@ public class MeetingServiceImpl implements MeetingService {
         Event event = new Event(meetingRequest.getEventRequest());
 
         User user2 = userService.findUserById(meetingRequest.getUserId2());
-        event.setCreatedBy(user);
         eventRepository.save(event);
         Meeting meeting = new Meeting(user, user2, meetingRequest, event);
         meetingRepository.save(meeting);

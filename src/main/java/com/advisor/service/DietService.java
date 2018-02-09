@@ -9,6 +9,7 @@ import com.advisor.service.Exceptions.DietNotFoundException;
 import java.util.List;
 
 public interface DietService {
+
     void addDietList(User user, DietListRequest dietListRequest);
 
     Diet findByCreatorAndId(User user, long dietId);
@@ -35,5 +36,4 @@ public interface DietService {
 
     List<Diet> getAllActiveDiets(User user);
 
-//    Diet findByUserAndId(User user, long dietId);
 }

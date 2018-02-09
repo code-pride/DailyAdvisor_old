@@ -48,5 +48,4 @@ public class CoachServiceImpl implements CoachService {
         coachingRepository.save(coaching);
     }
 
-
 }
