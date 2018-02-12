@@ -1,7 +1,6 @@
 package com.advisor.controllers;
 
 import com.advisor.model.entity.Train;
-import com.advisor.model.entity.Training;
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
@@ -15,13 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class TrainController {
 
     @Autowired
@@ -30,9 +28,7 @@ public class TrainController {
     @Autowired
     private TrainService trainService;
 
-
     @RequestMapping(value = { "train/addTrainList" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity addTrainList(@RequestBody TrainListRequest trainListRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,7 +40,6 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/share" }, method = RequestMethod.PUT)
-    @ResponseBody
     public ResponseEntity shareTrainPlan(@RequestBody TrainShareRequest trainShareRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -66,7 +61,6 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/use" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity useTrainPlan(@RequestBody long trainId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -90,7 +84,6 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/disableTrainList" }, method = RequestMethod.PUT)
-    @ResponseBody
     public ResponseEntity disableTrainList(@RequestBody long trainId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -104,7 +97,6 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/getAllTrainLists" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<List<TrainResponse>> getAllTrainLists()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -122,7 +114,6 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/getTrainList/{trainId}" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<TrainResponse> getTrainList(@PathVariable long trainId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -136,7 +127,6 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/getAllTrainings" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<List<TrainResponse>> getAllTrainings()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -154,7 +144,6 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/remove" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity removeTrain(@RequestBody long trainId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());

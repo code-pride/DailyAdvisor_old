@@ -14,13 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class DietController {
 
     @Autowired
@@ -30,7 +29,6 @@ public class DietController {
     private DietService dietService;
 
     @RequestMapping(value = { "diet/addDietList" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity addDietList(@RequestBody DietListRequest dietListRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -41,7 +39,6 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/share" }, method = RequestMethod.PUT)
-    @ResponseBody
     public ResponseEntity shareDietPlan(@RequestBody DietShareRequest dietShareRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -63,7 +60,6 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/use" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity useDietPlan(@RequestBody long dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -86,7 +82,6 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/disableDietList" }, method = RequestMethod.PUT)
-    @ResponseBody
     public ResponseEntity disableDietList(@RequestBody long dietId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -100,7 +95,6 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/getAllDietLists" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<List<DietResponse>> getAllDietLists()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -118,7 +112,6 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/getDietList/{dietId}" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<DietResponse> getDietList(@PathVariable long dietId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -132,7 +125,6 @@ public class DietController {
     }
 
     @RequestMapping(value = { "train/getAllDiets" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<List<DietResponse>> getAllDiets()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -150,7 +142,6 @@ public class DietController {
     }
     
     @RequestMapping(value = { "diet/remove" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity removeDiet(@RequestBody long dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());

@@ -14,13 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class AdvertisementController {
 
     @Autowired
@@ -30,7 +29,6 @@ public class AdvertisementController {
     private AdvertisementService advertisementService;
 
     @RequestMapping(value = { "advertisement/add" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity addAdvertisement(@RequestBody AdvertisementRequest advertisementRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -45,7 +43,6 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "advertisement/getAll" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<List<AdvertisementResponse>> getAllAdvertisement()
     {
         List<AdvertisementResponse> advertisementList = advertisementService.selectAll();
@@ -57,7 +54,6 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "advertisement/get/{userId}" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable Long userId)
     {
         User user = userService.findUserById(userId);
@@ -75,7 +71,6 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "/advertisement/update" }, method = RequestMethod.PUT)
-    @ResponseBody
     public ResponseEntity updateAdvertisement(@RequestBody AdvertisementRequest advertisementRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -87,7 +82,6 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "/advertisement/active/{advId}" }, method = RequestMethod.PUT)
-    @ResponseBody
     public ResponseEntity activeAdvertisement(@PathVariable long advId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -101,7 +95,6 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "/advertisement/disable/{advId}" }, method = RequestMethod.PUT)
-    @ResponseBody
     public ResponseEntity disableAdvertisement(@PathVariable long advId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -115,7 +108,6 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "advertisement/getByCriteria" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity<List<AdvertisementResponse>> getByCriteria(@RequestBody AdvCriteriaRequest advCriteriaRequest)
     {
         List<UserProfile> userProfiles = userService.findByCity(advCriteriaRequest.getCity());

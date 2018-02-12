@@ -5,7 +5,6 @@ import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.request.EventRequest;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.request.NewUserRequest;
-import com.advisor.repository.AdvertisementRepository;
 import com.advisor.repository.CoachTypeRepository;
 import com.advisor.repository.RecurringTypeRepository;
 import com.advisor.repository.RoleRepository;
@@ -16,17 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 public class PopulateController {
 
     @Autowired
@@ -51,8 +50,7 @@ public class PopulateController {
     private CoachTypeRepository coachTypeRepository;
 
     @RequestMapping(value = { "/populate" }, method = RequestMethod.GET)
-    public @ResponseBody
-    ResponseEntity getMeetingById()
+    public ResponseEntity getMeetingById()
     {
         //save roles
         List<Role> roles = new ArrayList();
@@ -80,7 +78,6 @@ public class PopulateController {
         for (RecurringType rt : recurringTypes) {
             recurringTypeRepository.save(rt);
         }
-
 
 
         //User1register1
@@ -112,7 +109,6 @@ public class PopulateController {
         //Meeting2
         meetingRequest = new MeetingRequest((long) 1, "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
         meetingService.addMeeting(user, meetingRequest);
-
 
         return new ResponseEntity(HttpStatus.OK);
     }

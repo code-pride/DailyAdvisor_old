@@ -13,12 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class MeetingController {
 
     @Autowired
@@ -30,7 +29,6 @@ public class MeetingController {
     private static final Logger logger = LoggerFactory.getLogger(MeetingController.class);
 
     @RequestMapping(value = { "meeting/add" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity addMeeting(@RequestBody MeetingRequest meetingRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -47,8 +45,7 @@ public class MeetingController {
     }
 
     @RequestMapping(value = { "/meeting/{meetingId}" }, method = RequestMethod.GET)
-    public @ResponseBody
-    ResponseEntity<MeetingResponse> getMeetingById(@PathVariable Long meetingId)
+    public ResponseEntity<MeetingResponse> getMeetingById(@PathVariable Long meetingId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -62,8 +59,7 @@ public class MeetingController {
     }
 
     @RequestMapping(value = { "/meeting/" }, method = RequestMethod.GET)
-    public @ResponseBody
-    ResponseEntity<List<MeetingResponse>> getMeetingByUser()
+    public ResponseEntity<List<MeetingResponse>> getMeetingByUser()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -77,8 +73,7 @@ public class MeetingController {
     }
 
     @RequestMapping(value = { "/meeting/{meetingId}/{statusChange}" }, method = RequestMethod.PUT)
-    public @ResponseBody
-    ResponseEntity acceptMeeting(@PathVariable Long meetingId, @PathVariable String statusChange)
+    public ResponseEntity acceptMeeting(@PathVariable Long meetingId, @PathVariable String statusChange)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -104,7 +99,6 @@ public class MeetingController {
     }
 
     @RequestMapping(value = { "meeting/update" }, method = RequestMethod.PUT)
-    @ResponseBody
     public ResponseEntity updateMeeting(@RequestBody MeetingRequest meetingRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -118,7 +112,4 @@ public class MeetingController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
-
-    //walidacja
 }
