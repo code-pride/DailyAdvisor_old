@@ -13,16 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class CoachController {
 
     @Autowired
@@ -32,7 +28,6 @@ public class CoachController {
     private UserService userService;
 
     @RequestMapping(value = { "coaching/addClient" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity addClient(@RequestBody CoachingRequest coachingRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -49,7 +44,6 @@ public class CoachController {
     }
 
     @RequestMapping(value = { "coaching/getClientCoaches" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<List<CoachingResponse>> getClientCoaches()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -63,7 +57,6 @@ public class CoachController {
     }
 
     @RequestMapping(value = { "coaching/getCoachClients" }, method = RequestMethod.GET)
-    @ResponseBody
     public ResponseEntity<List<CoachingResponse>> getCoachClients()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -77,7 +70,6 @@ public class CoachController {
     }
 
     @RequestMapping(value = { "coaching/acceptCoaching" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity acceptCoaching(@RequestBody CoachingRequest coachingRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -99,7 +91,6 @@ public class CoachController {
     }
 
     @RequestMapping(value = { "coaching/cancelCoaching" }, method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity leaveCoach(@RequestBody CoachingRequest coachingRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

@@ -9,19 +9,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = { "/getUserProfile/{userId}" }, method = RequestMethod.GET)
-    public @ResponseBody
-    ResponseEntity<UserProfileResponse> getUserProfileByUserId(@PathVariable Long userId)
+    public ResponseEntity<UserProfileResponse> getUserProfileByUserId(@PathVariable Long userId)
     {
         User user = userService.findUserById(userId);
         if(user != null){ //TODO make exception catch
@@ -33,23 +31,8 @@ public class UserController {
         }
     }
 
-//    @RequestMapping(value = { "/getUser/{userId}" }, method = RequestMethod.GET)
-//    public @ResponseBody
-//    ResponseEntity<UserProfileResponse> getUserByUserId(@PathVariable Long userId)
-//    {
-//        User user = userService.findUserById(userId);
-//        if(user != null){ //TODO make exception catch
-//            UserProfileResponse userProfileResponse = userService.createUserResponseByUser(user);
-//            return new ResponseEntity<>(userProfileResponse, HttpStatus.OK);
-//        }
-//        else{
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
     @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.PUT)
-    public @ResponseBody
-    ResponseEntity updateUserProfile(@RequestBody UserProfileRequest userProfileRequest)
+    public ResponseEntity updateUserProfile(@RequestBody UserProfileRequest userProfileRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -60,8 +43,7 @@ public class UserController {
     }
 
     @RequestMapping(value = { "/upgradeToCoach" }, method = RequestMethod.POST)
-    public @ResponseBody
-    ResponseEntity upgradeToCoach()
+    public ResponseEntity upgradeToCoach()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
