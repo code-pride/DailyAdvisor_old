@@ -14,8 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import validator.ValidationError;
+import validator.ValidationErrorBuilder;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +33,7 @@ public class DietController {
     private DietService dietService;
 
     @RequestMapping(value = { "diet/addDietList" }, method = RequestMethod.POST)
-    public ResponseEntity addDietList(@RequestBody DietListRequest dietListRequest)
+    public ResponseEntity addDietList(@Valid @RequestBody DietListRequest dietListRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -39,7 +43,7 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/share" }, method = RequestMethod.PUT)
-    public ResponseEntity shareDietPlan(@RequestBody DietShareRequest dietShareRequest)
+    public ResponseEntity shareDietPlan(@Valid @RequestBody DietShareRequest dietShareRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -60,29 +64,30 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/use" }, method = RequestMethod.POST)
-    public ResponseEntity useDietPlan(@RequestBody long dietId) {
+    public ResponseEntity useDietPlan(@Valid @RequestBody long dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
         Diet diet = dietService.findDietById(dietId);
-        UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
-        if(userDiet.getStatus().equals("used")){
-            return new ResponseEntity(HttpStatus.IM_USED);
-        }
-        if (diet != null && user != null) {
-            if (userDiet == null) {
-                return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if(diet != null) {
+            UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
+            if (userDiet != null && userDiet.getStatus().equals("used")) {
+                return new ResponseEntity(HttpStatus.IM_USED);
             }
-            else{
-                dietService.useDietList(userDiet);
-                return new ResponseEntity(HttpStatus.OK);
+            if (diet != null && user != null) {
+                if (userDiet == null) {
+                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                } else {
+                    dietService.useDietList(userDiet);
+                    return new ResponseEntity(HttpStatus.OK);
+                }
             }
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = { "diet/disableDietList" }, method = RequestMethod.PUT)
-    public ResponseEntity disableDietList(@RequestBody long dietId)
+    public ResponseEntity disableDietList(@Valid @RequestBody long dietId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -142,18 +147,26 @@ public class DietController {
     }
     
     @RequestMapping(value = { "diet/remove" }, method = RequestMethod.POST)
-    public ResponseEntity removeDiet(@RequestBody long dietId) {
+    public ResponseEntity removeDiet(@Valid @RequestBody long dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
         Diet diet = dietService.findDietById(dietId);
         UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
-        if(userDiet.getStatus().equals("used")){
+        if(userDiet != null && userDiet.getStatus().equals("used")){
             dietService.removeDiet(userDiet);
             return new ResponseEntity(HttpStatus.OK);
         } else{
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
+    @ExceptionHandler
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ValidationError handleException(MethodArgumentNotValidException exception) {
+        return createValidationError(exception);
+    }
 
+    private ValidationError createValidationError(MethodArgumentNotValidException e) {
+        return ValidationErrorBuilder.fromBindingErrors(e.getBindingResult());
+    }
 }

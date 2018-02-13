@@ -19,7 +19,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
 
     List<Meeting> findMeetingsByUserIdOrUserId2(User user, User user2);
 
-    Meeting findMeetingByMeetingIdAndUserId2(Long meetingId, User user);
+    Meeting findByMeetingIdAndUserId2(long meetingId, User user);
 
     @Transactional
     @Modifying
@@ -34,4 +34,5 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
     @Query("UPDATE Meeting m SET m = :meeting WHERE m.meetingId = :meeting")
     void updateMeeting(@Param("meeting") Meeting meeting);
 
+    Meeting findByMeetingId(Long meetingId);
 }

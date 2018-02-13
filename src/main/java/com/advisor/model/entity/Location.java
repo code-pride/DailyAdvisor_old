@@ -1,6 +1,7 @@
 package com.advisor.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "location")
@@ -11,9 +12,11 @@ public class Location {
     @Column(nullable = false, name = "location_id")
     private Long locationId;
 
+    @NotNull
     @Column(nullable = false, name = "longitude")
     private Double longitude;
 
+    @NotNull
     @Column(nullable = false, name = "latitude")
     private Double latitude;
 

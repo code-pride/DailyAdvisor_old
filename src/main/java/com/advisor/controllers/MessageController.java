@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class MessageController {
     private UserService userService;
 
     @RequestMapping(value = { "message/add" }, method = RequestMethod.POST)
-    public ResponseEntity addUserMessage(@RequestBody MessageRequest messageRequest) {
+    public ResponseEntity addUserMessage(@Valid @RequestBody MessageRequest messageRequest) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         User user2 = userService.findUserById(messageRequest.getReceiverId());

@@ -1,11 +1,18 @@
 package com.advisor.model.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+
 public class MessageRequest {
 
+    @NotNull
     private long receiverId;
 
+    @NotBlank
     private String msgTime;
 
+    @NotBlank
     private String message;
 
 

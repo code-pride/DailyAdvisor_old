@@ -4,19 +4,38 @@ import com.advisor.model.entity.Event;
 import com.advisor.model.entity.EventInstanceException;
 import com.advisor.model.entity.RecurringPattern;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 
 public class EventRequest {
+
+    @NotNull
     private Date startDate;
+
+    @NotNull
     private Date endDate;
+
+    @NotNull
     private Time startTime;
+
+    @NotNull
     private Time endTime;
+
+    @NotNull
     private boolean isFullDayEvent;
+
+    @NotNull
     private boolean isRecurring;
+
+    @NotNull
     private Event parentEvent;
+
+    @NotNull
     private Set<EventInstanceException> eventsExceptions;
+
+    @NotNull
     private RecurringPattern recurringPattern;
 
 

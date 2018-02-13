@@ -1,11 +1,19 @@
 package com.advisor.model.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+
 public class TrainingRequest {
+    @NotNull
     private int id;
 
+    @NotNull
     private EventRequest event;
 
+    @NotBlank
     private String trainText;
+
 
     public TrainingRequest() {
     }

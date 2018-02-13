@@ -13,8 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import validator.ValidationError;
+import validator.ValidationErrorBuilder;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,31 +32,35 @@ public class CoachController {
     private UserService userService;
 
     @RequestMapping(value = { "coaching/addClient" }, method = RequestMethod.POST)
-    public ResponseEntity addClient(@RequestBody CoachingRequest coachingRequest)
+    public ResponseEntity addClient(@Valid @RequestBody CoachingRequest coachingRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         User client = userService.findUserById(coachingRequest.getClientId());
-        try {
-            coachService.findByCoachAndClient(user, client);
-        }
-        catch (CoachingNotFoundException e){
+
+            Coaching coaching = coachService.findByCoachAndClient(user, client);
+        if(coaching == null) {
             coachService.addNewCoaching(user, client);
             return new ResponseEntity(HttpStatus.OK);
         }
-        return new ResponseEntity(HttpStatus.IM_USED);
+        else if (coaching.getStatus().equals("sent")) {
+            coaching.setStatus("accepted");
+            coachService.updateStatus(coaching);
+            return new ResponseEntity(HttpStatus.OK);
+        } else
+            return new ResponseEntity(HttpStatus.IM_USED);
     }
 
-    @RequestMapping(value = { "coaching/getClientCoaches" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "client/getClientCoaches" }, method = RequestMethod.GET)
     public ResponseEntity<List<CoachingResponse>> getClientCoaches()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         List<Coaching> coachingList = coachService.findByClient(user);
         if(coachingList != null) {
-            return new ResponseEntity(getCoachingResponsesByUser(coachingList, "client"), HttpStatus.OK);
+            return new ResponseEntity<>(getCoachingResponsesByUser(coachingList, "client"), HttpStatus.OK);
         }else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -63,14 +71,14 @@ public class CoachController {
         User user = userService.findUserByEmail(auth.getName());
         List<Coaching> coachingList = coachService.findByCoach(user);
         if(coachingList != null) {
-            return new ResponseEntity(getCoachingResponsesByUser(coachingList, "coach"), HttpStatus.OK);
+            return new ResponseEntity<>(getCoachingResponsesByUser(coachingList, "coach"), HttpStatus.OK);
         }else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(value = { "coaching/acceptCoaching" }, method = RequestMethod.POST)
-    public ResponseEntity acceptCoaching(@RequestBody CoachingRequest coachingRequest)
+    @RequestMapping(value = { "client/acceptCoaching" }, method = RequestMethod.POST)
+    public ResponseEntity acceptCoaching(@Valid @RequestBody CoachingRequest coachingRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -90,8 +98,8 @@ public class CoachController {
         }
     }
 
-    @RequestMapping(value = { "coaching/cancelCoaching" }, method = RequestMethod.POST)
-    public ResponseEntity leaveCoach(@RequestBody CoachingRequest coachingRequest)
+    @RequestMapping(value = { "client/cancelCoaching" }, method = RequestMethod.POST)
+    public ResponseEntity leaveCoach(@Valid @RequestBody CoachingRequest coachingRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -134,5 +142,13 @@ public class CoachController {
         }
         return null;
     }
+    @ExceptionHandler
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ValidationError handleException(MethodArgumentNotValidException exception) {
+        return createValidationError(exception);
+    }
 
+    private ValidationError createValidationError(MethodArgumentNotValidException e) {
+        return ValidationErrorBuilder.fromBindingErrors(e.getBindingResult());
+    }
 }

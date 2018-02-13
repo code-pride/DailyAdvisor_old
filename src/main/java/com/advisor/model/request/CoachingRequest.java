@@ -1,11 +1,15 @@
 package com.advisor.model.request;
 
 
+import javax.validation.constraints.NotNull;
+
 public class CoachingRequest {
 
     private long coachingId;
+
     private long coachId;
-    private long clientId;
+
+    private Long clientId;
 
 
     public CoachingRequest() {

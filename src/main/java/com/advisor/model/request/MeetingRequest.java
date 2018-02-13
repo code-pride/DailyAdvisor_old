@@ -1,13 +1,25 @@
 package com.advisor.model.request;
 
 import com.advisor.model.entity.Location;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 
 public class MeetingRequest {
+
     private Long meetingId;
+
     private Long userId2;
+
+    @NotBlank
     private String meetingText;
+
+    @NotNull
     private Location location;
+
+    @NotNull
     private EventRequest eventRequest;
+
 
     public MeetingRequest() {
     }

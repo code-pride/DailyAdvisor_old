@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class TrainController {
     private TrainService trainService;
 
     @RequestMapping(value = { "train/addTrainList" }, method = RequestMethod.POST)
-    public ResponseEntity addTrainList(@RequestBody TrainListRequest trainListRequest)
+    public ResponseEntity addTrainList(@Valid @RequestBody TrainListRequest trainListRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -40,7 +41,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/share" }, method = RequestMethod.PUT)
-    public ResponseEntity shareTrainPlan(@RequestBody TrainShareRequest trainShareRequest)
+    public ResponseEntity shareTrainPlan(@Valid @RequestBody TrainShareRequest trainShareRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -61,14 +62,14 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/use" }, method = RequestMethod.POST)
-    public ResponseEntity useTrainPlan(@RequestBody long trainId) {
+    public ResponseEntity useTrainPlan(@Valid @RequestBody long trainId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
         Train train = trainService.findTrainById(trainId);
-        UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
-        if(userTrain!=null) {
-            if (userTrain.getStatus().equals("used")) {
+        if(train!=null) {
+            UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
+            if (userTrain != null && userTrain.getStatus().equals("used")) {
                 return new ResponseEntity(HttpStatus.IM_USED);
             }
             if (train != null && user != null) {
@@ -84,7 +85,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/disableTrainList" }, method = RequestMethod.PUT)
-    public ResponseEntity disableTrainList(@RequestBody long trainId)
+    public ResponseEntity disableTrainList(@Valid @RequestBody long trainId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -144,13 +145,13 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/remove" }, method = RequestMethod.POST)
-    public ResponseEntity removeTrain(@RequestBody long trainId) {
+    public ResponseEntity removeTrain(@Valid @RequestBody long trainId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
         Train train = trainService.findTrainById(trainId);
         UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
-        if(userTrain.getStatus().equals("used")){
+        if(userTrain != null && userTrain.getStatus().equals("used")){
             trainService.removeTrain(userTrain);
             return new ResponseEntity(HttpStatus.OK);
         } else{
