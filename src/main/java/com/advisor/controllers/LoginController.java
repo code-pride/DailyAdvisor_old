@@ -16,7 +16,7 @@ public class LoginController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ResponseEntity createNewUser(@RequestBody @Valid NewUserRequest newUserRequest) {
+	public ResponseEntity createNewUser(@Valid @RequestBody NewUserRequest newUserRequest) {
 		User userExists = userService.findUserByEmail(newUserRequest.getEmail());
 		if (userExists == null) {
             userService.saveUser(newUserRequest);

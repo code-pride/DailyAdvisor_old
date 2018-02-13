@@ -1,10 +1,16 @@
 package com.advisor.model.request;
 
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class AdvertisementRequest {
 
+    @NotBlank
     private String advText;
+
+    @NotBlank
     private String coachType;
+
 
     public AdvertisementRequest() {
     }

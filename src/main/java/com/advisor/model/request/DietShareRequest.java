@@ -1,8 +1,15 @@
 package com.advisor.model.request;
 
+import javax.validation.constraints.NotNull;
+
 public class DietShareRequest {
-    private long shareUser;
-    private long dietId;
+
+    @NotNull
+    private Long shareUser;
+
+    @NotNull
+    private Long dietId;
+
 
     public DietShareRequest() {
     }

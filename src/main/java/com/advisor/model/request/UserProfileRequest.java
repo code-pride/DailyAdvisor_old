@@ -1,10 +1,21 @@
 package com.advisor.model.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class UserProfileRequest {
+
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String lastName;
+
+    @NotBlank
     private String city;
+
+    @NotBlank
     private String about;
+
 
     public UserProfileRequest() {
     }

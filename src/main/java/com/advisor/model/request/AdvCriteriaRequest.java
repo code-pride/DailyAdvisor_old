@@ -1,8 +1,15 @@
 package com.advisor.model.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class AdvCriteriaRequest {
+
+    @NotBlank
     private String city;
+
+    @NotBlank
     private String coachType;
+
 
     public AdvCriteriaRequest() {
     }

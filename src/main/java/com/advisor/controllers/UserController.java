@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 public class UserController {
@@ -22,7 +24,7 @@ public class UserController {
     public ResponseEntity<UserProfileResponse> getUserProfileByUserId(@PathVariable Long userId)
     {
         User user = userService.findUserById(userId);
-        if(user != null){ //TODO make exception catch
+        if(user != null){
             UserProfileResponse userProfileResponse = userService.createUserProfileResponseByUser(user);
             return new ResponseEntity<>(userProfileResponse, HttpStatus.OK);
         }
@@ -32,7 +34,7 @@ public class UserController {
     }
 
     @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.PUT)
-    public ResponseEntity updateUserProfile(@RequestBody UserProfileRequest userProfileRequest)
+    public ResponseEntity updateUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());

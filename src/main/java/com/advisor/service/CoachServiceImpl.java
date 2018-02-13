@@ -23,7 +23,7 @@ public class CoachServiceImpl implements CoachService {
         if(coachingList.size() != 0) {
             return coachingList.get(0);
         }
-        else throw new CoachingNotFoundException();
+        else return null;
     }
 
     @Override

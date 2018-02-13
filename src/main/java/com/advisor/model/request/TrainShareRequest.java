@@ -1,8 +1,15 @@
 package com.advisor.model.request;
 
+import javax.validation.constraints.NotNull;
+
 public class TrainShareRequest {
+
+    @NotNull
     private long shareUser;
+
+    @NotNull
     private long trainId;
+
 
     public TrainShareRequest() {
     }

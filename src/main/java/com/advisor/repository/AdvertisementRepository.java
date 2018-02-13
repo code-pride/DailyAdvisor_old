@@ -32,6 +32,6 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, In
     @Query("update Advertisement a set a.status = :status where a.user = :user AND a.advId = :advId")
     int updateStatus(@Param("advId") long advId, @Param("user") User user, @Param("status") String status);
 
-    @Query("SELECT a FROM Advertisement a WHERE a.user IN :users AND a.coachType = :coachType")
-    List<Advertisement> findByUserInAndCoachType(@Param("users") List<User> users, @Param("coachType")CoachType coachType);
+    @Query("SELECT a FROM Advertisement a WHERE a.user IN :users AND a.coachType = :coachType AND a.status = :status")
+    List<Advertisement> findByUserInAndCoachTypeAndStatus(@Param("users") List<User> users, @Param("coachType") CoachType coachType, @Param("status") String status);
 }

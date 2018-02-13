@@ -14,8 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import validator.ValidationError;
+import validator.ValidationErrorBuilder;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +33,7 @@ public class AdvertisementController {
     private AdvertisementService advertisementService;
 
     @RequestMapping(value = { "advertisement/add" }, method = RequestMethod.POST)
-    public ResponseEntity addAdvertisement(@RequestBody AdvertisementRequest advertisementRequest)
+    public ResponseEntity addAdvertisement(@Valid @RequestBody AdvertisementRequest advertisementRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -71,7 +75,7 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "/advertisement/update" }, method = RequestMethod.PUT)
-    public ResponseEntity updateAdvertisement(@RequestBody AdvertisementRequest advertisementRequest)
+    public ResponseEntity updateAdvertisement(@Valid @RequestBody AdvertisementRequest advertisementRequest)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -108,7 +112,7 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "advertisement/getByCriteria" }, method = RequestMethod.POST)
-    public ResponseEntity<List<AdvertisementResponse>> getByCriteria(@RequestBody AdvCriteriaRequest advCriteriaRequest)
+    public ResponseEntity<List<AdvertisementResponse>> getByCriteria(@Valid @RequestBody AdvCriteriaRequest advCriteriaRequest)
     {
         List<UserProfile> userProfiles = userService.findByCity(advCriteriaRequest.getCity());
         List<User> users = new ArrayList<>();
@@ -121,6 +125,16 @@ public class AdvertisementController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ValidationError handleException(MethodArgumentNotValidException exception) {
+        return createValidationError(exception);
+    }
+
+    private ValidationError createValidationError(MethodArgumentNotValidException e) {
+        return ValidationErrorBuilder.fromBindingErrors(e.getBindingResult());
     }
 
 }

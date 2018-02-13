@@ -1,12 +1,24 @@
 package com.advisor.model.request;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class MealRequest {
 
+    @NotBlank
     private EventRequest event;
+
+    @NotBlank
     private String mealText;
+
+    @NotBlank
     private int cal;
+
+    @NotBlank
     private float carbohydrates;
+
+    @NotBlank
     private int fat;
+
 
     public MealRequest() {
     }
