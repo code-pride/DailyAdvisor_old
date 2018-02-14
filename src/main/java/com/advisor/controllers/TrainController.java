@@ -58,7 +58,7 @@ public class TrainController {
                 return new ResponseEntity(HttpStatus.OK);
             }
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = { "train/use" }, method = RequestMethod.POST)
@@ -74,14 +74,14 @@ public class TrainController {
             }
             if (train != null && user != null) {
                 if (userTrain == null) {
-                    return new ResponseEntity(HttpStatus.NOT_FOUND);
+                    return new ResponseEntity(HttpStatus.BAD_REQUEST);
                 } else {
                     trainService.useTrainList(userTrain);
                     return new ResponseEntity(HttpStatus.OK);
                 }
             }
         }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = { "train/disableTrainList" }, method = RequestMethod.PUT)
@@ -92,7 +92,7 @@ public class TrainController {
         try{
             trainService.setStatus(user, trainId, "disabled");
         } catch (TrainNotFoundException e){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -106,11 +106,13 @@ public class TrainController {
             List<Train> trainList = trainService.getAllTrainLists(user);
             List<TrainResponse> trainResponses = new ArrayList<>();
             for (Train train : trainList) {
-                trainResponses.add(new TrainResponse(train));
+                if(!train.getStatus().equals("disabled")) {
+                    trainResponses.add(new TrainResponse(train));
+                }
             }
             return new ResponseEntity<>(trainResponses, HttpStatus.OK);
         } catch (TrainNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -123,7 +125,7 @@ public class TrainController {
             Train train = trainService.findTrainByUserAndTrainId(user, trainId);
             return new ResponseEntity<>(new TrainResponse(train), HttpStatus.OK);
         } catch (TrainNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -140,7 +142,7 @@ public class TrainController {
             }
             return new ResponseEntity<>(trainResponses, HttpStatus.OK);
         } catch (TrainNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -155,7 +157,7 @@ public class TrainController {
             trainService.removeTrain(userTrain);
             return new ResponseEntity(HttpStatus.OK);
         } else{
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 
