@@ -1,4 +1,4 @@
-package validator;
+package com.advisor.validator;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;

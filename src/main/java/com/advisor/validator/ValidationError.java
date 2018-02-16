@@ -1,4 +1,4 @@
-package validator;
+package com.advisor.validator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
