@@ -57,7 +57,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public Train findByCreatorAndId(User user, long trainId) {
-        List<Train> trainList = trainRepository.findByCreatorAndId(user, 1);
+        List<Train> trainList = trainRepository.findByCreatorAndId(user, trainId);
         if(trainList.size()>0){
             return trainList.get(0);
         }

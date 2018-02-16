@@ -4,6 +4,7 @@ import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
+import com.advisor.service.Exceptions.UserNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
 import org.slf4j.Logger;
@@ -36,11 +37,16 @@ public class MeetingController {
         User user = userService.findUserByEmail(auth.getName());
 
         if(meetingRequest.getUserId2() == user.getId()){
-            logger.warn("Dad user request");
+            logger.warn("Bad user request");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         else {
-            meetingService.addMeeting(user, meetingRequest);
+            try {
+                meetingService.addMeeting(user, meetingRequest);
+            } catch (UserNotFoundException e){
+                logger.warn("User not found");
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
             return new ResponseEntity(HttpStatus.OK);
         }
     }

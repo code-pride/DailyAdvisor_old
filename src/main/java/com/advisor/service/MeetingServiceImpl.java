@@ -8,6 +8,7 @@ import com.advisor.model.response.MeetingResponse;
 import com.advisor.repository.EventRepository;
 import com.advisor.repository.MeetingRepository;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
+import com.advisor.service.Exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -30,13 +31,18 @@ public class MeetingServiceImpl implements MeetingService {
     private UserService userService;
 
     @Override
-    public void addMeeting(User user, MeetingRequest meetingRequest) {
-        Event event = new Event(meetingRequest.getEventRequest());
-
+    public void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException {
         User user2 = userService.findUserById(meetingRequest.getUserId2());
-        eventRepository.save(event);
-        Meeting meeting = new Meeting(user, user2, meetingRequest, event);
-        meetingRepository.save(meeting);
+        if(user2 != null) {
+            Event event = new Event(meetingRequest.getEventRequest());
+
+
+            eventRepository.save(event);
+            Meeting meeting = new Meeting(user, user2, meetingRequest, event);
+            meetingRepository.save(meeting);
+        } else {
+            throw new UserNotFoundException();
+        }
     }
 
     @Override

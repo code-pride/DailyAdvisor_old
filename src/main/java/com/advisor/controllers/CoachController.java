@@ -15,8 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import validator.ValidationError;
-import validator.ValidationErrorBuilder;
+import com.advisor.validator.ValidationError;
+import com.advisor.validator.ValidationErrorBuilder;
 
 import javax.validation.Valid;
 import java.util.ArrayList;

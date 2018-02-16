@@ -23,14 +23,14 @@ public class Meeting {
     private String meetingText;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id")
+    @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "id", nullable = false)
     private Event event;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private String status;
 
 
