@@ -8,17 +8,15 @@ import com.advisor.service.Exceptions.AdvertisementNotFound;
 
 import java.util.List;
 
-public interface AdvertisementService {
+public interface AdvertisementService extends IService<Advertisement, Long>{
 
     void setAdvertisement(User user, AdvertisementRequest advertisementRequest);
 
     List<AdvertisementResponse> selectAll();
 
-    AdvertisementResponse getAdvertisementByUser(User user);
+    AdvertisementResponse findByUser(User user);
 
-    Advertisement getActiveAdvertisementByUser(User user);
-
-    void addVisit(Advertisement advertisement);
+    Advertisement findActiveAdvertisementByUser(User user);
 
     void updateAdvertisement(User user, AdvertisementRequest advertisementRequest);
 

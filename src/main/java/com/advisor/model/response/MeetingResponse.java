@@ -2,7 +2,6 @@ package com.advisor.model.response;
 
 import com.advisor.model.entity.Location;
 import com.advisor.model.entity.Meeting;
-import com.advisor.model.entity.User;
 
 public class MeetingResponse {
     private Long meetingId;
@@ -17,7 +16,7 @@ public class MeetingResponse {
     }
 
     public MeetingResponse(Meeting meeting) {
-        this.meetingId = meeting.getMeetingId();
+        this.meetingId = meeting.getId();
         this.userId = new UserProfileResponse(meeting.getUserId().getUserProfile());
         this.userId2 = new UserProfileResponse(meeting.getUserId2().getUserProfile());
         this.meetingText = meeting.getMeetingText();

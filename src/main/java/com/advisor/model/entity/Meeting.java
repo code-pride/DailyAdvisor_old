@@ -11,7 +11,7 @@ public class Meeting {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "meeting_id")
-    private Long meetingId;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User userId;
@@ -46,12 +46,12 @@ public class Meeting {
         this.status = "sent";
     }
 
-    public Long getMeetingId() {
-        return meetingId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMeetingId(Long meetingId) {
-        this.meetingId = meetingId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUserId() {

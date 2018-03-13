@@ -15,24 +15,24 @@ import java.util.List;
 @Repository("meetingRepository")
 public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
 
-    Meeting findMeetingByMeetingId(Long meetingId);
+    Meeting findMeetingById(Long meetingId);
 
     List<Meeting> findMeetingsByUserIdOrUserId2(User user, User user2);
 
-    Meeting findByMeetingIdAndUserId2(long meetingId, User user);
+    Meeting findByIdAndUserId2(long meetingId, User user);
 
     @Transactional
     @Modifying
     @Query("UPDATE Meeting m SET m.status = :status WHERE m.userId2 = :user")
     void updateMeeting(@Param("user") User user, @Param("status") String status);
 
-    @Query("SELECT m FROM Meeting m WHERE m.meetingId = :meetingId AND (m.userId2 = :user OR m.userId = :user)")
-    List<Meeting> findMeetingByMeetingIdAndUserId(@Param("meetingId") Long meetingId,@Param("user") User user);
+    @Query("SELECT m FROM Meeting m WHERE m.id = :id AND (m.userId2 = :user OR m.userId = :user)")
+    List<Meeting> findMeetingByIdAndUserId(@Param("id") Long meetingId,@Param("user") User user);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Meeting m SET m = :meeting WHERE m.meetingId = :meeting")
+    @Query("UPDATE Meeting m SET m = :meeting WHERE m = :meeting")
     void updateMeeting(@Param("meeting") Meeting meeting);
 
-    Meeting findByMeetingId(Long meetingId);
+    Meeting findById(Long id);
 }

@@ -10,7 +10,7 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, name = "location_id")
-    private Long locationId;
+    private Long id;
 
     @NotNull
     @Column(nullable = false, name = "longitude")
@@ -29,12 +29,12 @@ public class Location {
         this.latitude = latitude;
     }
 
-    public Long getLocationId() {
-        return locationId;
+    public Long getId() {
+        return id;
     }
 
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Double getLongitude() {

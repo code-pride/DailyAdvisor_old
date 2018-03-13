@@ -8,6 +8,7 @@ import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.response.AdvertisementResponse;
 import com.advisor.service.AdvertisementService;
 import com.advisor.service.Exceptions.AdvertisementNotFound;
+import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class AdvertisementController {
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        if (advertisementService.getAdvertisementByUser(user) == null){
+        if (advertisementService.findByUser(user) == null){
             advertisementService.setAdvertisement(user, advertisementRequest);
 
             return new ResponseEntity(HttpStatus.OK);
@@ -58,15 +59,14 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "advertisement/get/{userId}" }, method = RequestMethod.GET)
-    public ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable Long userId)
-    {
+    public ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable Long userId) throws DataRepositoryException {
         User user = userService.findUserById(userId);
 
         if(user != null){
-            Advertisement advertisement = advertisementService.getActiveAdvertisementByUser(user);
+            Advertisement advertisement = advertisementService.findActiveAdvertisementByUser(user);
             if(advertisement != null){
                 if(advertisement.getUser().equals(user)){
-                    advertisementService.addVisit(advertisement);
+                    advertisementService.create(advertisement);
                 }
                 return new ResponseEntity<>(new AdvertisementResponse(advertisement), HttpStatus.OK);
             }

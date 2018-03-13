@@ -10,7 +10,7 @@ public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_profile_id")
-    private Long userProfileId;
+    private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
@@ -50,12 +50,12 @@ public class UserProfile {
         this.about = about;
     }
 
-    public Long getUserProfileId() {
-        return userProfileId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserProfileId(Long userProfileId) {
-        this.userProfileId = userProfileId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {

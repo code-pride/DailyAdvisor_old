@@ -2,7 +2,6 @@ package com.advisor.model.entity;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "advertisement")
@@ -10,7 +9,7 @@ public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "adv_id")
-    private Long advId;
+    private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user")
@@ -53,12 +52,12 @@ public class Advertisement {
         this.coachType = coachType;
     }
 
-    public Long getAdvId() {
-        return advId;
+    public Long getId() {
+        return id;
     }
 
-    public void setAdvId(Long advId) {
-        this.advId = advId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {

@@ -26,5 +26,11 @@ train i dietlist powinny byc udostepniane autorowi
 
 kiedy user próbuje pobrac wiadomosci z samym sobą powinien leciec wyjątek
 
+zmienić longi na inty w id encji
+
 QUESTIONS
 czy przed updatem powinno się sprawdzać czy update jest potrzebny?
+
+dlaczego id encji jest stringiem?
+
+czy błędem jest korzystać z obiektów typu Integer Long kiedy nie do końca wiemy czy prymityw będzie wystarczający?
