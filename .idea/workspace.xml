@@ -1,0 +1,1648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b7aa97b8-85da-4b87-84d4-d0eb66a1cc85" name="Default" comment="Refactored partially advertisement service">
+      <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/backend/.gitignore" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_11.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_11.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_3_4.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_8_10.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_8_10.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_2_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__dom4j_dom4j_1_6_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_transaction_javax_transaction_api_1_2.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_validation_validation_api_1_1_0_Final.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_44.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_1_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_2_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_8_5_23.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_8_5_23.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_8_5_23.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_8_5_23.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_jdbc_8_5_23.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_juli_8_5_23.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_8_13.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_2_6_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_library_1_3.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_5_0_1_Final.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_core_5_0_12_Final.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_entitymanager_5_0_12_Final.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_validator_5_3_6_Final.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_javax_persistence_hibernate_jpa_2_1_api_1_0_0_Final.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_21_0_GA.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_jandex_2_0_0_Final.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_1_Final.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_1_10_19.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_1.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_3.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_4_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_25.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_25.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_log4j_over_slf4j_1_7_25.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_1_5_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_1_13_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_1_11_9_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_4_2_3_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_4_2_3_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_4_2_3_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_orm_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_4_3_13_RELEASE.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_17.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/DailyAdvisor.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/backend/pom.xml" />
+      <change beforePath="$PROJECT_DIR$/src/logger/DailyAdvisorLog.log" afterPath="$PROJECT_DIR$/backend/src/logger/DailyAdvisorLog.log" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/MainApplication.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/MainApplication.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/configuration/SecurityConfiguration.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/configuration/SecurityConfiguration.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/configuration/WebMvcConfig.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/configuration/WebMvcConfig.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/configuration/logback-spring.xml" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/configuration/logback-spring.xml" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/AdvertisementController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/AdvertisementController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/AppErrorController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/AppErrorController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/CalendarController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/CalendarController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/CoachController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/CoachController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/DietController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/DietController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/LoginController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/LoginController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/MeetingController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/MeetingController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/MessageController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/MessageController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/PopulateController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/PopulateController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/TrainController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/TrainController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/controllers/UserController.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/UserController.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Advertisement.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Advertisement.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/CoachType.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/CoachType.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Coaching.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Coaching.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Diet.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Diet.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Event.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Event.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/EventInstanceException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/EventInstanceException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Location.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Location.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Meal.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Meal.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Meeting.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Meeting.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Message.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Message.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/RecurringPattern.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/RecurringPattern.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/RecurringType.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/RecurringType.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Role.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Role.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Train.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Train.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Training.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Training.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/User.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/User.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/UserDiet.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/UserDiet.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/UserProfile.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/UserProfile.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/UserTrain.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/UserTrain.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/AdvCriteriaRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/AdvCriteriaRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/AdvertisementRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/AdvertisementRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/CoachingRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/CoachingRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/DietListRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/DietListRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/DietShareRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/DietShareRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/EventRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/EventRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/MealRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/MealRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/MeetingRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/MeetingRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/MessageRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/MessageRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/NewUserRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/NewUserRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/TrainListRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/TrainListRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/TrainShareRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/TrainShareRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/TrainingRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/TrainingRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/request/UserProfileRequest.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/UserProfileRequest.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/AdvertisementResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/AdvertisementResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/CalendarResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/CalendarResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/CoachingResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/CoachingResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/DietResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/DietResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/EventResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/EventResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/MealResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/MealResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/MeetingResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/MeetingResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/MessageResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/MessageResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/TrainResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/TrainResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/TrainingResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/TrainingResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/model/response/UserProfileResponse.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/model/response/UserProfileResponse.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/AdvertisementRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/AdvertisementRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/CoachTypeRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/CoachTypeRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/CoachingRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/CoachingRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/DietRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/DietRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/EventInstanceExceptionRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/EventInstanceExceptionRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/EventRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/EventRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/MeetingRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/MeetingRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/MessageRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/MessageRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/RecurringPatternRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/RecurringPatternRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/RecurringTypeRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/RecurringTypeRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/RoleRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/RoleRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/TrainRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/TrainRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/UserDietRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/UserDietRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/UserProfileRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/UserProfileRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/UserRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/UserRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/repository/UserTrainRepository.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/UserTrainRepository.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/AdvertisementService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/AdvertisementService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/AdvertisementServiceImpl.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/AdvertisementServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/CoachService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/CoachService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/CoachServiceImpl.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/CoachServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/DietService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/DietService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/DietServiceImpl.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/DietServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/EventService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/EventService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/EventServiceImpl.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/EventServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/AdvertisementExists.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/AdvertisementExists.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/AdvertisementNotFound.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/AdvertisementNotFound.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/ApplicationException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/ApplicationException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/CoachingNotFoundException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/CoachingNotFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/DataRepositoryException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/DataRepositoryException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/DietNotFoundException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/DietNotFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/EntityNotFoundException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/EntityNotFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/MeetingNotFoundException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/MeetingNotFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/MessageNotFoundException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/MessageNotFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/TrainNotFoundException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/TrainNotFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/UserNotFoundException.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/UserNotFoundException.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/IService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/IService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/MeetingService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/MeetingService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/MeetingServiceImpl.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/MeetingServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/MessageService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/MessageService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/MessageServiceImpl.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/MessageServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/TrainService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/TrainService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/TrainServiceImpl.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/TrainServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/UserService.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/UserService.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/service/UserServiceImpl.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/service/UserServiceImpl.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/validator/ValidationError.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/validator/ValidationError.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/advisor/validator/ValidationErrorBuilder.java" afterPath="$PROJECT_DIR$/backend/src/main/java/com/advisor/validator/ValidationErrorBuilder.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/db/create_tables.sql" afterPath="$PROJECT_DIR$/backend/src/main/resources/static/db/create_tables.sql" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/db/populate.sql" afterPath="$PROJECT_DIR$/backend/src/main/resources/static/db/populate.sql" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/advisor/MainApplicationTests.java" afterPath="$PROJECT_DIR$/backend/src/test/java/com/advisor/MainApplicationTests.java" />
+      <change beforePath="$PROJECT_DIR$/src/todo.txt" afterPath="$PROJECT_DIR$/backend/src/todo.txt" />
+    </list>
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/DailyAdvisor$MainApplication.coverage" NAME="MainApplication Coverage Results" MODIFIED="1518477223283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="daily_advisor@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="daily_advisor@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="daily_advisor: schema" type="c314c289:MysqlImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="daily_advisor@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="daily_advisor: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="user: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="AdvertisementServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/AdvertisementServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="21">
+              <caret line="84" column="9" lean-forward="false" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
+              <folding>
+                <element signature="method#create#0;class#AdvertisementServiceImpl#0" expanded="false" />
+                <element signature="method#delete#0;class#AdvertisementServiceImpl#0" expanded="false" />
+                <element signature="method#update#0;class#AdvertisementServiceImpl#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="48" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/backend/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/IService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SecurityConfiguration.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/configuration/SecurityConfiguration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="336">
+              <caret line="64" column="53" lean-forward="false" selection-start-line="64" selection-start-column="53" selection-end-line="64" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdvertisementRepository.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/AdvertisementRepository.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="23" column="35" lean-forward="false" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user" pinned="false" current-in-tab="false">
+        <entry file="das://table:/6804bda5/24610ec8-26c2-4702-80f3-b8408f32b47c/daily_advisor.user">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebMvcConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/configuration/WebMvcConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>saveUser</find>
+      <find>updateUserProfile</find>
+      <find>selectAll</find>
+      <find>createUserProfileResponseByUser</find>
+      <find>acc</find>
+      <find>Long</find>
+      <find>admin</find>
+      <find>save</find>
+      <find>int</find>
+      <find>is</find>
+      <find>diet</find>
+      <find>meal</find>
+      <find>setAdvertisement</find>
+      <find>NotFoundException</find>
+      <find>getCurrentUserId</find>
+      <find>@RequestBody</find>
+      <find>IdAndUserId2</find>
+      <find>findByMeetingIdAndUserId2</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>long</replace>
+      <replace>Integer</replace>
+      <replace>training</replace>
+      <replace>Train</replace>
+      <replace>MessageNotFoundException</replace>
+      <replace>@Valid @RequestBody</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="acc\" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="genericServices" />
+      </map>
+    </option>
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/Validator/ValidationError.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/controllers/AppErrorController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/validator/ValidationErrorBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/MessageRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/NewUserRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/TrainingRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/TrainListRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/TrainShareRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/UserProfileRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/MeetingRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/MealRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/EventRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/DietShareRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/DietListRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/AdvertisementRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/AdvCriteriaRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/request/CoachingRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/CoachServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/controllers/CoachController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/configuration/SecurityConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/controllers/DietController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/UserNotFound.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/MeetingService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/controllers/MeetingController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Role.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/TrainServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/controllers/TrainController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/controllers/CalendarController.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/24610ec8-26c2-4702-80f3-b8408f32b47c/console.sql" />
+        <option value="$PROJECT_DIR$/src/logger/foo.json" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Advertisement.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Location.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/Meeting.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/model/entity/UserProfile.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/AdvertisementService.java" />
+        <option value="$PROJECT_DIR$/src/todo.txt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/AdvertisementNotFound.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/AdvertisementExists.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/ApplicationException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/DataRepositoryException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/Exceptions/EntityNotFound.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/IService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/AdvertisementServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/controllers/AdvertisementController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/repository/UserProfileRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/repository/AdvertisementRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/service/MeetingServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/advisor/repository/MeetingRepository.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1176" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="DailyAdvisor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DailyAdvisor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DailyAdvisor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DailyAdvisor" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DailyAdvisor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DailyAdvisor" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth2" value="75" />
+    <property name="RequestMappingsPanelOrder2" value="2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="console&#9;PSI&#9;JAVA://java.io.Console&#10;bCryptPasswordEncoder&#9;PSI&#9;JAVA://com.advisor.service.UserServiceImpl#bCryptPasswordEncoder" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Swiety\Documents\git\dailyAdvisor1\DailyAdvisor\backend" />
+      <recent name="C:\Users\Swiety\Documents\git\dailyAdvisor1\DailyAdvisor\src\main\resources\static\db" />
+      <recent name="C:\Users\Swiety\Documents\git\dailyAdvisor1\DailyAdvisor\src\main\java\com\advisor\configuration" />
+      <recent name="C:\Users\Swiety\Documents\git\dailyAdvisor1\DailyAdvisor\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.advisor" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.advisor.service.Exceptions" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.advisor.service" />
+      <recent name="com.advisor.model.responseClasses" />
+      <recent name="com.advisor.repository" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.advisor.MainApplication" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <module name="DailyAdvisor" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b7aa97b8-85da-4b87-84d4-d0eb66a1cc85" name="Default" comment="" />
+      <created>1512855954520</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1512855954520</updated>
+      <workItem from="1512855955880" duration="1539000" />
+      <workItem from="1512906244826" duration="4385000" />
+      <workItem from="1513283247332" duration="598000" />
+      <workItem from="1513285563847" duration="5367000" />
+      <workItem from="1513339255038" duration="1198000" />
+      <workItem from="1513423827902" duration="436000" />
+      <workItem from="1514999755409" duration="3675000" />
+      <workItem from="1515522149933" duration="4767000" />
+      <workItem from="1515753678369" duration="6246000" />
+      <workItem from="1515843187899" duration="8018000" />
+      <workItem from="1515926867532" duration="2928000" />
+      <workItem from="1515955901795" duration="992000" />
+      <workItem from="1516043306581" duration="595000" />
+      <workItem from="1516047391488" duration="9069000" />
+      <workItem from="1516129213712" duration="11740000" />
+      <workItem from="1516218297838" duration="8297000" />
+      <workItem from="1516230928404" duration="3486000" />
+      <workItem from="1516275052207" duration="21812000" />
+      <workItem from="1516352882476" duration="15547000" />
+      <workItem from="1516377508095" duration="4484000" />
+      <workItem from="1516442434208" duration="8609000" />
+      <workItem from="1516532204547" duration="28986000" />
+      <workItem from="1516644742668" duration="599000" />
+      <workItem from="1516729927944" duration="13707000" />
+      <workItem from="1516874939876" duration="8821000" />
+      <workItem from="1516896982339" duration="1884000" />
+      <workItem from="1516903276984" duration="1667000" />
+      <workItem from="1516906610773" duration="1521000" />
+      <workItem from="1516908302754" duration="7858000" />
+      <workItem from="1516967139504" duration="16530000" />
+      <workItem from="1517007302361" duration="795000" />
+      <workItem from="1517064368261" duration="14808000" />
+      <workItem from="1517140748689" duration="8000000" />
+      <workItem from="1517244914195" duration="1829000" />
+      <workItem from="1517331257085" duration="12871000" />
+      <workItem from="1517399969251" duration="16299000" />
+      <workItem from="1517423443668" duration="3093000" />
+      <workItem from="1517437217247" duration="57000" />
+      <workItem from="1517515681955" duration="1500000" />
+      <workItem from="1517565568338" duration="360000" />
+      <workItem from="1517566154578" duration="982000" />
+      <workItem from="1517589328256" duration="7129000" />
+      <workItem from="1517686296769" duration="8306000" />
+      <workItem from="1517763361933" duration="6071000" />
+      <workItem from="1517845767047" duration="8029000" />
+      <workItem from="1517924501630" duration="9531000" />
+      <workItem from="1518004434180" duration="21118000" />
+      <workItem from="1518104164626" duration="2563000" />
+      <workItem from="1518106922293" duration="134000" />
+      <workItem from="1518107096132" duration="39000" />
+      <workItem from="1518107307757" duration="139000" />
+      <workItem from="1518107589695" duration="72000" />
+      <workItem from="1518107733931" duration="1260000" />
+      <workItem from="1518116706723" duration="4641000" />
+      <workItem from="1518121388147" duration="17286000" />
+      <workItem from="1518288290203" duration="1235000" />
+      <workItem from="1518306597741" duration="1783000" />
+      <workItem from="1518361640446" duration="10296000" />
+      <workItem from="1518457234088" duration="7489000" />
+      <workItem from="1518514262302" duration="31276000" />
+      <workItem from="1518624825050" duration="384000" />
+      <workItem from="1518625367157" duration="2544000" />
+      <workItem from="1518695268651" duration="2131000" />
+      <workItem from="1518742202253" duration="760000" />
+      <workItem from="1520176850733" duration="710000" />
+      <workItem from="1520177981545" duration="599000" />
+      <workItem from="1520268722769" duration="1260000" />
+      <workItem from="1520719665748" duration="194000" />
+      <workItem from="1520763310175" duration="901000" />
+      <workItem from="1520771472554" duration="2952000" />
+      <workItem from="1520875978479" duration="3672000" />
+      <workItem from="1520967053528" duration="5817000" />
+      <workItem from="1520974640140" duration="1074000" />
+      <workItem from="1521118507208" duration="447000" />
+      <workItem from="1521118978262" duration="703000" />
+      <workItem from="1521127906387" duration="103000" />
+      <workItem from="1521128072858" duration="953000" />
+      <workItem from="1521131291243" duration="3710000" />
+      <workItem from="1521140481004" duration="1924000" />
+    </task>
+    <task id="LOCAL-00001" summary="0.1">
+      <created>1512917737673</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1512917737674</updated>
+    </task>
+    <task id="LOCAL-00002" summary="database0.1">
+      <created>1516054575896</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1516054575897</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Working getUserProfile&#10;&#10;testing updateUserProfile">
+      <created>1516140981145</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1516140981145</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added UserController:&#10;-updateUserProfile">
+      <created>1516234382138</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1516234382139</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fixed LoginController to make it working properly with rest requests.&#10;Small fix on UserController">
+      <created>1516283801862</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1516283801862</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added nulls to entities&#10;Added creating new advertisement">
+      <created>1516305004567</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1516305004567</updated>
+    </task>
+    <task id="LOCAL-00007" summary="get all advertisements">
+      <created>1516365100016</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1516365100017</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added getting all advertisements&#10;fixed createing advertisement">
+      <created>1516369855713</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1516369855713</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Small fixes">
+      <created>1516388537102</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1516388537102</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Moved name and last nam from User to UserProfile">
+      <created>1516450946579</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1516450946579</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Deleted pointless css, html, img files">
+      <created>1516451547970</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1516451547970</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Adding meetings">
+      <created>1516550017292</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1516550017292</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added &#10;acceptingMeeting&#10;getting Meetings">
+      <created>1516571998830</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1516571998830</updated>
+    </task>
+    <task id="LOCAL-00014" summary="ADDED updateMeeting">
+      <created>1516875214050</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1516875214050</updated>
+    </task>
+    <task id="LOCAL-00015" summary="ADDED populating database">
+      <created>1516878600134</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1516878600134</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added meeting status update">
+      <created>1516880548620</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1516880548620</updated>
+    </task>
+    <task id="LOCAL-00017" summary="ADDED populating database">
+      <created>1516903862923</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1516903862923</updated>
+    </task>
+    <task id="LOCAL-00018" summary="ADDED upgrading user role to coach">
+      <created>1516915940673</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1516915940673</updated>
+    </task>
+    <task id="LOCAL-00019" summary="ADDED creating coaching&#10;searching client coaches">
+      <created>1517091025995</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1517091025995</updated>
+    </task>
+    <task id="LOCAL-00020" summary="ADDED listing cach clients">
+      <created>1517144360829</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1517144360829</updated>
+    </task>
+    <task id="LOCAL-00021" summary="ADDED accepting and canceling coachings">
+      <created>1517337394616</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1517337394616</updated>
+    </task>
+    <task id="LOCAL-00022" summary="ADDED update getting clients and coaches">
+      <created>1517339139261</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1517339139261</updated>
+    </task>
+    <task id="LOCAL-00023" summary="ADDED populating database">
+      <created>1517347345096</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1517347345096</updated>
+    </task>
+    <task id="LOCAL-00024" summary="ADDED add dietplan">
+      <created>1517688335010</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1517688335010</updated>
+    </task>
+    <task id="LOCAL-00025" summary="ADDED add dietplan">
+      <created>1517692479312</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1517692479312</updated>
+    </task>
+    <task id="LOCAL-00026" summary="ADDED fixed adding and sharing diet plan">
+      <created>1517851112638</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1517851112639</updated>
+    </task>
+    <task id="LOCAL-00027" summary="ADDED add using diet">
+      <created>1517854456479</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1517854456479</updated>
+    </task>
+    <task id="LOCAL-00028" summary="ADDED added disabling dietList and getting all dietLists">
+      <created>1518006700948</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1518006700948</updated>
+    </task>
+    <task id="LOCAL-00029" summary="ADDED add removing diet">
+      <created>1518008786292</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1518008786292</updated>
+    </task>
+    <task id="LOCAL-00030" summary="ADDED getDietById">
+      <created>1518023103491</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1518023103491</updated>
+    </task>
+    <task id="LOCAL-00031" summary="ADDED adding tranList; small corrections in entities">
+      <created>1518027278416</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1518027278416</updated>
+    </task>
+    <task id="LOCAL-00032" summary="ADDED sharing train list">
+      <created>1518028493929</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1518028493929</updated>
+    </task>
+    <task id="LOCAL-00033" summary="ADDED using dietList">
+      <created>1518029126375</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1518029126375</updated>
+    </task>
+    <task id="LOCAL-00034" summary="ADDED disabling train list">
+      <created>1518029414351</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1518029414351</updated>
+    </task>
+    <task id="LOCAL-00035" summary="ADDED getting all train lists; getting specific train list; removing training">
+      <created>1518030546658</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1518030546658</updated>
+    </task>
+    <task id="LOCAL-00036" summary="ADDED small corrections in entities">
+      <created>1518105527028</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1518105527028</updated>
+    </task>
+    <task id="LOCAL-00037" summary="ADDED small corrections in entities">
+      <created>1518120869216</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1518120869217</updated>
+    </task>
+    <task id="LOCAL-00038" summary="ADDED foo">
+      <created>1518121622280</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1518121622280</updated>
+    </task>
+    <task id="LOCAL-00039" summary="ADDED search adv by criteria">
+      <created>1518130732985</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1518130732985</updated>
+    </task>
+    <task id="LOCAL-00040" summary="ADDED small corrections in entities">
+      <created>1518136613169</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1518136613169</updated>
+    </task>
+    <task id="LOCAL-00041" summary="revert of adding .idea folder">
+      <created>1518139498156</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1518139498156</updated>
+    </task>
+    <task id="LOCAL-00042" summary="ADDED small corrections in entities">
+      <created>1518469267022</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1518469267022</updated>
+    </task>
+    <task id="LOCAL-00043" summary="remove target">
+      <created>1518474983254</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1518474983254</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Added ErrorController">
+      <created>1518476383675</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1518476383675</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Added validator and small bug fixes in controllers">
+      <created>1518534549768</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1518534549768</updated>
+    </task>
+    <task id="LOCAL-00046" summary="final fixes">
+      <created>1518570805813</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1518570805813</updated>
+    </task>
+    <task id="LOCAL-00047" summary="1.0.0 final commit">
+      <created>1518742360806</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1518742360806</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Refactored partially advertisement service">
+      <created>1520972080890</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1520972080890</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="435190000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-9" y="-9" width="2418" height="1468" extended-state="6" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2576923" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32922128" sideWeight="0.18659265" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32922128" sideWeight="0.81340736" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32915717" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29803586" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2002562" sideWeight="0.49393415" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25384617" sideWeight="0.4968017" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14607948" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1595059" sideWeight="0.50606585" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32915717" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ADDED listing cach clients" />
+    <MESSAGE value="ADDED accepting and canceling coachings" />
+    <MESSAGE value="ADDED update getting clients and coaches" />
+    <MESSAGE value="ADDED populating database" />
+    <MESSAGE value="ADDED add dietplan" />
+    <MESSAGE value="ADDED fixed adding and sharing diet plan" />
+    <MESSAGE value="ADDED add using diet" />
+    <MESSAGE value="ADDED added disabling dietList and getting all dietLists" />
+    <MESSAGE value="ADDED add removing diet" />
+    <MESSAGE value="ADDED getDietById" />
+    <MESSAGE value="ADDED adding tranList; small corrections in entities" />
+    <MESSAGE value="ADDED sharing train list" />
+    <MESSAGE value="ADDED using dietList" />
+    <MESSAGE value="ADDED disabling train list" />
+    <MESSAGE value="ADDED getting all train lists; getting specific train list; removing training" />
+    <MESSAGE value="ADDED foo" />
+    <MESSAGE value="ADDED search adv by criteria" />
+    <MESSAGE value="revert of adding .idea folder" />
+    <MESSAGE value="ADDED small corrections in entities" />
+    <MESSAGE value="remove target" />
+    <MESSAGE value="Added ErrorController" />
+    <MESSAGE value="Added validator and small bug fixes in controllers" />
+    <MESSAGE value="final fixes" />
+    <MESSAGE value="1.0.0 final commit" />
+    <MESSAGE value="Refactored partially advertisement service" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored partially advertisement service" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="180" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/backend/src/main/resources/static/db/create_tables.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="673" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/resources/static/db/populate.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="64" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/logger/foo.json" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/24610ec8-26c2-4702-80f3-b8408f32b47c/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="9" lean-forward="false" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Coaching.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/CoachType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Diet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/EventInstanceException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Location.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="12" column="19" lean-forward="false" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Meal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Meeting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/RecurringPattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="31" column="12" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/RecurringType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Role.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="17" column="45" lean-forward="false" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Train.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Training.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding>
+            <element signature="e#1586#1587#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/UserDiet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/UserProfile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="12" column="19" lean-forward="false" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/UserTrain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-commons/1.13.9.RELEASE/spring-data-commons-1.13.9.RELEASE.jar!/org/springframework/data/repository/query/QueryByExampleExecutor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="26" lean-forward="false" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Advertisement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="54" column="15" lean-forward="false" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="15" />
+          <folding>
+            <element signature="e#1568#1569#0" expanded="false" />
+            <element signature="e#1593#1594#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/AdvertisementNotFound.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/AdvertisementExists.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/AdvertisementService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-commons/1.13.9.RELEASE/spring-data-commons-1.13.9.RELEASE.jar!/org/springframework/data/repository/CrudRepository.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="15" column="6" lean-forward="false" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/ApplicationException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-283">
+          <caret line="4" column="62" lean-forward="false" selection-start-line="4" selection-start-column="62" selection-end-line="4" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/DataRepositoryException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="67" lean-forward="false" selection-start-line="4" selection-start-column="67" selection-end-line="4" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/Exceptions/EntityNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="50" lean-forward="false" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/advisor/service/ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE.java" />
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/request/AdvertisementRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/controllers/AdvertisementController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/UserProfileRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="22" column="47" lean-forward="false" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/MeetingServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1134">
+          <caret line="68" column="50" lean-forward="false" selection-start-line="68" selection-start-column="50" selection-end-line="68" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/MeetingRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/6804bda5/24610ec8-26c2-4702-80f3-b8408f32b47c/daily_advisor.advertisement">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/model/entity/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1344">
+          <caret line="69" column="5" lean-forward="false" selection-start-line="69" selection-start-column="5" selection-end-line="69" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/logger/DailyAdvisorLog.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/configuration/logback-spring.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="33" lean-forward="false" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/configuration/WebMvcConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/6804bda5/24610ec8-26c2-4702-80f3-b8408f32b47c/daily_advisor.user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/configuration/SecurityConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="64" column="53" lean-forward="false" selection-start-line="64" selection-start-column="53" selection-end-line="64" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/repository/AdvertisementRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="23" column="35" lean-forward="false" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/IService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/src/main/java/com/advisor/service/AdvertisementServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="84" column="9" lean-forward="false" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
+          <folding>
+            <element signature="method#create#0;class#AdvertisementServiceImpl#0" expanded="false" />
+            <element signature="method#delete#0;class#AdvertisementServiceImpl#0" expanded="false" />
+            <element signature="method#update#0;class#AdvertisementServiceImpl#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="48" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>DailyAdvisor</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: antlr:antlr:2.7.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
