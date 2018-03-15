@@ -1,0 +1,36 @@
+UserController
+    odzyskiwanie hasła poprzez mail.
+    zwiększenie trudności hasła
+    zmiana adresu email
+
+Advertisement
+    sortowanie wynikow
+
+Login
+    walidacja danych przychodzących
+
+baza danych
+    walidacja danych po stronie bazy danych
+
+transakcje spring i spring data
+
+przerobic wszystkie listy na sety w encjach
+
+monitorowanie aktywności użytkownika i wyswietlanie jego dostępności
+
+sprawdzanie wyjątków bazy danych
+
+wszystkie serwisy powinny dziedziczyc po interfejsie serwisu...
+
+train i dietlist powinny byc udostepniane autorowi
+
+kiedy user próbuje pobrac wiadomosci z samym sobą powinien leciec wyjątek
+
+zmienić longi na inty w id encji
+
+QUESTIONS
+czy przed updatem powinno się sprawdzać czy update jest potrzebny?
+
+dlaczego id encji jest stringiem?
+
+czy błędem jest korzystać z obiektów typu Integer Long kiedy nie do końca wiemy czy prymityw będzie wystarczający?
