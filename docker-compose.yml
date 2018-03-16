@@ -1,0 +1,30 @@
+version: '2.1'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/dev.Dockerfile
+    volumes:
+    - ./frontend:/frontend
+    ports:
+      - "3000:3000"
+  backend:
+    build:
+      context: .
+      dockerfile: backend/dev.Dockerfile
+    volumes:
+        - ./backend:/backend
+    ports:
+      - "8080:8080"
+    links:
+      - mysql
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: daily_advisor
+    volumes:
+      - ./data/mysql/db:/data/mysql/db
+    ports:
+      - "3306:3306"
