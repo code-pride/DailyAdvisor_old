@@ -2,6 +2,7 @@ package com.advisor.model.entity;
 
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.model.request.TrainingRequest;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 
 @Entity
+@Data
 @Table(name = "train")
 public class Train {
     @Id
@@ -54,59 +56,4 @@ public class Train {
         this.trainText = trainListRequest.getTrainText();
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getTrainName() {
-        return trainName;
-    }
-
-    public void setTrainName(String trainName) {
-        this.trainName = trainName;
-    }
-
-    public String getTrainText() {
-        return trainText;
-    }
-
-    public void setTrainText(String trainText) {
-        this.trainText = trainText;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Set<Training> getTrainings() {
-        return trainings;
-    }
-
-    public void setTrainings(Set<Training> trainings) {
-        this.trainings = trainings;
-    }
 }

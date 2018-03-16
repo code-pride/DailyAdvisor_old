@@ -1,8 +1,10 @@
 package com.advisor.model.request;
 
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
+@Data
 public class AdvertisementRequest {
 
     @NotBlank
@@ -20,19 +22,4 @@ public class AdvertisementRequest {
         this.coachType = coachType;
     }
 
-    public String getAdvText() {
-        return advText;
-    }
-
-    public void setAdvText(String advText) {
-        this.advText = advText;
-    }
-
-    public String getCoachType() {
-        return coachType;
-    }
-
-    public void setCoachType(String coachType) {
-        this.coachType = coachType;
-    }
 }

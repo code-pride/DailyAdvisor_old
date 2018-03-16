@@ -1,8 +1,10 @@
 package com.advisor.model.response;
 
 import com.advisor.model.entity.Advertisement;
+import lombok.Data;
 
-public class AdvertisementResponse {
+public @Data
+class AdvertisementResponse {
     private Long userId;
     private String name;
     private String lastName;
@@ -25,46 +27,6 @@ public class AdvertisementResponse {
         this.name = name;
         this.lastName = lastName;
         this.city = city;
-        this.advertisement = advertisement;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAdvertisement() {
-        return advertisement;
-    }
-
-    public void setAdvertisement(String advertisement) {
         this.advertisement = advertisement;
     }
 }

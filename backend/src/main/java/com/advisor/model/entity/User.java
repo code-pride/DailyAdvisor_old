@@ -3,9 +3,11 @@ package com.advisor.model.entity;
 import java.util.Set;
 import javax.persistence.*;
 import com.advisor.model.request.NewUserRequest;
+import lombok.Data;
 import org.springframework.data.annotation.Transient;
 
 @Entity
+@Data
 @Table(name = "user")
 public class User {
 
@@ -41,51 +43,4 @@ public class User {
     public User() {
     }
 
-    public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public int getActive() {
-		return active;
-	}
-
-	public void setActive(int active) {
-		this.active = active;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	public UserProfile getUserProfile() {
-		return userProfile;
-	}
-
-	public void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
-	}
 }

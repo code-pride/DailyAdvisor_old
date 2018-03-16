@@ -1,7 +1,10 @@
 package com.advisor.model.request;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotNull;
 
+@Data
 public class DietShareRequest {
 
     @NotNull
@@ -19,19 +22,4 @@ public class DietShareRequest {
         this.dietId = dietId;
     }
 
-    public long getShareUser() {
-        return shareUser;
-    }
-
-    public void setShareUser(long shareUser) {
-        this.shareUser = shareUser;
-    }
-
-    public long getDietId() {
-        return dietId;
-    }
-
-    public void setDietId(long dietId) {
-        this.dietId = dietId;
-    }
 }
