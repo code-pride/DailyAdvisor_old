@@ -1,9 +1,11 @@
 package com.advisor.model.request;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 
+@Data
 public class MessageRequest {
 
     @NotNull
@@ -19,27 +21,4 @@ public class MessageRequest {
     public MessageRequest() {
     }
 
-    public long getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(long receiverId) {
-        this.receiverId = receiverId;
-    }
-
-    public String getMsgTime() {
-        return msgTime;
-    }
-
-    public void setMsgTime(String msgTime) {
-        this.msgTime = msgTime;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

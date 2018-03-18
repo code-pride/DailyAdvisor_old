@@ -1,8 +1,11 @@
 package com.advisor.model.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name = "coaching")
 public class Coaching {
     @Id
@@ -29,35 +32,4 @@ public class Coaching {
         this.status = status;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getCoach() {
-        return coach;
-    }
-
-    public void setCoach(User coach) {
-        this.coach = coach;
-    }
-
-    public User getClient() {
-        return client;
-    }
-
-    public void setClient(User client) {
-        this.client = client;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

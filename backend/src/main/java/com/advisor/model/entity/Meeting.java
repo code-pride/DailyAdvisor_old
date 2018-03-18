@@ -1,10 +1,12 @@
 package com.advisor.model.entity;
 
 import com.advisor.model.request.MeetingRequest;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name = "meeting")
 public class Meeting {
 
@@ -44,62 +46,6 @@ public class Meeting {
         this.location = meetingRequest.getLocation();
         this.event = event;
         this.status = "sent";
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
-    public User getUserId2() {
-        return userId2;
-    }
-
-    public void setUserId2(User userId2) {
-        this.userId2 = userId2;
-    }
-
-    public String getMeetingText() {
-        return meetingText;
-    }
-
-    public void setMeetingText(String meetingText) {
-        this.meetingText = meetingText;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
 }

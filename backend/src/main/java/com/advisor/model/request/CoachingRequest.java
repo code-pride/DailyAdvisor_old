@@ -1,8 +1,9 @@
 package com.advisor.model.request;
 
 
-import javax.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 public class CoachingRequest {
 
     private long coachingId;
@@ -21,27 +22,4 @@ public class CoachingRequest {
         this.clientId = clientId;
     }
 
-    public long getCoachingId() {
-        return coachingId;
-    }
-
-    public void setCoachingId(long coachingId) {
-        this.coachingId = coachingId;
-    }
-
-    public long getCoachId() {
-        return coachId;
-    }
-
-    public void setCoachId(long coachId) {
-        this.coachId = coachId;
-    }
-
-    public long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
-    }
 }
