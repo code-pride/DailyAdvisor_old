@@ -1,3 +1,7 @@
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.12'
+    id 'java'
+}
 apply plugin: 'java'
 apply plugin: 'maven'
 
