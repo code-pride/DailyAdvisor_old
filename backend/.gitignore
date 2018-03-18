@@ -87,6 +87,7 @@ $RECYCLE.BIN/
 # Custom
 .idea
 target
+out
 .DS_Store
 .directory
 node_modules
