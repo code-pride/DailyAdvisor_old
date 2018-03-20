@@ -2,11 +2,13 @@ package com.advisor.model.response;
 
 import com.advisor.model.entity.Diet;
 import com.advisor.model.entity.Meal;
+import lombok.Data;
 
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 public class DietResponse {
 
     private long id;
@@ -32,47 +34,8 @@ public class DietResponse {
             mealResponses.add(mealResponse);
         }
         this.meals = mealResponses;
-        this.status = status;
-        this.createDate = createDate;
+        this.status = diet.getStatus();
+        //this.createDate = diet.getCreateDate();
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public UserProfileResponse getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(UserProfileResponse createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Set<MealResponse> getMeals() {
-        return meals;
-    }
-
-    public void setMeals(Set<MealResponse> meals) {
-        this.meals = meals;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 }

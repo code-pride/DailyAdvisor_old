@@ -1,7 +1,10 @@
 package com.advisor.model.response;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class CalendarResponse {
     private List<MeetingResponse> meetingResponses;
     private List<TrainResponse> trainResponses;
@@ -24,19 +27,4 @@ public class CalendarResponse {
         this.meetingResponses = meetingResponses;
     }
 
-    public List<TrainResponse> getTrainResponses() {
-        return trainResponses;
-    }
-
-    public void setTrainResponses(List<TrainResponse> trainResponses) {
-        this.trainResponses = trainResponses;
-    }
-
-    public List<DietResponse> getDietResponses() {
-        return dietResponses;
-    }
-
-    public void setDietResponses(List<DietResponse> dietResponses) {
-        this.dietResponses = dietResponses;
-    }
 }

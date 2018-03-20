@@ -1,8 +1,11 @@
 package com.advisor.model.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 public class RecurringType {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -19,19 +22,4 @@ public class RecurringType {
         this.recurringName = recurringName;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRecurringName() {
-        return recurringName;
-    }
-
-    public void setRecurringName(String recurringName) {
-        this.recurringName = recurringName;
-    }
 }

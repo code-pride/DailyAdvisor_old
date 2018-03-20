@@ -1,7 +1,9 @@
 package com.advisor.model.response;
 
 import com.advisor.model.entity.UserProfile;
+import lombok.Data;
 
+@Data
 public class CoachingResponse {
     private String name;
     private String lastName;
@@ -22,27 +24,4 @@ public class CoachingResponse {
     public CoachingResponse() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

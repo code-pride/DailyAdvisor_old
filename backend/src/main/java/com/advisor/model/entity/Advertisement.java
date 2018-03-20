@@ -1,9 +1,12 @@
 package com.advisor.model.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Data
 @Table(name = "advertisement")
 public class Advertisement {
     @Id
@@ -49,78 +52,6 @@ public class Advertisement {
         this.visits = 0;
         this.answers = 0;
         this.status = "disabled";
-        this.coachType = coachType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getAdvText() {
-        return advText;
-    }
-
-    public void setAdvText(String advText) {
-        this.advText = advText;
-    }
-
-    public int getVisits() {
-        return visits;
-    }
-
-    public void setVisits(int visits) {
-        this.visits = visits;
-    }
-
-    public int getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(int answers) {
-        this.answers = answers;
-    }
-
-    public Date getCreate_date() {
-        return create_date;
-    }
-
-    public void setCreate_date(Date create_date) {
-        this.create_date = create_date;
-    }
-
-    public Date getEdit_date() {
-        return edit_date;
-    }
-
-    public void setEdit_date(Date edit_date) {
-        this.edit_date = edit_date;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public CoachType getCoachType() {
-        return coachType;
-    }
-
-    public void setCoachType(CoachType coachType) {
         this.coachType = coachType;
     }
 }

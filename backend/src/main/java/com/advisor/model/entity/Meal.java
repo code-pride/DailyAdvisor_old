@@ -1,10 +1,12 @@
 package com.advisor.model.entity;
 
 import com.advisor.model.request.MealRequest;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name = "meal")
 public class Meal {
     @Id
@@ -38,54 +40,6 @@ public class Meal {
         this.cal = mealRequest.getCal();
         this.carbohydrates = mealRequest.getCarbohydrates();
         this.fat = mealRequest.getFat();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public String getMealText() {
-        return mealText;
-    }
-
-    public void setMealText(String mealText) {
-        this.mealText = mealText;
-    }
-
-    public int getCal() {
-        return cal;
-    }
-
-    public void setCal(int cal) {
-        this.cal = cal;
-    }
-
-    public float getCarbohydrates() {
-        return carbohydrates;
-    }
-
-    public void setCarbohydrates(float carbohydrates) {
-        this.carbohydrates = carbohydrates;
-    }
-
-    public int getFat() {
-        return fat;
-    }
-
-    public void setFat(int fat) {
-        this.fat = fat;
     }
 
 }

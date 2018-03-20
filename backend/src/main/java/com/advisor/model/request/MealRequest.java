@@ -1,7 +1,9 @@
 package com.advisor.model.request;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
+@Data
 public class MealRequest {
 
     @NotBlank
@@ -31,43 +33,4 @@ public class MealRequest {
         this.fat = fat;
     }
 
-    public EventRequest getEvent() {
-        return event;
-    }
-
-    public void setEvent(EventRequest event) {
-        this.event = event;
-    }
-
-    public String getMealText() {
-        return mealText;
-    }
-
-    public void setMealText(String mealText) {
-        this.mealText = mealText;
-    }
-
-    public int getCal() {
-        return cal;
-    }
-
-    public void setCal(int cal) {
-        this.cal = cal;
-    }
-
-    public float getCarbohydrates() {
-        return carbohydrates;
-    }
-
-    public void setCarbohydrates(float carbohydrates) {
-        this.carbohydrates = carbohydrates;
-    }
-
-    public int getFat() {
-        return fat;
-    }
-
-    public void setFat(int fat) {
-        this.fat = fat;
-    }
 }

@@ -2,7 +2,9 @@ package com.advisor.model.response;
 
 import com.advisor.model.entity.Location;
 import com.advisor.model.entity.Meeting;
+import lombok.Data;
 
+@Data
 public class MeetingResponse {
     private Long meetingId;
     private UserProfileResponse userId;
@@ -25,59 +27,4 @@ public class MeetingResponse {
         this.status = meeting.getStatus();
     }
 
-    public Long getMeetingId() {
-        return meetingId;
-    }
-
-    public void setMeetingId(Long meetingId) {
-        this.meetingId = meetingId;
-    }
-
-    public UserProfileResponse getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UserProfileResponse userId) {
-        this.userId = userId;
-    }
-
-    public UserProfileResponse getUserId2() {
-        return userId2;
-    }
-
-    public void setUserId2(UserProfileResponse userId2) {
-        this.userId2 = userId2;
-    }
-
-    public String getMeetingText() {
-        return meetingText;
-    }
-
-    public void setMeetingText(String meetingText) {
-        this.meetingText = meetingText;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public EventResponse getEventResponse() {
-        return eventResponse;
-    }
-
-    public void setEventResponse(EventResponse eventResponse) {
-        this.eventResponse = eventResponse;
-    }
 }

@@ -2,6 +2,7 @@ package com.advisor.model.entity;
 
 import com.advisor.model.request.DietListRequest;
 import com.advisor.model.request.MealRequest;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Data
 @Table(name = "diet")
 public class Diet {
     @Id
@@ -46,44 +48,5 @@ public class Diet {
         this.status = "published";
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Set<Meal> getMeals() {
-        return meals;
-    }
-
-    public void setMeals(Set<Meal> meals) {
-        this.meals = meals;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
 

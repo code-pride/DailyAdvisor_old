@@ -1,11 +1,13 @@
 package com.advisor.model.entity;
 
 import com.advisor.model.request.TrainingRequest;
+import lombok.Data;
 
 import javax.persistence.*;
 
 
 @Entity
+@Data
 @Table(name = "training")
 public class Training {
     @Id
@@ -28,27 +30,4 @@ public class Training {
         this.trainText = trainingRequest.getTrainText();
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public String getTrainText() {
-        return trainText;
-    }
-
-    public void setTrainText(String trainText) {
-        this.trainText = trainText;
-    }
 }
