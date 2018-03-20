@@ -47,58 +47,61 @@ In progress
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+There are multiple type of tests that you can run.
 
-### Break down into end to end tests
+### End to end tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
+To run e2e tests run:
 
 ```
-Give an example
+$ npm run e2e
+```
+
+### Frontend unit tests
+
+To run frontend unit tests run:
+
+```
+npm run test
+```
+
+### Backend tests
+
+```
+In progress
 ```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+To build frontend run:
 
-## Built With
+```
+npm run build
+```
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+This command will create highly optimized version of frontend. You can open it with any http server i.e. [http-server][3]:
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+```
+$ cd dist
+$ http-server ./
+```
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **[Bartek][4]**
+* **[benq95][5]**
+* **[makowskimarek][6]**
+* **[Marcin Krawczyk][7]**
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
-
 
 [1]: https://nodejs.org/en/
 [2]: http://localhost:8080
+[3]: https://github.com/indexzero/http-server
+[4]: https://github.com/BartoszBaczek
+[5]: https://github.com/benq95
+[6]: https://github.com/makowskimarek
+[7]: https://github.com/marckraw
