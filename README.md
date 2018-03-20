@@ -1,4 +1,4 @@
-# Project Title
+# Daily Advisor
 
 Application for trainer and their students to keep them in progress, to make conversation and to stay in touch.
 
