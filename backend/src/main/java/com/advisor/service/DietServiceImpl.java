@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service("dietService")
 public class DietServiceImpl implements DietService {
@@ -41,18 +42,20 @@ public class DietServiceImpl implements DietService {
         for (Meal meal : dietList.getMeals()) {
             if(meal.getEvent().getRecurring()){
                 meal.getEvent().getRecurringPattern().setRecurringType(recurringTypeRepository.findByRecurringName(meal.getEvent().getRecurringPattern().getRecurringType().getRecurringName()));
+                recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
             }
             else {
                 meal.getEvent().setRecurringPattern(null);
+                //recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
             }
-            recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
+
             eventRepository.save(meal.getEvent());
         }
         dietRepository.save(dietList);
     }
 
     @Override
-    public Diet findByCreatorAndId(User user, long dietId) {
+    public Diet findByCreatorAndId(User user, UUID dietId) {
         List<Diet> dietList = dietRepository.findByCreatorAndId(user, dietId);
         if(dietList.size()>0){
             return dietList.get(0);
@@ -88,12 +91,12 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public Diet findDietById(long dietId) {
+    public Diet findDietById(UUID dietId) {
         return dietRepository.findOneById(dietId);
     }
 
     @Override
-    public void setStatus(User user, long dietId, String status) throws DietNotFoundException{
+    public void setStatus(User user, UUID dietId, String status) throws DietNotFoundException{
         Diet diet = findByCreatorAndId(user, dietId);
         if(diet != null && diet.getStatus().equals("published")){
             diet.setStatus(status);
@@ -122,7 +125,7 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public Diet findDietByUserAndDietId(User user, long dietId) throws DietNotFoundException{
+    public Diet findDietByUserAndDietId(User user, UUID dietId) throws DietNotFoundException{
         Diet diet = dietRepository.findOneById(dietId);
         if(diet != null) {
             if (diet.getCreatedBy().equals(user)) {

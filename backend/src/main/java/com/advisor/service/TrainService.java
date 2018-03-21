@@ -8,12 +8,13 @@ import com.advisor.model.request.TrainListRequest;
 import com.advisor.service.Exceptions.TrainNotFoundException;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TrainService {
 
     void addTrainList(User user, TrainListRequest trainListRequest);
 
-    Train findByCreatorAndId(User user, long trainId);
+    Train findByCreatorAndId(User user, UUID trainId);
 
     void updateTrain(Train train);
 
@@ -23,15 +24,15 @@ public interface TrainService {
 
     void useTrainList(UserTrain userTrain);
 
-    Train findTrainById(long trainId);
+    Train findTrainById(UUID trainId);
 
-    void setStatus(User user, long trainId, String status) throws TrainNotFoundException;
+    void setStatus(User user, UUID trainId, String status) throws TrainNotFoundException;
 
     List<Train> getAllTrainLists(User user);
 
     void removeTrain(UserTrain userTrain);
 
-    Train findTrainByUserAndTrainId(User user, long trainId) throws TrainNotFoundException;
+    Train findTrainByUserAndTrainId(User user, UUID trainId) throws TrainNotFoundException;
 
     List<Train> getAllTrainings(User user);
 

@@ -7,8 +7,9 @@ import com.advisor.model.response.AdvertisementResponse;
 import com.advisor.service.Exceptions.AdvertisementNotFound;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface AdvertisementService extends IService<Advertisement, Long>{
+public interface AdvertisementService extends IService<Advertisement, UUID>{
 
     void setAdvertisement(User user, AdvertisementRequest advertisementRequest);
 
@@ -20,7 +21,7 @@ public interface AdvertisementService extends IService<Advertisement, Long>{
 
     void updateAdvertisement(User user, AdvertisementRequest advertisementRequest);
 
-    void updateStatus(long advId, User user, String status) throws AdvertisementNotFound;
+    void updateStatus(UUID advId, User user, String status) throws AdvertisementNotFound;
 
     List<Advertisement> getByCriteria(List<User> user, String coachType);
 

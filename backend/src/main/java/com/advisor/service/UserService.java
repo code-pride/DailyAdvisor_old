@@ -7,6 +7,7 @@ import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.response.UserProfileResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
@@ -14,11 +15,11 @@ public interface UserService {
 
 	void saveUser(NewUserRequest newUserRequest);
 
-	User findUserById(Long userId);
+	User findUserById(UUID userId);
 
 	UserProfileResponse createUserProfileResponseByUser(User user);
 
-	void updateUserProfile(UserProfileRequest userProfileRequest, Long userProfileId);
+	void updateUserProfile(UserProfileRequest userProfileRequest, UUID userProfileId);
 
 	void upgradeUserToCoach(User user);
 

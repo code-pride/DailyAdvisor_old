@@ -3,10 +3,12 @@ package com.advisor.model.response;
 import com.advisor.model.entity.Meal;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class MealResponse {
 
-    private int id;
+    private UUID id;
 
     private EventResponse event;
 

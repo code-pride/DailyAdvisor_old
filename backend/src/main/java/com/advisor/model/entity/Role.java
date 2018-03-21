@@ -8,15 +8,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name = "role")
 public class Role {
 	@Id
+	@org.hibernate.annotations.Type(type = "pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="role_id")
-	private int id;
+	@Column(name = "id",unique=true, nullable = false)
+	private UUID id;
 
 	@Column(nullable = false, unique = true, name="role")
 	private String role;

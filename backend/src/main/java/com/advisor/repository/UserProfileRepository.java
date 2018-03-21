@@ -11,16 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Repository("userProfileRepository")
-public interface UserProfileRepository extends JpaRepository<UserProfile, Integer> {
+public interface UserProfileRepository extends JpaRepository<UserProfile, UUID> {
 
     UserProfile findByUser(User user);
 
     @Transactional
     @Modifying
     @Query("update UserProfile u set u.city = :city, u.about = :about, u.name = :name, u.lastName = :lastName where u.id = :id")
-    void updateUserProfile(@Param("id") Long id, @Param("city") String city, @Param("about") String about, @Param("name") String name, @Param("lastName") String lastName);
+    void updateUserProfile(@Param("id") UUID id, @Param("city") String city, @Param("about") String about, @Param("name") String name, @Param("lastName") String lastName);
     
     Set<UserProfile> findByUserIn(Set<User> users);
 

@@ -7,12 +7,13 @@ import com.advisor.model.request.DietListRequest;
 import com.advisor.service.Exceptions.DietNotFoundException;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DietService {
 
     void addDietList(User user, DietListRequest dietListRequest);
 
-    Diet findByCreatorAndId(User user, long dietId);
+    Diet findByCreatorAndId(User user, UUID dietId);
 
     void updateDiet(Diet diet);
 
@@ -22,15 +23,15 @@ public interface DietService {
 
     void useDietList(UserDiet userDiet);
 
-    Diet findDietById(long dietId);
+    Diet findDietById(UUID dietId);
 
-    void setStatus(User user, long dietId, String disabled) throws DietNotFoundException;
+    void setStatus(User user, UUID dietId, String disabled) throws DietNotFoundException;
 
     List<Diet> getAllDietLists(User user);
 
     void removeDiet(UserDiet userDiet);
 
-    Diet findDietByUserAndDietId(User user, long dietId) throws DietNotFoundException;
+    Diet findDietByUserAndDietId(User user, UUID dietId) throws DietNotFoundException;
 
     List<Diet> getAllDiets(User user);
 

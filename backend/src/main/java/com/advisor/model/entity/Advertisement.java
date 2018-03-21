@@ -4,18 +4,20 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name = "advertisement")
 public class Advertisement {
     @Id
+    @org.hibernate.annotations.Type(type = "pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "adv_id")
-    private Long id;
+    @Column(name = "id",unique=true, nullable = false)
+    private UUID id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, name = "user")
+    @JoinColumn(nullable = false, name = "user_")
     private User user;
 
     @Column(nullable = false, name = "adv_text")
@@ -26,7 +28,7 @@ public class Advertisement {
     private Date create_date = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="edit_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
+    @Column(name="edit_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     private Date edit_date = new Date();
 
     @ManyToOne(cascade = CascadeType.ALL)

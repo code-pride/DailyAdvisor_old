@@ -11,15 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository("meetingRepository")
-public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
+public interface MeetingRepository extends JpaRepository<Meeting, UUID> {
 
-    Meeting findMeetingById(Long meetingId);
+    Meeting findMeetingById(UUID meetingId);
 
     List<Meeting> findMeetingsByUserIdOrUserId2(User user, User user2);
 
-    Meeting findByIdAndUserId2(long meetingId, User user);
+    Meeting findByIdAndUserId2(UUID meetingId, User user);
 
     @Transactional
     @Modifying
@@ -27,12 +28,12 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
     void updateMeeting(@Param("user") User user, @Param("status") String status);
 
     @Query("SELECT m FROM Meeting m WHERE m.id = :id AND (m.userId2 = :user OR m.userId = :user)")
-    List<Meeting> findMeetingByIdAndUserId(@Param("id") Long meetingId,@Param("user") User user);
+    List<Meeting> findMeetingByIdAndUserId(@Param("id") UUID meetingId, @Param("user") User user);
 
     @Transactional
     @Modifying
     @Query("UPDATE Meeting m SET m = :meeting WHERE m = :meeting")
     void updateMeeting(@Param("meeting") Meeting meeting);
 
-    Meeting findById(Long id);
+    Meeting findById(UUID id);
 }

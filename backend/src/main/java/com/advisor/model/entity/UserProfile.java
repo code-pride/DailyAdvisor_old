@@ -4,6 +4,7 @@ import com.advisor.model.request.NewUserRequest;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -11,9 +12,10 @@ import javax.persistence.*;
 public class UserProfile {
 
     @Id
+    @org.hibernate.annotations.Type(type = "pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_profile_id")
-    private Long id;
+    @Column(name = "id",unique=true, nullable = false)
+    private UUID id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")

@@ -4,12 +4,13 @@ import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Data
 public class MessageRequest {
 
     @NotNull
-    private long receiverId;
+    private UUID receiverId;
 
     @NotBlank
     private String msgTime;

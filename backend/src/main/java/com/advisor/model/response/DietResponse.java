@@ -7,11 +7,12 @@ import lombok.Data;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 public class DietResponse {
 
-    private long id;
+    private UUID id;
 
     private UserProfileResponse createdBy;
 

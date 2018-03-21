@@ -3,9 +3,11 @@ package com.advisor.model.response;
 import com.advisor.model.entity.Training;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class TrainingResponse {
-    private long id;
+    private UUID id;
 
     private EventResponse event;
 

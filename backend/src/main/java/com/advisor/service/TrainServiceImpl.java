@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service("trainService")
@@ -56,7 +57,7 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public Train findByCreatorAndId(User user, long trainId) {
+    public Train findByCreatorAndId(User user, UUID trainId) {
         List<Train> trainList = trainRepository.findByCreatorAndId(user, trainId);
         if(trainList.size()>0){
             return trainList.get(0);
@@ -92,12 +93,12 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public Train findTrainById(long trainId) {
+    public Train findTrainById(UUID trainId) {
         return trainRepository.findOneById(trainId);
     }
 
     @Override
-    public void setStatus(User user, long trainId, String status) throws TrainNotFoundException {
+    public void setStatus(User user, UUID trainId, String status) throws TrainNotFoundException {
         Train train = findByCreatorAndId(user, trainId);
         if(train != null && train.getStatus().equals("published")){
             train.setStatus(status);
@@ -126,7 +127,7 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public Train findTrainByUserAndTrainId(User user, long trainId) throws TrainNotFoundException{
+    public Train findTrainByUserAndTrainId(User user, UUID trainId) throws TrainNotFoundException{
         Train train = trainRepository.findOneById(trainId);
         if(train != null) {
             if (train.getCreatedBy().equals(user)) {

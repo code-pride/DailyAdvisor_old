@@ -8,15 +8,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Repository("dietRepository")
-public interface DietRepository extends JpaRepository<Diet, Integer> {
+public interface DietRepository extends JpaRepository<Diet, UUID> {
 
     @Query("SELECT d FROM Diet d WHERE d.id = :id AND d.createdBy = :creator")
-    List<Diet> findByCreatorAndId(@Param("creator") User creator, @Param("id") long id);
+    List<Diet> findByCreatorAndId(@Param("creator") User creator, @Param("id") UUID id);
 
-    Diet findOneById(long dietId);
+    Diet findOneById(UUID dietId);
 
     List<Diet> findByCreatedBy(User user);
 }

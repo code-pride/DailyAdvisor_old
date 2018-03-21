@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class MessageController {
@@ -38,7 +39,7 @@ public class MessageController {
     }
 
     @RequestMapping(value = { "message/{userId}" }, method = RequestMethod.GET)
-    public ResponseEntity<List<MessageResponse>> getUserMessages(@PathVariable long userId) {
+    public ResponseEntity<List<MessageResponse>> getUserMessages(@PathVariable UUID userId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         User user2 = userService.findUserById(userId);

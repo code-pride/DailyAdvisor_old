@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -11,9 +12,10 @@ import javax.validation.constraints.NotNull;
 public class Location {
 
     @Id
+    @org.hibernate.annotations.Type(type = "pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, name = "location_id")
-    private Long id;
+    @Column(name = "id",unique=true, nullable = false)
+    private UUID id;
 
     @NotNull
     @Column(nullable = false, name = "longitude")

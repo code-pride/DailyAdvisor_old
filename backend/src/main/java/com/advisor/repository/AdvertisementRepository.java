@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Repository("advertisementRepository")
-public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
+public interface AdvertisementRepository extends JpaRepository<Advertisement, UUID> {
 
     Advertisement findByUser(User user);
 
@@ -27,10 +28,13 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
 
     List<Advertisement> findByStatus(String status);
 
+
+    Advertisement findById(UUID id);
+
     @Transactional
     @Modifying
     @Query("update Advertisement a set a.status = :status where a.user = :user AND a.id = :id")
-    int updateStatus(@Param("id") long advId, @Param("user") User user, @Param("status") String status);
+    int updateStatus(@Param("id") UUID advId, @Param("user") User user, @Param("status") String status);
 
     @Query("SELECT a FROM Advertisement a WHERE a.user IN :users AND a.coachType = :coachType AND a.status = :status")
     List<Advertisement> findByUserInAndCoachTypeAndStatus(@Param("users") List<User> users, @Param("coachType") CoachType coachType, @Param("status") String status);

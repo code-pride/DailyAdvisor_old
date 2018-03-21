@@ -22,6 +22,7 @@ import com.advisor.validator.ValidationErrorBuilder;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class DietController {
@@ -64,7 +65,7 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/use" }, method = RequestMethod.POST)
-    public ResponseEntity useDietPlan(@Valid @RequestBody long dietId) {
+    public ResponseEntity useDietPlan(@Valid @RequestBody UUID dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
@@ -87,7 +88,7 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/disableDietList" }, method = RequestMethod.PUT)
-    public ResponseEntity disableDietList(@Valid @RequestBody long dietId)
+    public ResponseEntity disableDietList(@Valid @RequestBody UUID dietId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -117,7 +118,7 @@ public class DietController {
     }
 
     @RequestMapping(value = { "diet/getDietList/{dietId}" }, method = RequestMethod.GET)
-    public ResponseEntity<DietResponse> getDietList(@PathVariable long dietId)
+    public ResponseEntity<DietResponse> getDietList(@PathVariable UUID dietId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -147,7 +148,7 @@ public class DietController {
     }
     
     @RequestMapping(value = { "diet/remove" }, method = RequestMethod.POST)
-    public ResponseEntity removeDiet(@Valid @RequestBody long dietId) {
+    public ResponseEntity removeDiet(@Valid @RequestBody UUID dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 

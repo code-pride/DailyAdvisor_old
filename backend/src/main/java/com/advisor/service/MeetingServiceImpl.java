@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service("meetingService")
 public class MeetingServiceImpl implements MeetingService {
@@ -46,7 +47,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public MeetingResponse findMeetingByIdAndUser(Long meetingId, User user) {
+    public MeetingResponse findMeetingByIdAndUser(UUID meetingId, User user) {
         Meeting meeting = meetingRepository.findMeetingById(meetingId);
         if(meeting != null && (meeting.getUserId().getId().equals(user.getId()) || meeting.getUserId2().getId().equals(user.getId()))){
             return new MeetingResponse(meeting);
@@ -65,7 +66,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public void updateMeetingStatus(Long meetingId, User user, String newStatus) throws MeetingNotFoundException{
+    public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws MeetingNotFoundException{
         Meeting meeting = meetingRepository.findById(meetingId);
         if(meeting != null && meeting.getUserId().equals(user)) {
             if (newStatus.equals("accept") && meeting.getStatus().equals("sent")) {

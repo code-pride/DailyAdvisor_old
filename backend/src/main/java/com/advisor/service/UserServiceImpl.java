@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService{
 	}
 
     @Override
-    public User findUserById(Long userId) {
+    public User findUserById(UUID userId) {
         return userRepository.findById(userId);
     }
 
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateUserProfile(UserProfileRequest userProfileRequest, Long userId){
+    public void updateUserProfile(UserProfileRequest userProfileRequest, UUID userId){
         userProfileRepository.updateUserProfile(userId, userProfileRequest.getCity(), userProfileRequest.getAbout(), userProfileRequest.getName(), userProfileRequest.getLastName());
     }
 

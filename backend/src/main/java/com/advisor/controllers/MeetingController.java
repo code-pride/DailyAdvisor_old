@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class MeetingController {
@@ -52,7 +53,7 @@ public class MeetingController {
     }
 
     @RequestMapping(value = { "/meeting/{meetingId}" }, method = RequestMethod.GET)
-    public ResponseEntity<MeetingResponse> getMeetingById(@PathVariable Long meetingId)
+    public ResponseEntity<MeetingResponse> getMeetingById(@PathVariable UUID meetingId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -80,7 +81,7 @@ public class MeetingController {
     }
 
     @RequestMapping(value = { "/meeting/{meetingId}/{statusChange}" }, method = RequestMethod.PUT)
-    public ResponseEntity acceptMeeting(@PathVariable Long meetingId, @PathVariable String statusChange)
+    public ResponseEntity acceptMeeting(@PathVariable UUID meetingId, @PathVariable String statusChange)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());

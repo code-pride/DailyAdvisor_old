@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class TrainController {
@@ -62,7 +63,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/use" }, method = RequestMethod.POST)
-    public ResponseEntity useTrainPlan(@Valid @RequestBody long trainId) {
+    public ResponseEntity useTrainPlan(@Valid @RequestBody UUID trainId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
@@ -85,7 +86,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/disableTrainList" }, method = RequestMethod.PUT)
-    public ResponseEntity disableTrainList(@Valid @RequestBody long trainId)
+    public ResponseEntity disableTrainList(@Valid @RequestBody UUID trainId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -117,7 +118,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/getTrainList/{trainId}" }, method = RequestMethod.GET)
-    public ResponseEntity<TrainResponse> getTrainList(@PathVariable long trainId)
+    public ResponseEntity<TrainResponse> getTrainList(@PathVariable UUID trainId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -147,7 +148,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/remove" }, method = RequestMethod.POST)
-    public ResponseEntity removeTrain(@Valid @RequestBody long trainId) {
+    public ResponseEntity removeTrain(@Valid @RequestBody UUID trainId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 

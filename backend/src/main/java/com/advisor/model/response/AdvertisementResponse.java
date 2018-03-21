@@ -3,9 +3,11 @@ package com.advisor.model.response;
 import com.advisor.model.entity.Advertisement;
 import lombok.Data;
 
+import java.util.UUID;
+
 public @Data
 class AdvertisementResponse {
-    private Long userId;
+    private UUID userId;
     private String name;
     private String lastName;
     private String city;
@@ -22,7 +24,7 @@ class AdvertisementResponse {
         this.city = advertisement.getUser().getUserProfile().getCity();
     }
 
-    public AdvertisementResponse(Long userId, String name, String lastName, String city, String advertisement) {
+    public AdvertisementResponse(UUID userId, String name, String lastName, String city, String advertisement) {
         this.userId = userId;
         this.name = name;
         this.lastName = lastName;

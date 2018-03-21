@@ -4,9 +4,11 @@ import com.advisor.model.entity.Location;
 import com.advisor.model.entity.Meeting;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class MeetingResponse {
-    private Long meetingId;
+    private UUID meetingId;
     private UserProfileResponse userId;
     private UserProfileResponse userId2;
     private String meetingText;
