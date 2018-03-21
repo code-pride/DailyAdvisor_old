@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service("AdvertisementService")
 public class AdvertisementServiceImpl implements AdvertisementService {
@@ -33,7 +34,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Advertisement create(Advertisement advertisement) {
-        if(advertisement.getId() == null || !repository.exists(advertisement.getId())) {
+        if(advertisement.getId() == null || repository.findById(advertisement.getId()) == null) {
             advertisement.setVisits(advertisement.getVisits() + 1);
             return repository.save(advertisement);
         } else {
@@ -42,7 +43,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public void delete(Long id) throws DataRepositoryException {
+    public void delete(UUID id) throws DataRepositoryException {
         if (repository.exists(id)) {
             repository.delete(id);
         } else {
@@ -56,17 +57,18 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public Advertisement findById(Long id) {
+    public Advertisement findById(UUID id) {
         return repository.findOne(id);
     }
 
     @Override
-    public Advertisement update(Advertisement t) throws DataRepositoryException {
-        if (repository.exists(t.getId())) {
-            return repository.save(t);
+    public Advertisement update(Advertisement advertisement) throws DataRepositoryException {
+        if (repository.findById(advertisement.getId()) == null) {
+            return repository.save(advertisement);
         } else {
             throw new EntityNotFoundException(ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE);
         }
+
     }
 
 
@@ -106,7 +108,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public void updateStatus(long advId, User user, String status) throws AdvertisementNotFound{
+    public void updateStatus(UUID advId, User user, String status) throws AdvertisementNotFound{
         if(repository.updateStatus(advId, user, status) == 0){
             throw new AdvertisementNotFound();
         }

@@ -4,6 +4,7 @@ import com.advisor.model.request.MeetingRequest;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -11,9 +12,10 @@ import javax.persistence.*;
 public class Meeting {
 
     @Id
+    @org.hibernate.annotations.Type(type = "pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "meeting_id")
-    private Long id;
+    @Column(name = "id",unique=true, nullable = false)
+    private UUID id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User userId;

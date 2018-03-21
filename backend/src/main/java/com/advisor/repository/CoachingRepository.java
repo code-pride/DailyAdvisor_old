@@ -11,9 +11,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository("coachingRepository")
-public interface CoachingRepository extends JpaRepository<Coaching, Integer> {
+public interface CoachingRepository extends JpaRepository<Coaching, UUID> {
 
     List<Coaching> findByCoach(User coach);
 

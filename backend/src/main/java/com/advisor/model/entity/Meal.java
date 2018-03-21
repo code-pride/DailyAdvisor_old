@@ -4,15 +4,17 @@ import com.advisor.model.request.MealRequest;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name = "meal")
 public class Meal {
     @Id
+    @org.hibernate.annotations.Type(type = "pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "id",unique=true, nullable = false)
+    private UUID id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "event")

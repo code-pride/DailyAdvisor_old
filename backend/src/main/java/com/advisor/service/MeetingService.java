@@ -7,16 +7,17 @@ import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.Exceptions.UserNotFoundException;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface MeetingService {
 
     void addMeeting(User user, MeetingRequest meetingRequest)throws UserNotFoundException;
 
-    MeetingResponse findMeetingByIdAndUser(Long meetingId, User user);
+    MeetingResponse findMeetingByIdAndUser(UUID meetingId, User user);
 
     List<MeetingResponse> findMeetingByUser(User user);
 
-    void updateMeetingStatus(Long meetingId, User user, String newStatus) throws MeetingNotFoundException;
+    void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws MeetingNotFoundException;
 
     void updateMeeting(MeetingRequest meetingRequest, User user) throws MeetingNotFoundException;
 

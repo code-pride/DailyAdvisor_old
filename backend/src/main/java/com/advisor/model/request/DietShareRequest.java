@@ -3,21 +3,22 @@ package com.advisor.model.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Data
 public class DietShareRequest {
 
     @NotNull
-    private Long shareUser;
+    private UUID shareUser;
 
     @NotNull
-    private Long dietId;
+    private UUID dietId;
 
 
     public DietShareRequest() {
     }
 
-    public DietShareRequest(long shareUser, long dietId) {
+    public DietShareRequest(UUID shareUser, UUID dietId) {
         this.shareUser = shareUser;
         this.dietId = dietId;
     }

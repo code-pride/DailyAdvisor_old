@@ -50,7 +50,7 @@ public class PopulateController {
     private CoachTypeRepository coachTypeRepository;
 
     @RequestMapping(value = { "/populate" }, method = RequestMethod.GET)
-    public ResponseEntity getMeetingById()
+    public ResponseEntity populate()
     {
         //save roles
         List<Role> roles = new ArrayList();
@@ -95,20 +95,22 @@ public class PopulateController {
         newUserRequest = new NewUserRequest(email, "Marcin", "Krawczyk", "Gliwice", "111111");
         userService.saveUser(newUserRequest);
 
+        //User2
+        User user2 = userService.findUserByEmail(email);
+
         //Meeting1
-        MeetingRequest meetingRequest = new MeetingRequest((long) 2, "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+        MeetingRequest meetingRequest = new MeetingRequest(user2.getId(), "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
         meetingService.addMeeting(user, meetingRequest);
 
-        //User2
-        user = userService.findUserByEmail(email);
+
 
         //adv2
         advertisementRequest = new AdvertisementRequest("WYśmienite moje ogloszenie", "fitness");
-        advertisementService.setAdvertisement(user, advertisementRequest);
+        advertisementService.setAdvertisement(user2, advertisementRequest);
 
         //Meeting2
-        meetingRequest = new MeetingRequest((long) 1, "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
-        meetingService.addMeeting(user, meetingRequest);
+        meetingRequest = new MeetingRequest(user.getId(), "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+        meetingService.addMeeting(user2, meetingRequest);
 
         return new ResponseEntity(HttpStatus.OK);
     }

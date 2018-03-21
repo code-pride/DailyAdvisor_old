@@ -7,10 +7,12 @@ import lombok.Data;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 public class TrainResponse {
-    private long id;
+
+    private UUID id;
 
     private UserProfileResponse createdBy;
 

@@ -4,6 +4,7 @@ import com.advisor.model.request.TrainingRequest;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 
 @Entity
@@ -11,9 +12,10 @@ import javax.persistence.*;
 @Table(name = "training")
 public class Training {
     @Id
+    @org.hibernate.annotations.Type(type = "pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "id",unique=true, nullable = false)
+    private UUID id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "event")

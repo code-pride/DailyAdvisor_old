@@ -3,14 +3,16 @@ package com.advisor.model.response;
 import com.advisor.model.entity.Message;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class MessageResponse {
 
-    private long msgId;
+    private UUID msgId;
 
-    private long senderId;
+    private UUID senderId;
 
-    private long receiverId;
+    private UUID receiverId;
 
     private String status;
 

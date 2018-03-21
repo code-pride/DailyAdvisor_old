@@ -23,6 +23,7 @@ import com.advisor.validator.ValidationErrorBuilder;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class AdvertisementController {
@@ -59,7 +60,7 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "advertisement/get/{userId}" }, method = RequestMethod.GET)
-    public ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable Long userId) throws DataRepositoryException {
+    public ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable UUID userId) throws DataRepositoryException {
         User user = userService.findUserById(userId);
 
         if(user != null){
@@ -86,7 +87,7 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "/advertisement/active/{advId}" }, method = RequestMethod.PUT)
-    public ResponseEntity activeAdvertisement(@PathVariable long advId)
+    public ResponseEntity activeAdvertisement(@PathVariable UUID advId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -99,7 +100,7 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = { "/advertisement/disable/{advId}" }, method = RequestMethod.PUT)
-    public ResponseEntity disableAdvertisement(@PathVariable long advId)
+    public ResponseEntity disableAdvertisement(@PathVariable UUID advId)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());

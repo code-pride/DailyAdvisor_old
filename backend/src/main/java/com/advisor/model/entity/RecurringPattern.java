@@ -3,15 +3,17 @@ package com.advisor.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Data
 public class RecurringPattern {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column (nullable = false, name = "id")
-    private Long id;
+    @org.hibernate.annotations.Type(type = "pg-uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id",unique=true, nullable = false)
+    private UUID id;
 
     @Column (nullable = false, name = "separation_count")
     private Integer separation_count;

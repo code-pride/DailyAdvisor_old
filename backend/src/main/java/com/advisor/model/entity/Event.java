@@ -8,13 +8,16 @@ import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Event {
     @Id
+    @org.hibernate.annotations.Type(type = "pg-uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "id",unique=true, nullable = false)
+    private UUID id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "recurring_pattern")

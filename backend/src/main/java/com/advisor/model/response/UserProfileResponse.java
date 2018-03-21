@@ -4,15 +4,17 @@ import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserProfile;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class UserProfileResponse {
-    private Long userId;
+    private UUID userId;
     private String name;
     private String lastName;
     private String city;
     private String about;
 
-    public UserProfileResponse(Long userId, String name, String lastName, String city, String about) {
+    public UserProfileResponse(UUID userId, String name, String lastName, String city, String about) {
         this.userId = userId;
         this.name = name;
         this.lastName = lastName;

@@ -9,9 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository("userDietRepository")
-public interface UserDietRepository extends JpaRepository<UserDiet, Integer> {
+public interface UserDietRepository extends JpaRepository<UserDiet, UUID> {
 
     @Query("SELECT u FROM UserDiet u WHERE u.diet = :diet AND u.user = :user")
     List<UserDiet> findUserDietByUserAndDiet(@Param("user") User user, @Param("diet") Diet diet);

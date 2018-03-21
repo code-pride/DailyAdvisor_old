@@ -8,14 +8,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository("trainRepository")
-public interface TrainRepository extends JpaRepository<Train, Integer> {
+public interface TrainRepository extends JpaRepository<Train, UUID> {
 
     @Query("SELECT t FROM Train t WHERE t.id = :id AND t.createdBy = :creator")
-    List<Train> findByCreatorAndId(@Param("creator") User creator, @Param("id") long id);
+    List<Train> findByCreatorAndId(@Param("creator") User creator, @Param("id") UUID id);
 
-    Train findOneById(long dietId);
+    Train findOneById(UUID dietId);
 
     List<Train>  findByCreatedBy(User user);
 }

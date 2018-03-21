@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 
 @RestController
@@ -21,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = { "/getUserProfile/{userId}" }, method = RequestMethod.GET)
-    public ResponseEntity<UserProfileResponse> getUserProfileByUserId(@PathVariable Long userId)
+    public ResponseEntity<UserProfileResponse> getUserProfileByUserId(@PathVariable UUID userId)
     {
         User user = userService.findUserById(userId);
         if(user != null){
