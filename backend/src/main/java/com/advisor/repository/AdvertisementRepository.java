@@ -28,13 +28,13 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, UU
 
     List<Advertisement> findByStatus(String status);
 
-
-    Advertisement findById(UUID id);
+    @Query("SELECT a FROM Advertisement a WHERE a.id=:id ")
+    Advertisement findByIdd(@Param("id") UUID id);
 
     @Transactional
     @Modifying
     @Query("update Advertisement a set a.status = :status where a.user = :user AND a.id = :id")
-    int updateStatus(@Param("id") UUID advId, @Param("user") User user, @Param("status") String status);
+    int updateStatus(@Param("id") UUID id, @Param("user") User user, @Param("status") String status);
 
     @Query("SELECT a FROM Advertisement a WHERE a.user IN :users AND a.coachType = :coachType AND a.status = :status")
     List<Advertisement> findByUserInAndCoachTypeAndStatus(@Param("users") List<User> users, @Param("coachType") CoachType coachType, @Param("status") String status);
