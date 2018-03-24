@@ -2,12 +2,11 @@ package com.advisor.configuration;
 
 import javax.sql.DataSource;
 
-import com.advisor.controllers.AppErrorController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.web.ErrorAttributes;
-import org.springframework.context.annotation.Bean;
+
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,12 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(bCryptPasswordEncoder);
 	}
 
-	@Autowired
-	private ErrorAttributes errorAttributes;
-
-	@Bean
-	public AppErrorController appErrorController(){return new AppErrorController(errorAttributes);}
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
@@ -87,7 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Override
-	public void configure(WebSecurity web) throws Exception {
+	public void configure(WebSecurity web) {
 	    web
 	       .ignoring()
 	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");

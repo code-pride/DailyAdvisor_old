@@ -35,5 +35,8 @@ public interface MeetingRepository extends JpaRepository<Meeting, UUID> {
     @Query("UPDATE Meeting m SET m = :meeting WHERE m = :meeting")
     void updateMeeting(@Param("meeting") Meeting meeting);
 
-    Meeting findById(UUID id);
+    @Query("SELECT m FROM Meeting m WHERE m.id=:id ")
+    Meeting findByIdd(@Param("id") UUID id);
+
+
 }

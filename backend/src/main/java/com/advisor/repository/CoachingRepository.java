@@ -23,5 +23,4 @@ public interface CoachingRepository extends JpaRepository<Coaching, UUID> {
     @Query("SELECT c FROM Coaching c WHERE c.coach = :coach AND c.client = :client")
     List<Coaching>  findByCoachAndClient(@Param("coach") User coach, @Param("client") User client);
 
-    List<Coaching> findByIdAndClient(long coachingId, User client);
 }

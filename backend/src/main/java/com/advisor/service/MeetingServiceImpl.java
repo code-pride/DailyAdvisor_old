@@ -67,7 +67,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws MeetingNotFoundException{
-        Meeting meeting = meetingRepository.findById(meetingId);
+        Meeting meeting = meetingRepository.findByIdd(meetingId);
         if(meeting != null && meeting.getUserId().equals(user)) {
             if (newStatus.equals("accept") && meeting.getStatus().equals("sent")) {
                 meetingRepository.updateMeeting(user, "accepted");

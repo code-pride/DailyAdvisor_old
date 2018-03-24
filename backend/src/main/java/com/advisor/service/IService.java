@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface IService<T, ID> {
 
-    public T create(T t) throws DataRepositoryException;
+    T create(T t) throws DataRepositoryException;
 
-    public void delete(ID id) throws DataRepositoryException;
+    void delete(ID id) throws DataRepositoryException;
 
-    public List<T> findAll();
+    List<T> findAll();
 
-    public T findById(ID id);
+    T findById(ID id);
 
-    public T update(T t) throws DataRepositoryException;
+    T update(T t) throws DataRepositoryException;
 }

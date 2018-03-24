@@ -34,7 +34,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Advertisement create(Advertisement advertisement) {
-        if(advertisement.getId() == null || repository.findById(advertisement.getId()) == null) {
+        if(advertisement.getId() == null || repository.findByIdd(advertisement.getId()) == null) {
             advertisement.setVisits(advertisement.getVisits() + 1);
             return repository.save(advertisement);
         } else {
@@ -44,11 +44,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public void delete(UUID id) throws DataRepositoryException {
-        if (repository.exists(id)) {
-            repository.delete(id);
-        } else {
-            throw new EntityNotFoundException(ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE);
-        }
+//        if (repository.exists(id)) {
+//
+//            repository.delete(id);
+//        } else {
+//            throw new EntityNotFoundException(ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE);
+//        }
     }
 
     @Override
@@ -58,12 +59,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public Advertisement findById(UUID id) {
-        return repository.findOne(id);
+        return repository.findByIdd(id);
     }
 
     @Override
     public Advertisement update(Advertisement advertisement) throws DataRepositoryException {
-        if (repository.findById(advertisement.getId()) == null) {
+        if (repository.findByIdd(advertisement.getId()) == null) {
             return repository.save(advertisement);
         } else {
             throw new EntityNotFoundException(ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE);
