@@ -2,7 +2,6 @@ package com.advisor.repository;
 
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserProfile;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Repository("userProfileRepository")
-public interface UserProfileRepository extends JpaRepository<UserProfile, UUID> {
+public interface UserProfileRepository extends SimplyRepository<UserProfile> {
 
     UserProfile findByUser(User user);
 

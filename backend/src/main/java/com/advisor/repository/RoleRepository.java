@@ -1,12 +1,9 @@
 package com.advisor.repository;
 
 import com.advisor.model.entity.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository("roleRepository")
-public interface RoleRepository extends JpaRepository<Role, UUID>{
+public interface RoleRepository extends SimplyRepository<Role> {
 	Role findByRole(String role);
 }
