@@ -21,9 +21,7 @@ import com.advisor.validator.ValidationError;
 import com.advisor.validator.ValidationErrorBuilder;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class AdvertisementController {
@@ -52,27 +50,29 @@ public class AdvertisementController {
     public ResponseEntity<List<AdvertisementResponse>> getAllAdvertisement()
     {
         List<AdvertisementResponse> advertisementList = advertisementService.selectAll();
-        if (advertisementList.size() != 0){
+        if (advertisementList.isEmpty()){
             return new ResponseEntity<>(advertisementList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(value = { "advertisement/get/{userId}" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"advertisement/get/{userId}"}, method = RequestMethod.GET)
     public ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable UUID userId) throws DataRepositoryException {
-        User user = userService.findUserById(userId);
-
-        if(user != null){
-            Advertisement advertisement = advertisementService.findActiveAdvertisementByUser(user);
-            if(advertisement != null){
-                if(advertisement.getUser().equals(user)){
+        Optional<User> user = userService.findById(userId);
+        if (user.isPresent()) {
+            Advertisement advertisement = advertisementService.findActiveAdvertisementByUser(user.get());
+            if (advertisement != null) {
+                if (advertisement.getUser().equals(user.get())) {
                     advertisementService.create(advertisement);
                 }
                 return new ResponseEntity<>(new AdvertisementResponse(advertisement), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = { "/advertisement/update" }, method = RequestMethod.PUT)
@@ -121,7 +121,7 @@ public class AdvertisementController {
         List<Advertisement> advertisementList = advertisementService.getByCriteria(users, advCriteriaRequest.getCoachType());
         List<AdvertisementResponse> advertisementResponses = new ArrayList<>();
         advertisementList.forEach(advertisement->advertisementResponses.add(new AdvertisementResponse(advertisement)));
-        if (advertisementList.size() != 0){
+        if (advertisementList.isEmpty()){
             return new ResponseEntity<>(advertisementResponses, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

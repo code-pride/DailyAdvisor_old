@@ -3,6 +3,7 @@ package com.advisor.service;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.Exceptions.UserNotFoundException;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 public interface MeetingService {
 
-    void addMeeting(User user, MeetingRequest meetingRequest)throws UserNotFoundException;
+    void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException, EntityNotFoundException;
 
     MeetingResponse findMeetingByIdAndUser(UUID meetingId, User user);
 

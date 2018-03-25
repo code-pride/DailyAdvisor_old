@@ -9,6 +9,7 @@ import com.advisor.repository.CoachTypeRepository;
 import com.advisor.repository.RecurringTypeRepository;
 import com.advisor.repository.RoleRepository;
 import com.advisor.service.AdvertisementService;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 public class PopulateController {
@@ -99,19 +101,21 @@ public class PopulateController {
         User user2 = userService.findUserByEmail(email);
 
         //Meeting1
-        MeetingRequest meetingRequest = new MeetingRequest(user2.getId(), "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
-        meetingService.addMeeting(user, meetingRequest);
+        try {
+            MeetingRequest meetingRequest = new MeetingRequest(user2.getId(), "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+            meetingService.addMeeting(user, meetingRequest);
 
 
+            //adv2
+            advertisementRequest = new AdvertisementRequest("WYśmienite moje ogloszenie", "fitness");
+            advertisementService.setAdvertisement(user2, advertisementRequest);
 
-        //adv2
-        advertisementRequest = new AdvertisementRequest("WYśmienite moje ogloszenie", "fitness");
-        advertisementService.setAdvertisement(user2, advertisementRequest);
-
-        //Meeting2
-        meetingRequest = new MeetingRequest(user.getId(), "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
-        meetingService.addMeeting(user2, meetingRequest);
-
+            //Meeting2
+            meetingRequest = new MeetingRequest(user.getId(), "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+            meetingService.addMeeting(user2, meetingRequest);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 }

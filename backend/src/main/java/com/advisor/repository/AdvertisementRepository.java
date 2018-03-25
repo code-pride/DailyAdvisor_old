@@ -28,9 +28,6 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, UU
 
     List<Advertisement> findByStatus(String status);
 
-    @Query("SELECT a FROM Advertisement a WHERE a.id=:id ")
-    Advertisement findByIdd(@Param("id") UUID id);
-
     @Transactional
     @Modifying
     @Query("update Advertisement a set a.status = :status where a.user = :user AND a.id = :id")

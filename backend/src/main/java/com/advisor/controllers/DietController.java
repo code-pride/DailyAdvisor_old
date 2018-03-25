@@ -22,6 +22,7 @@ import com.advisor.validator.ValidationErrorBuilder;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -50,16 +51,14 @@ public class DietController {
         User user = userService.findUserByEmail(auth.getName());
 
         Diet diet = dietService.findByCreatorAndId(user, dietShareRequest.getDietId());
-        User user2 = userService.findUserById(dietShareRequest.getShareUser());
-        if(diet != null && user2 !=null && diet.getStatus() != "disabled"){
-            if(dietService.findUserDietByDietIdAndUser(diet, user2) != null){
+        Optional<User> user2 = userService.findById(dietShareRequest.getShareUser());
+        if(diet != null && user2.isPresent() && "disabled".equals(diet.getStatus())){
+            if(dietService.findUserDietByDietIdAndUser(diet, user2.get()) != null){
                 return new ResponseEntity(HttpStatus.IM_USED);
             }
-            if(user2 != null){
-                dietService.addUserDiet(user2, diet);
-                dietService.updateDiet(diet);
-                return new ResponseEntity(HttpStatus.OK);
-            }
+            dietService.addUserDiet(user2.get(), diet);
+            dietService.updateDiet(diet);
+            return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
@@ -75,7 +74,7 @@ public class DietController {
             if (userDiet != null && userDiet.getStatus().equals("used")) {
                 return new ResponseEntity(HttpStatus.IM_USED);
             }
-            if (diet != null && user != null) {
+            if (user != null) {
                 if (userDiet == null) {
                     return new ResponseEntity(HttpStatus.NOT_FOUND);
                 } else {

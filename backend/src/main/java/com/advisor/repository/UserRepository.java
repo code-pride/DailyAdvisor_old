@@ -15,7 +15,4 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     User findByEmail(String email);
 
-    @Query("SELECT u FROM User u WHERE u.id=:id")
-    User findByIdd(@Param("id") UUID id);
-
 }

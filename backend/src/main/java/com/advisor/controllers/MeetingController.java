@@ -3,6 +3,7 @@ package com.advisor.controllers;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.Exceptions.UserNotFoundException;
 import com.advisor.service.MeetingService;
@@ -44,9 +45,9 @@ public class MeetingController {
         else {
             try {
                 meetingService.addMeeting(user, meetingRequest);
-            } catch (UserNotFoundException e){
-                logger.warn("User not found");
-                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            } catch (EntityNotFoundException e){
+                logger.warn(e.getStandardMessageCode());
+                return new ResponseEntity(e.getStandardResponseCode());
             }
             return new ResponseEntity(HttpStatus.OK);
         }

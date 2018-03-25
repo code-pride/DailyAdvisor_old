@@ -17,9 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class TrainController {
@@ -44,17 +42,18 @@ public class TrainController {
     @RequestMapping(value = { "train/share" }, method = RequestMethod.PUT)
     public ResponseEntity shareTrainPlan(@Valid @RequestBody TrainShareRequest trainShareRequest)
     {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
         Train train = trainService.findByCreatorAndId(user, trainShareRequest.getTrainId());
-        User user2 = userService.findUserById(trainShareRequest.getShareUser());
-        if(train != null && user2 !=null && train.getStatus() != "disabled"){
-            if(trainService.findUserTrainByTrainIdAndUser(train, user2) != null){
-                return new ResponseEntity(HttpStatus.IM_USED);
-            }
-            if(user2 != null){
-                trainService.addUserTrain(user2, train);
+        Optional<User> user2 = userService.findById(trainShareRequest.getShareUser());
+        if(user2.isPresent()){
+            if(train != null && "disabled".equals(train.getStatus())){
+                if(trainService.findUserTrainByTrainIdAndUser(train, user2.get()) != null){
+                    return new ResponseEntity(HttpStatus.IM_USED);
+                }
+                trainService.addUserTrain(user2.get(), train);
                 trainService.updateTrain(train);
                 return new ResponseEntity(HttpStatus.OK);
             }
@@ -73,7 +72,7 @@ public class TrainController {
             if (userTrain != null && userTrain.getStatus().equals("used")) {
                 return new ResponseEntity(HttpStatus.IM_USED);
             }
-            if (train != null && user != null) {
+            if (user != null) {
                 if (userTrain == null) {
                     return new ResponseEntity(HttpStatus.BAD_REQUEST);
                 } else {

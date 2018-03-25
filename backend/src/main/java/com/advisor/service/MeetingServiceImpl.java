@@ -7,18 +7,20 @@ import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
 import com.advisor.repository.EventRepository;
 import com.advisor.repository.MeetingRepository;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.Exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service("meetingService")
 public class MeetingServiceImpl implements MeetingService {
+
+    private static final String MEETING_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.meeting";
+    private static final String USER_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.user";
 
     @Autowired
     @Qualifier("eventRepository")
@@ -32,17 +34,15 @@ public class MeetingServiceImpl implements MeetingService {
     private UserService userService;
 
     @Override
-    public void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException {
-        User user2 = userService.findUserById(meetingRequest.getUserId2());
-        if(user2 != null) {
+    public void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException, EntityNotFoundException {
+        Optional<User> user2 = userService.findById(meetingRequest.getUserId2());
+        if(user2.isPresent()) {
             Event event = new Event(meetingRequest.getEventRequest());
-
-
             eventRepository.save(event);
-            Meeting meeting = new Meeting(user, user2, meetingRequest, event);
+            Meeting meeting = new Meeting(user, user2.get(), meetingRequest, event);
             meetingRepository.save(meeting);
         } else {
-            throw new UserNotFoundException();
+            throw new EntityNotFoundException(USER_NOT_FOUND_MESSAGE_CODE);
         }
     }
 
@@ -58,7 +58,7 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public List<MeetingResponse> findMeetingByUser(User user) {
         List<Meeting> meetingList = meetingRepository.findMeetingsByUserIdOrUserId2(user, user);
-        List<MeetingResponse> meetingResponseList = new ArrayList<MeetingResponse>();
+        List<MeetingResponse> meetingResponseList = new ArrayList<>();
         for (Meeting meeting : meetingList) {
             meetingResponseList.add(new MeetingResponse(meeting));
         }
@@ -67,16 +67,21 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws MeetingNotFoundException{
-        Meeting meeting = meetingRepository.findByIdd(meetingId);
-        if(meeting != null && meeting.getUserId().equals(user)) {
-            if (newStatus.equals("accept") && meeting.getStatus().equals("sent")) {
-                meetingRepository.updateMeeting(user, "accepted");
+
+        Optional<Meeting> meeting = meetingRepository.findById(meetingId);
+        if(meeting.isPresent()){
+            if(meeting.get().getUserId().equals(user)) {
+                if (newStatus.equals("accept") && meeting.get().getStatus().equals("sent")) {
+                    meetingRepository.updateMeeting(user, "accepted");
+                }
+                else if(newStatus.equals("cancel")){
+                    meetingRepository.updateMeeting(user, "canceled");
+                }
             }
-            else if(newStatus.equals("cancel")){
-                meetingRepository.updateMeeting(user, "canceled");
+            else {
+                throw new MeetingNotFoundException();
             }
-        }
-        else {
+        } else {
             throw new MeetingNotFoundException();
         }
     }
