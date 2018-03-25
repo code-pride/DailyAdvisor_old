@@ -7,10 +7,7 @@ import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.response.AdvertisementResponse;
 import com.advisor.repository.AdvertisementRepository;
 import com.advisor.repository.CoachTypeRepository;
-import com.advisor.service.Exceptions.AdvertisementExists;
-import com.advisor.service.Exceptions.AdvertisementNotFound;
-import com.advisor.service.Exceptions.DataRepositoryException;
-import com.advisor.service.Exceptions.EntityNotFoundException;
+import com.advisor.service.Exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,6 +19,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     private static final String ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.advertisement";
 
+    private static final String ADVERTISEMENT_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.coach";
+
     @Autowired
     @Qualifier("advertisementRepository")
     private AdvertisementRepository repository;
@@ -31,12 +30,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private CoachTypeRepository coachTypeRepository;
 
     @Override
-    public Advertisement create(Advertisement advertisement) {
+    public Advertisement create(Advertisement advertisement) throws EntityExists {
         if(advertisement.getId() == null || !repository.findById(advertisement.getId()).isPresent()) {
             advertisement.setVisits(advertisement.getVisits() + 1);
             return repository.save(advertisement);
         } else {
-            throw new AdvertisementExists();
+            throw new EntityExists(ADVERTISEMENT_EXISTS_MESSAGE_CODE);
         }
     }
 

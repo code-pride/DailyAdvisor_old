@@ -6,7 +6,6 @@ import com.advisor.model.entity.UserProfile;
 import com.advisor.model.request.CoachingRequest;
 import com.advisor.model.response.CoachingResponse;
 import com.advisor.service.CoachService;
-import com.advisor.service.Exceptions.CoachingNotFoundException;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import com.advisor.validator.ValidationErrorBuilder;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -34,57 +32,54 @@ public class CoachController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = { "coaching/addClient" }, method = RequestMethod.POST)
-    public ResponseEntity addClient(@Valid @RequestBody CoachingRequest coachingRequest)
-    {
+    @RequestMapping(value = {"coaching/addClient"}, method = RequestMethod.POST)
+    public ResponseEntity addClient(@Valid @RequestBody CoachingRequest coachingRequest) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
         Optional<User> client = userService.findById(coachingRequest.getClientId());
-        if(client.isPresent()){
+        if (client.isPresent()) {
             Coaching coaching = coachService.findByCoachAndClient(user, client.get());
-            if(coaching == null) {
-                Coaching newCoaching = new Coaching(user, client.get());
-                try {
+            try {
+                if (coaching == null) {
+                    Coaching newCoaching = new Coaching(user, client.get());
                     coachService.create(newCoaching);
-                } catch (DataRepositoryException e) {
-                    return new ResponseEntity(e.getStandardResponseCode());
+                    return new ResponseEntity(HttpStatus.OK);
+                } else if (coaching.getStatus().equals("sent")) {
+                    coaching.setStatus("accepted");
+                    coachService.update(coaching);
+                    return new ResponseEntity(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.IM_USED);
                 }
-                return new ResponseEntity(HttpStatus.OK);
+            } catch (DataRepositoryException e) {
+                return new ResponseEntity<>(e.getStandardResponseCode());
             }
-            else if (coaching.getStatus().equals("sent")) {
-                coaching.setStatus("accepted");
-                coachService.updateStatus(coaching);
-                return new ResponseEntity(HttpStatus.OK);
-            } else
-                return new ResponseEntity(HttpStatus.IM_USED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(value = { "client/getClientCoaches" }, method = RequestMethod.GET)
-    public ResponseEntity<List<CoachingResponse>> getClientCoaches()
-    {
+    @RequestMapping(value = {"client/getClientCoaches"}, method = RequestMethod.GET)
+    public ResponseEntity<List<CoachingResponse>> getClientCoaches() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         List<Coaching> coachingList = coachService.findByClient(user);
-        if(coachingList != null) {
+        if (coachingList != null) {
             return new ResponseEntity<>(getCoachingResponsesByUser(coachingList, "client"), HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @RequestMapping(value = { "coaching/getCoachClients" }, method = RequestMethod.GET)
-    public ResponseEntity<List<CoachingResponse>> getCoachClients()
-    {
+    @RequestMapping(value = {"coaching/getCoachClients"}, method = RequestMethod.GET)
+    public ResponseEntity<List<CoachingResponse>> getCoachClients() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         List<Coaching> coachingList = coachService.findByCoach(user);
-        if(coachingList != null) {
+        if (coachingList != null) {
             return new ResponseEntity<>(getCoachingResponsesByUser(coachingList, "coach"), HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -99,7 +94,7 @@ public class CoachController {
                 Coaching coaching = coachService.findByCoachAndClient(coach.get(), user);
                 if (coaching.getStatus().equals("sent")) {
                     coaching.setStatus("accepted");
-                    coachService.updateStatus(coaching);
+                    coachService.update(coaching);
                     return new ResponseEntity(HttpStatus.OK);
                 } else {
                     return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -107,23 +102,22 @@ public class CoachController {
             } else {
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
-        } catch (CoachingNotFoundException e) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
     }
 
-    @RequestMapping(value = { "client/cancelCoaching" }, method = RequestMethod.POST)
-    public ResponseEntity leaveCoach(@Valid @RequestBody CoachingRequest coachingRequest)
-    {
+    @RequestMapping(value = {"client/cancelCoaching"}, method = RequestMethod.POST)
+    public ResponseEntity leaveCoach(@Valid @RequestBody CoachingRequest coachingRequest) {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userService.findUserByEmail(auth.getName());
             Optional<User> coach = userService.findById(coachingRequest.getCoachId());
-            if(coach.isPresent()) {
+            if (coach.isPresent()) {
                 Coaching coaching = coachService.findByCoachAndClient(coach.get(), user);
                 if (coaching.getStatus().equals("sent") || coaching.getStatus().equals("accepted")) {
                     coaching.setStatus("canceled");
-                    coachService.updateStatus(coaching);
+                    coachService.update(coaching);
                     return new ResponseEntity(HttpStatus.OK);
                 } else {
                     return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -131,19 +125,19 @@ public class CoachController {
             } else {
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
-        } catch (CoachingNotFoundException e) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
     }
 
-    private List<CoachingResponse> getCoachingResponsesByUser (List<Coaching> coachingList, String user) {
+    private List<CoachingResponse> getCoachingResponsesByUser(List<Coaching> coachingList, String user) {
         if (!coachingList.isEmpty()) {
             List<User> users = new ArrayList<>();
-            if(user.equals("coach")){
+            if (user.equals("coach")) {
                 for (Coaching coaching : coachingList) {
                     users.add(userService.findById(coaching.getClient().getId()).get());
                 }
-            } else if(user.equals("client")){
+            } else if (user.equals("client")) {
                 for (Coaching coaching : coachingList) {
                     users.add(userService.findById(coaching.getCoach().getId()).get());
                 }
@@ -159,6 +153,7 @@ public class CoachController {
         }
         return new ArrayList<>();
     }
+
     @ExceptionHandler
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ValidationError handleException(MethodArgumentNotValidException exception) {

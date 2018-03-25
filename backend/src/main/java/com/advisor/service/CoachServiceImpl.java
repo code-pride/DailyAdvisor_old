@@ -3,7 +3,6 @@ package com.advisor.service;
 import com.advisor.model.entity.Coaching;
 import com.advisor.model.entity.User;
 import com.advisor.repository.CoachingRepository;
-import com.advisor.service.Exceptions.CoachingNotFoundException;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityExists;
 import com.advisor.service.Exceptions.EntityNotFoundException;
@@ -28,7 +27,7 @@ public class CoachServiceImpl implements CoachService {
     private CoachingRepository repository;
 
     @Override
-    public Coaching findByCoachAndClient(User coach, User client) throws CoachingNotFoundException{
+    public Coaching findByCoachAndClient(User coach, User client){
         List<Coaching>  coachingList = repository.findByCoachAndClient(coach, client);
         if(coachingList.size() != 0) {
             return coachingList.get(0);
@@ -44,11 +43,6 @@ public class CoachServiceImpl implements CoachService {
     @Override
     public List<Coaching> findByCoach(User coach) {
         return repository.findByCoach(coach);
-    }
-
-    @Override
-    public void updateStatus(Coaching coaching) {
-        repository.save(coaching);
     }
 
     @Override

@@ -3,21 +3,27 @@ package com.advisor.service;
 import com.advisor.model.entity.*;
 import com.advisor.model.request.DietListRequest;
 import com.advisor.repository.*;
+import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.DietNotFoundException;
+import com.advisor.service.Exceptions.EntityExists;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 @Service("dietService")
 public class DietServiceImpl implements DietService {
 
+    private static final String DIET_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.diet";
+
+    private static final String DIET_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.diet";
+
     @Autowired
     @Qualifier("dietRepository")
-    private DietRepository dietRepository;
+    private DietRepository repository;
 
     @Autowired
     @Qualifier("eventRepository")
@@ -32,8 +38,45 @@ public class DietServiceImpl implements DietService {
     private RecurringTypeRepository recurringTypeRepository;
 
     @Autowired
-    @Qualifier("userDietRepository")
-    private UserDietRepository userDietRepository;
+    @Qualifier("userDietService")
+    private UserDietService userDietService;
+
+    @Override
+    public Diet create(Diet diet) throws EntityExists {
+        if(diet.getId() == null || repository.existsById(diet.getId())) {
+            return repository.save(diet);
+        } else {
+            throw new EntityExists(DIET_EXISTS_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public void delete(UUID id) throws DataRepositoryException {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(DIET_NOT_FOUND_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public List<Diet> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Optional<Diet> findById(UUID id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public Diet update(Diet diet) throws DataRepositoryException {
+        if(repository.existsById(diet.getId())){
+            return repository.save(diet);
+        } else {
+            throw new EntityNotFoundException(DIET_NOT_FOUND_MESSAGE_CODE);
+        }
+    }
 
     @Override
     public void addDietList(User user, DietListRequest dietListRequest) {
@@ -46,71 +89,48 @@ public class DietServiceImpl implements DietService {
             }
             else {
                 meal.getEvent().setRecurringPattern(null);
+                //TODO fix
                 //recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
             }
 
             eventRepository.save(meal.getEvent());
         }
-        dietRepository.save(dietList);
+        repository.save(dietList);
     }
 
     @Override
-    public Diet findByCreatorAndId(User user, UUID dietId) {
-        List<Diet> dietList = dietRepository.findByCreatorAndId(user, dietId);
-        if(dietList.size()>0){
-            return dietList.get(0);
+    @NotNull
+    public Diet findByCreatorAndId(User user, UUID dietId) throws EntityNotFoundException {
+        Diet diet = repository.findOneByCreatedByAndId(user, dietId);
+        if(Optional.of(diet).isPresent()){
+            return diet;
+        } else{
+            throw new EntityNotFoundException(DIET_NOT_FOUND_MESSAGE_CODE);
         }
-        else{
-            return null;
-        }
     }
 
     @Override
-    public void updateDiet(Diet diet) {
-        dietRepository.save(diet);
+    public void addUserDiet(User user, Diet diet) throws DataRepositoryException {
+        userDietService.create(new UserDiet(user, diet, "waiting"));
     }
 
     @Override
-    public UserDiet findUserDietByDietIdAndUser(Diet diet, User user) {
-        List<UserDiet> userDiets = userDietRepository.findUserDietByUserAndDiet(user, diet);
-        if(userDiets.size()!=0){
-            return userDiets.get(0);
-        }
-        return null;
-    }
-
-    @Override
-    public void addUserDiet(User user, Diet diet) {
-        userDietRepository.save(new UserDiet(user, diet, "waiting"));
-    }
-
-    @Override
-    public void useDietList(UserDiet userDiet) {
-        userDiet.setStatus("used");
-        userDietRepository.save(userDiet);
-    }
-
-    @Override
-    public Diet findDietById(UUID dietId) {
-        return dietRepository.findOneById(dietId);
-    }
-
-    @Override
-    public void setStatus(User user, UUID dietId, String status) throws DietNotFoundException{
+    public void setStatus(User user, UUID dietId, String status) throws DietNotFoundException, DataRepositoryException {
         Diet diet = findByCreatorAndId(user, dietId);
         if(diet != null && diet.getStatus().equals("published")){
             diet.setStatus(status);
-            dietRepository.save(diet);
+            update(diet);
         } else {
             throw new DietNotFoundException();
         }
     }
 
+    //TODO not optimal, should resolve it on db part
     @Override
     public List<Diet> getAllDietLists(User user) {
-        List<Diet> dietList = dietRepository.findByCreatedBy(user);
-        List<UserDiet> dietList2 = userDietRepository.findByUser(user);
-        for (UserDiet userDiet : dietList2) {
+        List<Diet> dietList = repository.findByCreatedBy(user);
+        List<UserDiet> userDietList = userDietService.findByUser(user);
+        for (UserDiet userDiet : userDietList) {
             if(!dietList.contains(userDiet.getDiet())){
                 dietList.add(userDiet.getDiet());
             }
@@ -119,30 +139,30 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public void removeDiet(UserDiet userDiet) {
+    public void removeDiet(UserDiet userDiet) throws DataRepositoryException {
         userDiet.setStatus("waiting");
-        userDietRepository.save(userDiet);
+        userDietService.create(userDiet);
     }
 
     @Override
-    public Diet findDietByUserAndDietId(User user, UUID dietId) throws DietNotFoundException{
-        Diet diet = dietRepository.findOneById(dietId);
+    public Diet findByUserAndDietId(User user, UUID dietId) throws EntityNotFoundException {
+        Diet diet = this.repository.findOneById(dietId);
         if(diet != null) {
             if (diet.getCreatedBy().equals(user)) {
                 return diet;
             } else {
-                List<UserDiet> userDiets = userDietRepository.findUserDietByUserAndDiet(user, diet);
-                if (userDiets.size() == 1) {
-                    return userDiets.get(0).getDiet();
+                UserDiet userDiet = userDietService.findByDietIdAndUser(diet, user);
+                if(Optional.of(userDiet).isPresent()){
+                    return userDiet.getDiet();
                 }
             }
         }
-        throw new DietNotFoundException();
+        throw new EntityNotFoundException(DIET_NOT_FOUND_MESSAGE_CODE);
     }
 
     @Override
     public List<Diet> getAllDiets(User user) {
-        List<UserDiet> userDiets = userDietRepository.findByUser(user);
+        List<UserDiet> userDiets = userDietService.findByUser(user);
         List<Diet> dietList = new ArrayList<>();
         for (UserDiet userDiet : userDiets) {
             dietList.add(userDiet.getDiet());
@@ -152,7 +172,7 @@ public class DietServiceImpl implements DietService {
 
     @Override
     public List<Diet> getAllActiveDiets(User user) {
-        List<UserDiet> userDiets = userDietRepository.findByUser(user);
+        List<UserDiet> userDiets = userDietService.findByUser(user);
         List<Diet> dietList = new ArrayList<>();
         for (UserDiet userDiet : userDiets) {
             if(userDiet.getStatus().equals("used")) {

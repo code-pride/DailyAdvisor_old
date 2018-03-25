@@ -2,8 +2,10 @@ package com.advisor.model.entity;
 
 import com.advisor.model.request.NewUserRequest;
 import lombok.Data;
-
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import javax.persistence.*;
+
 import java.util.UUID;
 
 @Entity
@@ -11,14 +13,14 @@ import java.util.UUID;
 @Table(name = "user_profile")
 public class UserProfile {
 
+    @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
     @Id
-    @org.hibernate.annotations.Type(type = "pg-uuid")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "generator")
     @Column(name = "id",unique=true, nullable = false)
     private UUID id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = false, name = "id")
     private User user;
 
     @Column(name = "name")
