@@ -28,10 +28,10 @@ public class Coaching {
     public Coaching() {
     }
 
-    public Coaching(User coach, User client, String status) {
+    public Coaching(User coach, User client) {
         this.coach = coach;
         this.client = client;
-        this.status = status;
+        this.status = "sent";
     }
 
 }

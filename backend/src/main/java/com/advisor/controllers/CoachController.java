@@ -7,6 +7,7 @@ import com.advisor.model.request.CoachingRequest;
 import com.advisor.model.response.CoachingResponse;
 import com.advisor.service.CoachService;
 import com.advisor.service.Exceptions.CoachingNotFoundException;
+import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,12 @@ public class CoachController {
         if(client.isPresent()){
             Coaching coaching = coachService.findByCoachAndClient(user, client.get());
             if(coaching == null) {
-                coachService.addNewCoaching(user, client.get());
+                Coaching newCoaching = new Coaching(user, client.get());
+                try {
+                    coachService.create(newCoaching);
+                } catch (DataRepositoryException e) {
+                    return new ResponseEntity(e.getStandardResponseCode());
+                }
                 return new ResponseEntity(HttpStatus.OK);
             }
             else if (coaching.getStatus().equals("sent")) {
