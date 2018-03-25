@@ -16,9 +16,8 @@ You need to set up your development environment before you can do anything.
 
 #### Backend
 
-```
-In progress
-```
+* Install Java V1.8.0_161
+* Install PostgreSQL V10.3
 
 ### Installing
 
@@ -41,8 +40,36 @@ Your app will be opened on [http://localhost:8080][2]
 
 #### Backend
 
+##### Database
+
+Creation:
 ```
-In progress
+$ sudo -u postgres psql -c 'create database daily_advisor;'
+```
+Login to database
+```
+$ sudo -u postgres psql postgres
+```
+Grant privilages
+```
+$ grant all privileges on database daily_advisor to postgres;
+```
+
+##### Configuration of PostgreSQL server
+
+In backend\src\main\resources\application.properties check:
+```
+server.port = 8091
+spring.datasource.url =jdbc:postgresql://localhost:5432/daily_advisor
+spring.datasource.username =postgres
+spring.datasource.password =postgres
+```
+##### Server
+In backend root folder launch commands:
+```
+$ ./gradlew clean
+$ ./gradlew build
+$ ./gradlew bootJar
 ```
 
 ## Running the tests
@@ -67,11 +94,14 @@ npm run test
 
 ### Backend tests
 
+In backend root folder launch commands:
 ```
-In progress
+$ ./gradlew testClasses
 ```
 
 ## Deployment
+
+#### Frontend
 
 To build frontend run:
 
@@ -84,6 +114,13 @@ This command will create highly optimized version of frontend. You can open it w
 ```
 $ cd dist
 $ http-server ./
+```
+
+#### Backend
+##### Run server
+In backend/build/lib/ run commands
+```
+$ java -jar DailyAdvisor.java
 ```
 
 ## Authors
