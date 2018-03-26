@@ -38,8 +38,14 @@ public class DietServiceImpl implements DietService {
     private RecurringTypeRepository recurringTypeRepository;
 
     @Autowired
+    @Qualifier("mealRepository")
+    private MealRepository mealRepository;
+
+    @Autowired
     @Qualifier("userDietService")
     private UserDietService userDietService;
+
+
 
     @Override
     public Diet create(Diet diet) throws EntityExists {
@@ -87,13 +93,9 @@ public class DietServiceImpl implements DietService {
                 meal.getEvent().getRecurringPattern().setRecurringType(recurringTypeRepository.findByRecurringName(meal.getEvent().getRecurringPattern().getRecurringType().getRecurringName()));
                 recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
             }
-            else {
-                meal.getEvent().setRecurringPattern(null);
-                //TODO fix
-                //recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
-            }
 
             eventRepository.save(meal.getEvent());
+            mealRepository.save(meal);
         }
         repository.save(dietList);
     }

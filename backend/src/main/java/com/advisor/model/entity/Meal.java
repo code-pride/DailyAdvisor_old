@@ -16,7 +16,7 @@ public class Meal {
     @Column(name = "id",unique=true, nullable = false)
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "event")
     private Event event;
 

@@ -5,6 +5,7 @@ import com.advisor.model.request.MealRequest;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +24,7 @@ public class Diet {
     @OneToOne(cascade = CascadeType.ALL)
     private User createdBy;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "diet_meal", joinColumns = @JoinColumn(name = "id"))
     private Set<Meal> meals;
 
@@ -48,6 +49,7 @@ public class Diet {
         }
         this.meals = meals;
         this.status = "published";
+        this.createDate = new Timestamp(System.currentTimeMillis());
     }
 
 }

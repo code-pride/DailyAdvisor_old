@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -80,5 +81,10 @@ public class Event {
 
     public boolean getRecurring() {
         return recurring;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getId());
     }
 }
