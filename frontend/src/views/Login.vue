@@ -1,5 +1,6 @@
 <template>
     <div class="background">
+        <img src="../assets/logo.png">
         <div class="login-card-wrapper">
             <v-card class="card-content">
                 <v-form>
@@ -23,12 +24,19 @@
 </template>
 
 <style lang="scss" scoped>
+    img {
+        width: auto;
+        max-height: 100px;  
+        margin-bottom: 30px;
+    }
+
     .background {
         background: #29D8F3;
         // background: red;
         display: flex;
         flex: 1 1 0;
         flex-wrap: nowrap;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
