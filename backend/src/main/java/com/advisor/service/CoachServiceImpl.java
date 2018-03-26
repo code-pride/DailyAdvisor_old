@@ -24,7 +24,7 @@ public class CoachServiceImpl implements CoachService {
 
     @Override
     public Coaching create(Coaching coaching) throws EntityExists {
-        if(coaching.getId() == null || repository.existsById(coaching.getId())) {
+        if(coaching.getId() == null || !repository.existsById(coaching.getId())) {
             return repository.save(coaching);
         } else {
             throw new EntityExists(COACHING_EXISTS_MESSAGE_CODE);

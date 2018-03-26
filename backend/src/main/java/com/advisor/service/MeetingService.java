@@ -1,8 +1,10 @@
 package com.advisor.service;
 
+import com.advisor.model.entity.Meeting;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
+import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.Exceptions.UserNotFoundException;
@@ -10,9 +12,9 @@ import com.advisor.service.Exceptions.UserNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
-public interface MeetingService {
+public interface MeetingService extends IService<Meeting, UUID> {
 
-    void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException, EntityNotFoundException;
+    void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException, DataRepositoryException;
 
     MeetingResponse findMeetingByIdAndUser(UUID meetingId, User user);
 
@@ -20,6 +22,6 @@ public interface MeetingService {
 
     void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws MeetingNotFoundException;
 
-    void updateMeeting(MeetingRequest meetingRequest, User user) throws MeetingNotFoundException;
+    void updateMeeting(MeetingRequest meetingRequest, User user) throws MeetingNotFoundException, DataRepositoryException;
 
 }

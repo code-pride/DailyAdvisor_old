@@ -27,7 +27,7 @@ public class RecurringTypeServiceImpl implements RecurringTypeService {
 
     @Override
     public RecurringType create(RecurringType recurringType) throws EntityExists {
-        if(recurringType.getId() == null || repository.existsById(recurringType.getId())) {
+        if(recurringType.getId() == null || !repository.existsById(recurringType.getId())) {
             return repository.save(recurringType);
         } else {
             throw new EntityExists(RECURRING_TYPE_EXISTS_MESSAGE_CODE);

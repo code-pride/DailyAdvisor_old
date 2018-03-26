@@ -47,7 +47,7 @@ public class DietServiceImpl implements DietService {
 
     @Override
     public Diet create(Diet diet) throws EntityExists {
-        if(diet.getId() == null || repository.existsById(diet.getId())) {
+        if(diet.getId() == null || !repository.existsById(diet.getId())) {
             return repository.save(diet);
         } else {
             throw new EntityExists(DIET_EXISTS_MESSAGE_CODE);

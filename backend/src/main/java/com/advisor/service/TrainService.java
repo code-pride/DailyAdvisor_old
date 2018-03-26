@@ -1,28 +1,28 @@
 package com.advisor.service;
 
 import com.advisor.model.entity.Train;
-import com.advisor.model.entity.Training;
 import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
+import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.TrainNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface TrainService {
+public interface TrainService extends IService<Train, UUID> {
 
-    void addTrainList(User user, TrainListRequest trainListRequest);
+    void addTrainList(User user, TrainListRequest trainListRequest) throws DataRepositoryException;
 
     Train findByCreatorAndId(User user, UUID trainId);
 
-    void updateTrain(Train train);
+    Train update(Train train) throws DataRepositoryException;
 
     UserTrain findUserTrainByTrainIdAndUser(Train train, User user);
 
-    void addUserTrain(User user, Train train);
+    void addUserTrain(User user, Train train) throws DataRepositoryException;
 
-    void useTrainList(UserTrain userTrain);
+    void useTrainList(UserTrain userTrain) throws DataRepositoryException;
 
     Train findTrainById(UUID trainId);
 
@@ -30,7 +30,7 @@ public interface TrainService {
 
     List<Train> getAllTrainLists(User user);
 
-    void removeTrain(UserTrain userTrain);
+    void removeTrain(UserTrain userTrain) throws DataRepositoryException;
 
     Train findTrainByUserAndTrainId(User user, UUID trainId) throws TrainNotFoundException;
 

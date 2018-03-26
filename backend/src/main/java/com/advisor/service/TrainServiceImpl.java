@@ -6,59 +6,101 @@ import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.repository.*;
+import com.advisor.service.Exceptions.DataRepositoryException;
+import com.advisor.service.Exceptions.EntityExists;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.Exceptions.TrainNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Service("trainService")
 public class TrainServiceImpl implements TrainService {
 
+    private static final String TRAIN_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.meal";
+
+    private static final String TRAIN_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.meal";
+
     @Autowired
     @Qualifier("trainRepository")
-    private TrainRepository trainRepository;
+    private TrainRepository repository;
 
     @Autowired
-    @Qualifier("userTrainRepository")
-    private UserTrainRepository userTrainRepository;
+    @Qualifier("eventService")
+    private EventService eventService;
 
     @Autowired
-    @Qualifier("eventRepository")
-    private EventRepository eventRepository;
+    @Qualifier("recurringPatternService")
+    private RecurringPatternService recurringPatternService;
 
     @Autowired
-    @Qualifier("recurringPatternRepository")
-    private RecurringPatternRepository recurringPatternRepository;
+    @Qualifier("recurringTypeService")
+    private RecurringTypeService recurringTypeService;
 
     @Autowired
-    @Qualifier("recurringTypeRepository")
-    private RecurringTypeRepository recurringTypeRepository;
+    @Qualifier("userTrainService")
+    private UserTrainService userTrainService;
 
     @Override
-    public void addTrainList(User user, TrainListRequest trainListRequest) {
+    public Train create(Train train) throws EntityExists {
+        if(train.getId() == null || !repository.existsById(train.getId())) {
+            return repository.save(train);
+        } else {
+            throw new EntityExists(TRAIN_EXISTS_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public void delete(UUID id) throws DataRepositoryException {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(TRAIN_NOT_FOUND_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public List<Train> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Optional<Train> findById(UUID id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public Train update(Train train) throws DataRepositoryException, NoSuchElementException {
+        if(repository.existsById(train.getId())){
+            return repository.save(train);
+        } else {
+            throw new EntityNotFoundException(TRAIN_NOT_FOUND_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public void addTrainList(User user, TrainListRequest trainListRequest) throws DataRepositoryException {
         Train trainList = new Train(user, trainListRequest);
 
         for (Training training : trainList.getTrainings()) {
             if(training.getEvent().getRecurring()){
-                training.getEvent().getRecurringPattern().setRecurringType(recurringTypeRepository.findByRecurringName(training.getEvent().getRecurringPattern().getRecurringType().getRecurringName()));
+                training.getEvent().getRecurringPattern().setRecurringType(recurringTypeService.findByRecurringName(training.getEvent().getRecurringPattern().getRecurringType().getRecurringName()));
             }
             else {
                 training.getEvent().setRecurringPattern(null);
             }
-            recurringPatternRepository.save(training.getEvent().getRecurringPattern());
-            eventRepository.save(training.getEvent());
+            recurringPatternService.create(training.getEvent().getRecurringPattern());
+            eventService.create(training.getEvent());
         }
-        trainRepository.save(trainList);
+        repository.save(trainList);
     }
 
     @Override
     public Train findByCreatorAndId(User user, UUID trainId) {
-        List<Train> trainList = trainRepository.findByCreatorAndId(user, trainId);
+        List<Train> trainList = repository.findByCreatorAndId(user, trainId);
         if(trainList.size()>0){
             return trainList.get(0);
         }
@@ -68,33 +110,30 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void updateTrain(Train train) {
-        trainRepository.save(train);
-    }
-
-    @Override
     public UserTrain findUserTrainByTrainIdAndUser(Train train, User user) {
-        List<UserTrain> userTrains = userTrainRepository.findByUserAndTrain(user, train);
+        List<UserTrain> userTrains = userTrainService.findByUserAndTrain(user, train);
         if(userTrains.size()!=0){
             return userTrains.get(0);
         }
         return null;
     }
 
+
+    //TODO move to controller creation of UserTrain
     @Override
-    public void addUserTrain(User user, Train train) {
-        userTrainRepository.save(new UserTrain(user, train, "waiting"));
+    public void addUserTrain(User user, Train train) throws DataRepositoryException {
+        userTrainService.create(new UserTrain(user, train, "waiting"));
     }
 
     @Override
-    public void useTrainList(UserTrain userTrain) {
+    public void useTrainList(UserTrain userTrain) throws DataRepositoryException {
         userTrain.setStatus("used");
-        userTrainRepository.save(userTrain);
+        userTrainService.update(userTrain);
     }
 
     @Override
     public Train findTrainById(UUID trainId) {
-        return trainRepository.findOneById(trainId);
+        return repository.findOneById(trainId);
     }
 
     @Override
@@ -102,7 +141,7 @@ public class TrainServiceImpl implements TrainService {
         Train train = findByCreatorAndId(user, trainId);
         if(train != null && train.getStatus().equals("published")){
             train.setStatus(status);
-            trainRepository.save(train);
+            repository.save(train);
         } else {
             throw new TrainNotFoundException();
         }
@@ -110,8 +149,8 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public List<Train> getAllTrainLists(User user) {
-        List<Train> trainList = trainRepository.findByCreatedBy(user);
-        List<UserTrain> trainList2 = userTrainRepository.findByUser(user);
+        List<Train> trainList = repository.findByCreatedBy(user);
+        List<UserTrain> trainList2 = userTrainService.findByUser(user);
         for (UserTrain userTrain : trainList2) {
             if(!trainList.contains(userTrain.getTrain())){
                 trainList.add(userTrain.getTrain());
@@ -121,19 +160,19 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void removeTrain(UserTrain userTrain) {
+    public void removeTrain(UserTrain userTrain) throws DataRepositoryException {
         userTrain.setStatus("waiting");
-        userTrainRepository.save(userTrain);
+        userTrainService.update(userTrain);
     }
 
     @Override
     public Train findTrainByUserAndTrainId(User user, UUID trainId) throws TrainNotFoundException{
-        Train train = trainRepository.findOneById(trainId);
+        Train train = repository.findOneById(trainId);
         if(train != null) {
             if (train.getCreatedBy().equals(user)) {
                 return train;
             } else {
-                List<UserTrain> userTrains = userTrainRepository.findByUserAndTrain(user, train);
+                List<UserTrain> userTrains = userTrainService.findByUserAndTrain(user, train);
                 if (userTrains.size() == 1) {
                     return userTrains.get(0).getTrain();
                 }
@@ -144,7 +183,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public List<Train> getAllTrainings(User user) {
-        List<UserTrain> userTrains = userTrainRepository.findByUser(user);
+        List<UserTrain> userTrains = userTrainService.findByUser(user);
         List<Train> trainList = new ArrayList<>();
         for (UserTrain userTrain : userTrains) {
             trainList.add(userTrain.getTrain());
@@ -154,7 +193,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public List<Train> getAllActiveTrainings(User user) {
-        List<UserTrain> userTrains = userTrainRepository.findByUser(user);
+        List<UserTrain> userTrains = userTrainService.findByUser(user);
         List<Train> trainList = new ArrayList<>();
         for (UserTrain userTrain : userTrains) {
             if(userTrain.getStatus().equals("used")) {

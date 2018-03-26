@@ -28,7 +28,7 @@ public class RecurringPatternServiceImpl implements RecurringPatternService {
 
     @Override
     public RecurringPattern create(RecurringPattern recurringPattern) throws EntityExists {
-        if(recurringPattern.getId() == null || repository.existsById(recurringPattern.getId())) {
+        if(recurringPattern.getId() == null || !repository.existsById(recurringPattern.getId())) {
             return repository.save(recurringPattern);
         } else {
             throw new EntityExists(RECURRING_PATTERN_EXISTS_MESSAGE_CODE);

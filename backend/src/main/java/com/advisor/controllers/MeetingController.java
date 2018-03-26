@@ -3,9 +3,9 @@ package com.advisor.controllers;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
+import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.Exceptions.MeetingNotFoundException;
-import com.advisor.service.Exceptions.UserNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
 import org.slf4j.Logger;
@@ -47,6 +47,8 @@ public class MeetingController {
                 meetingService.addMeeting(user, meetingRequest);
             } catch (EntityNotFoundException e){
                 logger.warn(e.getStandardMessageCode());
+                return new ResponseEntity(e.getStandardResponseCode());
+            } catch (DataRepositoryException e) {
                 return new ResponseEntity(e.getStandardResponseCode());
             }
             return new ResponseEntity(HttpStatus.OK);
@@ -117,6 +119,8 @@ public class MeetingController {
             meetingService.updateMeeting(meetingRequest, user);
         } catch (MeetingNotFoundException e){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
         return new ResponseEntity(HttpStatus.OK);
     }

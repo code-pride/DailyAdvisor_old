@@ -6,8 +6,9 @@ import com.advisor.model.entity.User;
 import com.advisor.service.Exceptions.MessageNotFoundException;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface MessageService {
+public interface MessageService extends IService<Message, UUID> {
 
     void addUserMessage(User user, User user2, MessageRequest messageRequest);
 

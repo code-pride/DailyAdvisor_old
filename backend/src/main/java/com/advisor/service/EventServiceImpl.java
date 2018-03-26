@@ -32,7 +32,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event create(Event event) throws EntityExists {
-        if(event.getId() == null || repository.existsById(event.getId())) {
+        if(event.getId() == null || !repository.existsById(event.getId())) {
             return repository.save(event);
         } else {
             throw new EntityExists(EVENT_EXISTS_MESSAGE_CODE);

@@ -6,6 +6,7 @@ import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.model.request.TrainShareRequest;
 import com.advisor.model.response.TrainResponse;
+import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.TrainNotFoundException;
 import com.advisor.service.TrainService;
 import com.advisor.service.UserService;
@@ -29,8 +30,7 @@ public class TrainController {
     private TrainService trainService;
 
     @RequestMapping(value = { "train/addTrainList" }, method = RequestMethod.POST)
-    public ResponseEntity addTrainList(@Valid @RequestBody TrainListRequest trainListRequest)
-    {
+    public ResponseEntity addTrainList(@Valid @RequestBody TrainListRequest trainListRequest) throws DataRepositoryException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
@@ -40,8 +40,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/share" }, method = RequestMethod.PUT)
-    public ResponseEntity shareTrainPlan(@Valid @RequestBody TrainShareRequest trainShareRequest)
-    {
+    public ResponseEntity shareTrainPlan(@Valid @RequestBody TrainShareRequest trainShareRequest) throws DataRepositoryException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
@@ -54,7 +53,7 @@ public class TrainController {
                     return new ResponseEntity(HttpStatus.IM_USED);
                 }
                 trainService.addUserTrain(user2.get(), train);
-                trainService.updateTrain(train);
+                trainService.update(train);
                 return new ResponseEntity(HttpStatus.OK);
             }
         }
@@ -62,7 +61,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/use" }, method = RequestMethod.POST)
-    public ResponseEntity useTrainPlan(@Valid @RequestBody UUID trainId) {
+    public ResponseEntity useTrainPlan(@Valid @RequestBody UUID trainId) throws DataRepositoryException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
@@ -147,7 +146,7 @@ public class TrainController {
     }
 
     @RequestMapping(value = { "train/remove" }, method = RequestMethod.POST)
-    public ResponseEntity removeTrain(@Valid @RequestBody UUID trainId) {
+    public ResponseEntity removeTrain(@Valid @RequestBody UUID trainId) throws DataRepositoryException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 

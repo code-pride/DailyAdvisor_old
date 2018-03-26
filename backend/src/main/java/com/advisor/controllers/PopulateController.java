@@ -9,6 +9,7 @@ import com.advisor.repository.CoachTypeRepository;
 import com.advisor.repository.RecurringTypeRepository;
 import com.advisor.repository.RoleRepository;
 import com.advisor.service.AdvertisementService;
+import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
@@ -18,14 +19,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 public class PopulateController {
@@ -55,7 +54,7 @@ public class PopulateController {
     public ResponseEntity populate()
     {
         //save roles
-        List<Role> roles = new ArrayList();
+        List<Role> roles = new ArrayList<>();
         roles.add(new Role("ADMIN"));
         roles.add(new Role("COACH"));
         roles.add(new Role("USER"));
@@ -64,7 +63,7 @@ public class PopulateController {
         }
 
         //save CoachTypes
-        List<CoachType> coachTypes = new ArrayList();
+        List<CoachType> coachTypes = new ArrayList<>();
         coachTypes.add(new CoachType("bodybuilding"));
         coachTypes.add(new CoachType("fitness"));
         for (CoachType c : coachTypes) {
@@ -72,7 +71,7 @@ public class PopulateController {
         }
 
         //save recurrence types
-        List<RecurringType> recurringTypes = new ArrayList();
+        List<RecurringType> recurringTypes = new ArrayList<>();
         recurringTypes.add(new RecurringType("daily"));
         recurringTypes.add(new RecurringType("weekly"));
         recurringTypes.add(new RecurringType("monthly"));
@@ -115,6 +114,8 @@ public class PopulateController {
             meetingService.addMeeting(user2, meetingRequest);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
         return new ResponseEntity(HttpStatus.OK);
     }

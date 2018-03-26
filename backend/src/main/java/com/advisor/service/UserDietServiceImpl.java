@@ -28,7 +28,7 @@ public class UserDietServiceImpl implements UserDietService {
 
     @Override
     public UserDiet create(UserDiet userDiet) throws EntityExists {
-        if(userDiet.getId() == null || repository.existsById(userDiet.getId())) {
+        if(userDiet.getId() == null || !repository.existsById(userDiet.getId())) {
             return repository.save(userDiet);
         } else {
             throw new EntityExists(USER_DIET_EXISTS_MESSAGE_CODE);

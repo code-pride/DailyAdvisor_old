@@ -27,7 +27,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public Meal create(Meal meal) throws EntityExists {
-        if(meal.getId() == null || repository.existsById(meal.getId())) {
+        if(meal.getId() == null || !repository.existsById(meal.getId())) {
             return repository.save(meal);
         } else {
             throw new EntityExists(MEAL_EXISTS_MESSAGE_CODE);
