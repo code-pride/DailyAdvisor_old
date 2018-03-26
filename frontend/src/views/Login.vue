@@ -3,36 +3,67 @@
         <img src="../assets/logo.png">
         <div class="login-card-wrapper">
             <v-card class="card-content">
-                <v-form>
+                <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
                     <v-text-field
                         label="Email"
                         v-model="email"
                         :rules="emailRules"
+                        required
                     ></v-text-field>
                     <v-text-field
                         label="Password"
                         v-model="password"
                         :rules="passwordRules"
                         :type="'password'"
+                        required
                     ></v-text-field>
+                    <v-btn
+                        @click="submit"
+                        :disabled="!valid"
+                        class="sign-in-btn"
+                        color="secondary"
+                    >Log in</v-btn>
                 </v-form>
-                <v-btn color="secondary">Log in</v-btn>
-                <v-btn flat small color="primary">Sign up</v-btn>
+                <v-btn flat small class="sign-up-btn" color="primary">Sign up</v-btn>
             </v-card>
         </div>
     </div>
 </template>
 
+<script>
+export default {
+    data: () => ({
+        valid: true,
+        email: '',
+        emailRules: [
+            v => !!v || 'E-mail is required',
+            v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+        ],
+        name: '',
+        nameRules: [
+            v => !!v || 'Password is required',
+            v => (v && v.length <= 10) || 'Password must be less than 10 characters',
+        ],
+    }),
+    methods: {
+        submit() {
+            if (this.$refs.form.validate()) {
+                console.log('test');
+            }
+        },
+    },
+};
+</script>
+
 <style lang="scss" scoped>
     img {
         width: auto;
-        max-height: 100px;  
+        max-height: 100px;
         margin-bottom: 30px;
     }
 
     .background {
         background: #29D8F3;
-        // background: red;
         display: flex;
         flex: 1 1 0;
         flex-wrap: nowrap;
@@ -52,7 +83,21 @@
         flex: 1 1 0;
         flex-direction: column;
         flex-wrap: nowrap;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
+    }
+
+    .form-wrapper {
+        padding-top: 10px;
+        width: 80%;
+    }
+
+    .sign-in-btn {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .sign-up-btn {
+        height: 15px;
     }
 </style>
