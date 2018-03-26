@@ -104,15 +104,19 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public void updateStatus(UUID advId, User user, String status) throws AdvertisementNotFound{
+    public void updateStatus(UUID advId, User user, String status) throws EntityNotFoundException {
         if(repository.updateStatus(advId, user, status) == 0){
-            throw new AdvertisementNotFound();
+            throw new EntityNotFoundException(ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE);
         }
     }
 
     @Override
     public List<Advertisement> getByCriteria(List<User> users, String type) {
-        CoachType coachType = coachTypeRepository.findByType(type);
-        return repository.findByUserInAndCoachTypeAndStatus(users, coachType, "active");
+        try {
+            CoachType coachType = coachTypeRepository.findByType(type);
+            return repository.findByUserInAndCoachTypeAndStatus(users, coachType, "active");
+        }catch (En){
+
+        }
     }
 }

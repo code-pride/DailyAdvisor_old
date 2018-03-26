@@ -4,14 +4,12 @@ import com.advisor.model.entity.*;
 import com.advisor.model.request.DietListRequest;
 import com.advisor.repository.*;
 import com.advisor.service.Exceptions.DataRepositoryException;
-import com.advisor.service.Exceptions.DietNotFoundException;
 import com.advisor.service.Exceptions.EntityExists;
 import com.advisor.service.Exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Service("dietService")
@@ -113,13 +111,13 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public void setStatus(User user, UUID dietId, String status) throws DietNotFoundException, DataRepositoryException {
+    public void setStatus(User user, UUID dietId, String status) throws DataRepositoryException {
         Diet diet = findByCreatorAndId(user, dietId);
         if(diet != null && diet.getStatus().equals("published")){
             diet.setStatus(status);
             update(diet);
         } else {
-            throw new DietNotFoundException();
+            throw new EntityNotFoundException(DIET_NOT_FOUND_MESSAGE_CODE);
         }
     }
 

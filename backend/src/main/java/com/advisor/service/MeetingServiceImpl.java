@@ -73,7 +73,7 @@ public class MeetingServiceImpl implements MeetingService {
 
 
     @Override
-    public void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException, DataRepositoryException {
+    public void addMeeting(User user, MeetingRequest meetingRequest) throws DataRepositoryException {
         Optional<User> user2 = userService.findById(meetingRequest.getUserId2());
         if(user2.isPresent()) {
             Event event = new Event(meetingRequest.getEventRequest());
@@ -105,7 +105,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws MeetingNotFoundException{
+    public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws EntityNotFoundException {
         Optional<Meeting> meeting = repository.findById(meetingId);
         if(meeting.isPresent()){
             if(meeting.get().getUserId().equals(user)) {
@@ -116,16 +116,13 @@ public class MeetingServiceImpl implements MeetingService {
                     repository.updateMeeting(user, "canceled");
                 }
             }
-            else {
-                throw new MeetingNotFoundException();
-            }
-        } else {
-            throw new MeetingNotFoundException();
         }
+        throw new EntityNotFoundException(MEETING_NOT_FOUND_MESSAGE_CODE);
+
     }
 
     @Override
-    public void updateMeeting(MeetingRequest meetingRequest, User user) throws MeetingNotFoundException, DataRepositoryException {
+    public void updateMeeting(MeetingRequest meetingRequest, User user) throws DataRepositoryException {
         Meeting meeting = repository.findOneByIdAndUserId(meetingRequest.getMeetingId(), user);
 
         Event event = new Event(meetingRequest.getEventRequest());

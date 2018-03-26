@@ -7,8 +7,8 @@ import com.advisor.model.request.AdvCriteriaRequest;
 import com.advisor.model.request.AdvertisementRequest;
 import com.advisor.model.response.AdvertisementResponse;
 import com.advisor.service.AdvertisementService;
-import com.advisor.service.Exceptions.AdvertisementNotFound;
 import com.advisor.service.Exceptions.DataRepositoryException;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -93,8 +93,8 @@ public class AdvertisementController {
         User user = userService.findUserByEmail(auth.getName());
     try {
         advertisementService.updateStatus(advId, user, "active");
-    } catch(AdvertisementNotFound e){
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    } catch (EntityNotFoundException e) {
+        return new ResponseEntity<>(e.getStandardResponseCode());
     }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -106,8 +106,8 @@ public class AdvertisementController {
         User user = userService.findUserByEmail(auth.getName());
         try {
             advertisementService.updateStatus(advId, user, "disabled");
-        } catch(AdvertisementNotFound e){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getStandardResponseCode());
         }
         return new ResponseEntity(HttpStatus.OK);
     }

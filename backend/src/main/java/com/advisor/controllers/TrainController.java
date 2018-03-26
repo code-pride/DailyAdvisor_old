@@ -7,7 +7,7 @@ import com.advisor.model.request.TrainListRequest;
 import com.advisor.model.request.TrainShareRequest;
 import com.advisor.model.response.TrainResponse;
 import com.advisor.service.Exceptions.DataRepositoryException;
-import com.advisor.service.Exceptions.TrainNotFoundException;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.TrainService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,8 +90,8 @@ public class TrainController {
         User user = userService.findUserByEmail(auth.getName());
         try{
             trainService.setStatus(user, trainId, "disabled");
-        } catch (TrainNotFoundException e){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -101,55 +101,44 @@ public class TrainController {
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        try{
-            List<Train> trainList = trainService.getAllTrainLists(user);
-            List<TrainResponse> trainResponses = new ArrayList<>();
-            for (Train train : trainList) {
-                if(!train.getStatus().equals("disabled")) {
-                    trainResponses.add(new TrainResponse(train));
-                }
-            }
-            return new ResponseEntity<>(trainResponses, HttpStatus.OK);
-        } catch (TrainNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @RequestMapping(value = { "train/getTrainList/{trainId}" }, method = RequestMethod.GET)
-    public ResponseEntity<TrainResponse> getTrainList(@PathVariable UUID trainId)
-    {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        try{
-            Train train = trainService.findTrainByUserAndTrainId(user, trainId);
-            return new ResponseEntity<>(new TrainResponse(train), HttpStatus.OK);
-        } catch (TrainNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @RequestMapping(value = { "train/getAllTrainings" }, method = RequestMethod.GET)
-    public ResponseEntity<List<TrainResponse>> getAllTrainings()
-    {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        try{
-            List<Train> trainList = trainService.getAllTrainings(user);
-            List<TrainResponse> trainResponses = new ArrayList<>();
-            for (Train train : trainList) {
+        List<Train> trainList = trainService.getAllTrainLists(user);
+        List<TrainResponse> trainResponses = new ArrayList<>();
+        for (Train train : trainList) {
+            if(!train.getStatus().equals("disabled")) {
                 trainResponses.add(new TrainResponse(train));
             }
-            return new ResponseEntity<>(trainResponses, HttpStatus.OK);
-        } catch (TrainNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(trainResponses, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"train/getTrainList/{trainId}"}, method = RequestMethod.GET)
+    public ResponseEntity<TrainResponse> getTrainList(@PathVariable UUID trainId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        try {
+            Train train = trainService.findTrainByUserAndTrainId(user, trainId);
+            return new ResponseEntity<>(new TrainResponse(train), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getStandardResponseCode());
+        }
+    }
+
+    @RequestMapping(value = {"train/getAllTrainings"}, method = RequestMethod.GET)
+    public ResponseEntity<List<TrainResponse>> getAllTrainings() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        List<Train> trainList = trainService.getAllTrainings(user);
+        List<TrainResponse> trainResponses = new ArrayList<>();
+        for (Train train : trainList) {
+            trainResponses.add(new TrainResponse(train));
+        }
+        return new ResponseEntity<>(trainResponses, HttpStatus.OK);
     }
 
     @RequestMapping(value = { "train/remove" }, method = RequestMethod.POST)
     public ResponseEntity removeTrain(@Valid @RequestBody UUID trainId) throws DataRepositoryException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-
         Train train = trainService.findTrainById(trainId);
         UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
         if(userTrain != null && userTrain.getStatus().equals("used")){

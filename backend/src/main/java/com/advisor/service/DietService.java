@@ -2,10 +2,8 @@ package com.advisor.service;
 
 import com.advisor.model.entity.Diet;
 import com.advisor.model.entity.User;
-import com.advisor.model.entity.UserDiet;
 import com.advisor.model.request.DietListRequest;
 import com.advisor.service.Exceptions.DataRepositoryException;
-import com.advisor.service.Exceptions.DietNotFoundException;
 import com.advisor.service.Exceptions.EntityNotFoundException;
 
 import java.util.List;

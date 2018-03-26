@@ -5,7 +5,7 @@ import com.advisor.model.entity.User;
 import com.advisor.model.entity.UserTrain;
 import com.advisor.model.request.TrainListRequest;
 import com.advisor.service.Exceptions.DataRepositoryException;
-import com.advisor.service.Exceptions.TrainNotFoundException;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,13 +26,13 @@ public interface TrainService extends IService<Train, UUID> {
 
     Train findTrainById(UUID trainId);
 
-    void setStatus(User user, UUID trainId, String status) throws TrainNotFoundException;
+    void setStatus(User user, UUID trainId, String status) throws EntityNotFoundException;
 
     List<Train> getAllTrainLists(User user);
 
     void removeTrain(UserTrain userTrain) throws DataRepositoryException;
 
-    Train findTrainByUserAndTrainId(User user, UUID trainId) throws TrainNotFoundException;
+    Train findTrainByUserAndTrainId(User user, UUID trainId) throws EntityNotFoundException;
 
     List<Train> getAllTrainings(User user);
 

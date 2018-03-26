@@ -6,22 +6,20 @@ import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityNotFoundException;
-import com.advisor.service.Exceptions.MeetingNotFoundException;
-import com.advisor.service.Exceptions.UserNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface MeetingService extends IService<Meeting, UUID> {
 
-    void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException, DataRepositoryException;
+    void addMeeting(User user, MeetingRequest meetingRequest) throws DataRepositoryException;
 
     MeetingResponse findMeetingByIdAndUser(UUID meetingId, User user);
 
     List<MeetingResponse> findMeetingByUser(User user);
 
-    void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws MeetingNotFoundException;
+    void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws EntityNotFoundException;
 
-    void updateMeeting(MeetingRequest meetingRequest, User user) throws MeetingNotFoundException, DataRepositoryException;
+    void updateMeeting(MeetingRequest meetingRequest, User user) throws DataRepositoryException;
 
 }

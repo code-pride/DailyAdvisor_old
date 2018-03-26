@@ -5,7 +5,6 @@ import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityNotFoundException;
-import com.advisor.service.Exceptions.MeetingNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
 import org.slf4j.Logger;
@@ -84,17 +83,16 @@ public class MeetingController {
     }
 
     @RequestMapping(value = { "/meeting/{meetingId}/{statusChange}" }, method = RequestMethod.PUT)
-    public ResponseEntity acceptMeeting(@PathVariable UUID meetingId, @PathVariable String statusChange)
-    {
+    public ResponseEntity acceptMeeting(@PathVariable UUID meetingId, @PathVariable String statusChange) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         try {
-            switch (statusChange){
-                case("accept"):{
+            switch (statusChange) {
+                case ("accept"): {
                     meetingService.updateMeetingStatus(meetingId, user, "accept");
                     break;
                 }
-                case("cancel"):{
+                case ("cancel"): {
                     meetingService.updateMeetingStatus(meetingId, user, "cancel");
                     break;
                 }
@@ -102,11 +100,10 @@ public class MeetingController {
                     return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
             meetingService.updateMeetingStatus(meetingId, user, "accept");
-        } catch (MeetingNotFoundException e){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getStandardResponseCode());
         }
         return new ResponseEntity(HttpStatus.OK);
-
     }
 
     @RequestMapping(value = { "meeting/update" }, method = RequestMethod.PUT)
@@ -117,8 +114,6 @@ public class MeetingController {
 
         try {
             meetingService.updateMeeting(meetingRequest, user);
-        } catch (MeetingNotFoundException e){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
         } catch (DataRepositoryException e) {
             return new ResponseEntity(e.getStandardResponseCode());
         }

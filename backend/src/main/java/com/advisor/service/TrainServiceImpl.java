@@ -9,7 +9,6 @@ import com.advisor.repository.*;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityExists;
 import com.advisor.service.Exceptions.EntityNotFoundException;
-import com.advisor.service.Exceptions.TrainNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -137,13 +136,13 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public void setStatus(User user, UUID trainId, String status) throws TrainNotFoundException {
+    public void setStatus(User user, UUID trainId, String status) throws EntityNotFoundException {
         Train train = findByCreatorAndId(user, trainId);
         if(train != null && train.getStatus().equals("published")){
             train.setStatus(status);
             repository.save(train);
         } else {
-            throw new TrainNotFoundException();
+            throw new EntityNotFoundException(TRAIN_NOT_FOUND_MESSAGE_CODE);
         }
     }
 
@@ -166,7 +165,7 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public Train findTrainByUserAndTrainId(User user, UUID trainId) throws TrainNotFoundException{
+    public Train findTrainByUserAndTrainId(User user, UUID trainId) throws EntityNotFoundException {
         Train train = repository.findOneById(trainId);
         if(train != null) {
             if (train.getCreatedBy().equals(user)) {
@@ -178,7 +177,7 @@ public class TrainServiceImpl implements TrainService {
                 }
             }
         }
-        throw new TrainNotFoundException();
+        throw new EntityNotFoundException(TRAIN_NOT_FOUND_MESSAGE_CODE);
     }
 
     @Override

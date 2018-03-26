@@ -8,7 +8,6 @@ import com.advisor.model.request.DietShareRequest;
 import com.advisor.model.response.DietResponse;
 import com.advisor.service.DietService;
 import com.advisor.service.Exceptions.DataRepositoryException;
-import com.advisor.service.Exceptions.DietNotFoundException;
 import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.UserDietService;
 import com.advisor.service.UserService;
@@ -111,16 +110,12 @@ public class DietController {
     public ResponseEntity<List<DietResponse>> getAllDietLists() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        try {
-            List<Diet> diets = dietService.getAllDietLists(user);
-            List<DietResponse> dietResponseList = new ArrayList<>();
-            for (Diet diet : diets) {
-                dietResponseList.add(new DietResponse(diet));
-            }
-            return new ResponseEntity<>(dietResponseList, HttpStatus.OK);
-        } catch (DietNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<Diet> diets = dietService.getAllDietLists(user);
+        List<DietResponse> dietResponseList = new ArrayList<>();
+        for (Diet diet : diets) {
+            dietResponseList.add(new DietResponse(diet));
         }
+        return new ResponseEntity<>(dietResponseList, HttpStatus.OK);
     }
 
     @RequestMapping(value = {"diet/getDietList/{dietId}"}, method = RequestMethod.GET)
@@ -139,16 +134,12 @@ public class DietController {
     public ResponseEntity<List<DietResponse>> getAllDiets() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        try {
-            List<Diet> dietList = dietService.findAllUserDiets(user);
-            List<DietResponse> dietResponses = new ArrayList<>();
-            for (Diet diet : dietList) {
-                dietResponses.add(new DietResponse(diet));
-            }
-            return new ResponseEntity<>(dietResponses, HttpStatus.OK);
-        } catch (DietNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<Diet> dietList = dietService.findAllUserDiets(user);
+        List<DietResponse> dietResponses = new ArrayList<>();
+        for (Diet diet : dietList) {
+            dietResponses.add(new DietResponse(diet));
         }
+        return new ResponseEntity<>(dietResponses, HttpStatus.OK);
     }
 
     @RequestMapping(value = {"diet/remove"}, method = RequestMethod.POST)
