@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public interface DietService extends IService<Diet, UUID>{
 
-    void addDietList(User user, DietListRequest dietListRequest);
+    void addDietList(User user, DietListRequest dietListRequest) throws DataRepositoryException;
 
     Diet findByCreatorAndId(User user, UUID dietId) throws EntityNotFoundException;
 
@@ -28,11 +28,9 @@ public interface DietService extends IService<Diet, UUID>{
 
     List<Diet> getAllDietLists(User user);
 
-    void removeDiet(UserDiet userDiet) throws DataRepositoryException;
-
     Diet findByUserAndDietId(User user, UUID dietId) throws EntityNotFoundException;
 
-    List<Diet> getAllDiets(User user);
+    List<Diet> findAllUserDiets(User user);
 
     List<Diet> getAllActiveDiets(User user);
 

@@ -16,5 +16,7 @@ public interface UserDietService extends IService<UserDiet, UUID> {
     List<UserDiet> findByUser(User user);
 
     void useDietList(UserDiet userDiet) throws DataRepositoryException;
+
+    void removeDiet(UserDiet userDiet) throws DataRepositoryException;
 }
 

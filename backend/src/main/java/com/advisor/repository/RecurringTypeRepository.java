@@ -9,6 +9,5 @@ import java.util.UUID;
 @Repository("recurringTypeRepository")
 public interface RecurringTypeRepository extends JpaRepository<RecurringType, UUID> {
 
-
-    RecurringType findByRecurringName(String type);
+    RecurringType findByRecurringName(String recurringName);
 }

@@ -26,26 +26,24 @@ public class DietServiceImpl implements DietService {
     private DietRepository repository;
 
     @Autowired
-    @Qualifier("eventRepository")
-    private EventRepository eventRepository;
-
-    @Autowired
-    @Qualifier("recurringPatternRepository")
-    private RecurringPatternRepository recurringPatternRepository;
-
-    @Autowired
-    @Qualifier("recurringTypeRepository")
-    private RecurringTypeRepository recurringTypeRepository;
-
-    @Autowired
-    @Qualifier("mealRepository")
-    private MealRepository mealRepository;
-
-    @Autowired
     @Qualifier("userDietService")
     private UserDietService userDietService;
 
+    @Autowired
+    @Qualifier("mealService")
+    private MealService mealService;
 
+    @Autowired
+    @Qualifier("eventService")
+    private EventService eventService;
+
+    @Autowired
+    @Qualifier("recurringPatternService")
+    private RecurringPatternService recurringPatternService;
+
+    @Autowired
+    @Qualifier("recurringTypeService")
+    private RecurringTypeService recurringTypeService;
 
     @Override
     public Diet create(Diet diet) throws EntityExists {
@@ -85,23 +83,21 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public void addDietList(User user, DietListRequest dietListRequest) {
+    public void addDietList(User user, DietListRequest dietListRequest) throws DataRepositoryException {
         Diet dietList = new Diet(user, dietListRequest);
 
         for (Meal meal : dietList.getMeals()) {
             if(meal.getEvent().getRecurring()){
-                meal.getEvent().getRecurringPattern().setRecurringType(recurringTypeRepository.findByRecurringName(meal.getEvent().getRecurringPattern().getRecurringType().getRecurringName()));
-                recurringPatternRepository.save(meal.getEvent().getRecurringPattern());
+                meal.getEvent().getRecurringPattern().setRecurringType(recurringTypeService.findByRecurringName(meal.getEvent().getRecurringPattern().getRecurringType().getRecurringName()));
+                recurringPatternService.create(meal.getEvent().getRecurringPattern());
             }
-
-            eventRepository.save(meal.getEvent());
-            mealRepository.save(meal);
+            eventService.create(meal.getEvent());
+            mealService.create(meal);
         }
         repository.save(dietList);
     }
 
     @Override
-    @NotNull
     public Diet findByCreatorAndId(User user, UUID dietId) throws EntityNotFoundException {
         Diet diet = repository.findOneByCreatedByAndId(user, dietId);
         if(Optional.of(diet).isPresent()){
@@ -141,12 +137,6 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public void removeDiet(UserDiet userDiet) throws DataRepositoryException {
-        userDiet.setStatus("waiting");
-        userDietService.create(userDiet);
-    }
-
-    @Override
     public Diet findByUserAndDietId(User user, UUID dietId) throws EntityNotFoundException {
         Diet diet = this.repository.findOneById(dietId);
         if(diet != null) {
@@ -163,7 +153,7 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<Diet> getAllDiets(User user) {
+    public List<Diet> findAllUserDiets(User user) {
         List<UserDiet> userDiets = userDietService.findByUser(user);
         List<Diet> dietList = new ArrayList<>();
         for (UserDiet userDiet : userDiets) {

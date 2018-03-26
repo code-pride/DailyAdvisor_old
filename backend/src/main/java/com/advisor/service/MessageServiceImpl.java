@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("messageServiceImpl")
+@Service("messageService")
 public class MessageServiceImpl implements MessageService {
 
     @Autowired

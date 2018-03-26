@@ -84,4 +84,10 @@ public class UserDietServiceImpl implements UserDietService {
         update(userDiet);
     }
 
+    @Override
+    public void removeDiet(UserDiet userDiet) throws DataRepositoryException {
+        userDiet.setStatus("waiting");
+        update(userDiet);
+    }
+
 }

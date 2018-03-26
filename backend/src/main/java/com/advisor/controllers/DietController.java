@@ -44,8 +44,11 @@ public class DietController {
     public ResponseEntity addDietList(@Valid @RequestBody DietListRequest dietListRequest) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        dietService.addDietList(user, dietListRequest);
-
+        try {
+            dietService.addDietList(user, dietListRequest);
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -137,7 +140,7 @@ public class DietController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         try {
-            List<Diet> dietList = dietService.getAllDiets(user);
+            List<Diet> dietList = dietService.findAllUserDiets(user);
             List<DietResponse> dietResponses = new ArrayList<>();
             for (Diet diet : dietList) {
                 dietResponses.add(new DietResponse(diet));
@@ -157,7 +160,7 @@ public class DietController {
             if (diet.isPresent()) {
                 UserDiet userDiet = userDietService.findByDietIdAndUser(diet.get(), user);
                 if (userDiet != null && userDiet.getStatus().equals("used")) {
-                    dietService.removeDiet(userDiet);
+                    userDietService.removeDiet(userDiet);
                     return new ResponseEntity(HttpStatus.OK);
                 }
             }

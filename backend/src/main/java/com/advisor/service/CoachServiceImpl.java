@@ -20,30 +20,7 @@ public class CoachServiceImpl implements CoachService {
 
     private static final String COACHING_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.coaching";
 
-    private static final String COACHING_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.coach";
-
-    @Autowired
-    @Qualifier("coachingRepository")
-    private CoachingRepository repository;
-
-    @Override
-    public Coaching findByCoachAndClient(User coach, User client){
-        List<Coaching>  coachingList = repository.findByCoachAndClient(coach, client);
-        if(coachingList.size() != 0) {
-            return coachingList.get(0);
-        }
-        else return null;
-    }
-
-    @Override
-    public List<Coaching> findByClient(User client) {
-        return repository.findByClient(client);
-    }
-
-    @Override
-    public List<Coaching> findByCoach(User coach) {
-        return repository.findByCoach(coach);
-    }
+    private static final String COACHING_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.coaching";
 
     @Override
     public Coaching create(Coaching coaching) throws EntityExists {
@@ -81,5 +58,30 @@ public class CoachServiceImpl implements CoachService {
             throw new EntityNotFoundException(COACHING_NOT_FOUND_MESSAGE_CODE);
         }
     }
+
+    @Autowired
+    @Qualifier("coachingRepository")
+    private CoachingRepository repository;
+
+    @Override
+    public Coaching findByCoachAndClient(User coach, User client){
+        List<Coaching>  coachingList = repository.findByCoachAndClient(coach, client);
+        if(coachingList.size() != 0) {
+            return coachingList.get(0);
+        }
+        else return null;
+    }
+
+    @Override
+    public List<Coaching> findByClient(User client) {
+        return repository.findByClient(client);
+    }
+
+    @Override
+    public List<Coaching> findByCoach(User coach) {
+        return repository.findByCoach(coach);
+    }
+
+
 
 }
