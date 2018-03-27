@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import login from '../services/login';
+
 export default {
     data: () => ({
         valid: true,
@@ -39,8 +41,8 @@ export default {
             v => !!v || 'E-mail is required',
             v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
         ],
-        name: '',
-        nameRules: [
+        password: '',
+        passwordRules: [
             v => !!v || 'Password is required',
             v => (v && v.length <= 10) || 'Password must be less than 10 characters',
         ],
@@ -48,7 +50,7 @@ export default {
     methods: {
         submit() {
             if (this.$refs.form.validate()) {
-                console.log('test');
+                login.login('m@m.mm', '111111');
             }
         },
     },
