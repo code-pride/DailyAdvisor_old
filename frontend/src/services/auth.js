@@ -1,9 +1,9 @@
+import axios from 'axios';
 import qs from 'qs';
-import server from './server-config';
 
-export default {
+const authService = {
     login(email, password) {
-        return server.post(
+        return axios.post(
             '/login',
             qs.stringify({
                 Submit: 'Login',
@@ -13,3 +13,5 @@ export default {
         );
     },
 };
+
+export default authService;

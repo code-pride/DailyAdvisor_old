@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import login from '../services/login';
+import auth from '../services/auth';
 
 export default {
     data: () => ({
@@ -44,13 +44,13 @@ export default {
         password: '',
         passwordRules: [
             v => !!v || 'Password is required',
-            v => (v && v.length <= 10) || 'Password must be less than 10 characters',
         ],
     }),
+
     methods: {
         submit() {
             if (this.$refs.form.validate()) {
-                login.login('m@m.mm', '111111');
+                auth.login(this.email, this.password);
             }
         },
     },
@@ -77,6 +77,7 @@ export default {
     .login-card-wrapper {
         height: 300px;
         margin: 0 auto;
+        max-width: 400px;
         width: 90%;
     }
 
