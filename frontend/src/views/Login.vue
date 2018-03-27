@@ -35,7 +35,7 @@ import auth from '../services/auth';
 
 export default {
     data: () => ({
-        valid: true,
+        valid: false,
         email: '',
         emailRules: [
             v => !!v || 'E-mail is required',
