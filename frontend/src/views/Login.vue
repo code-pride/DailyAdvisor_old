@@ -18,20 +18,26 @@
                         required
                     ></v-text-field>
                     <v-btn
-                        @click="submit"
+                        @click="authenticate({email, password})"
                         :disabled="!valid"
                         class="sign-in-btn"
                         color="secondary"
                     >Log in</v-btn>
                 </v-form>
-                <v-btn flat small class="sign-up-btn" color="primary">Sign up</v-btn>
+                <v-btn
+                    flat
+                    small
+                    class="sign-up-btn"
+                    color="primary"
+                    to="register"
+                    >Sign up</v-btn>
             </v-card>
         </div>
     </div>
 </template>
 
 <script>
-import auth from '../services/auth';
+import { mapActions } from 'vuex';
 
 export default {
     data: () => ({
@@ -48,11 +54,9 @@ export default {
     }),
 
     methods: {
-        submit() {
-            if (this.$refs.form.validate()) {
-                auth.login(this.email, this.password);
-            }
-        },
+        ...mapActions([
+            'authenticate',
+        ]),
     },
 };
 </script>

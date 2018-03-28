@@ -1,16 +1,14 @@
-import axios from 'axios';
-import qs from 'qs';
-
 const authService = {
-    login(email, password) {
-        return axios.post(
-            '/login',
-            qs.stringify({
-                Submit: 'Login',
-                email,
-                password,
-            }),
-        );
+    login(credentials) {
+        // temporar solution, as API doesn't work yet
+
+        return new Promise((resolve, reject) => {
+            if (credentials.email === 'm@m.mm' && credentials.password === '111111') {
+                resolve();
+            } else {
+                reject();
+            }
+        });
     },
 };
 
