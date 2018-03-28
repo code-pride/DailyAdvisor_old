@@ -2,7 +2,6 @@ package com.advisor.repository;
 
 import com.advisor.model.entity.Meeting;
 import com.advisor.model.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository("meetingRepository")
-public interface MeetingRepository extends JpaRepository<Meeting, UUID> {
+public interface MeetingRepository extends SimplyRepository<Meeting> {
 
     Meeting findMeetingById(UUID meetingId);
 

@@ -9,10 +9,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository("coachingRepository")
-public interface CoachingRepository extends JpaRepository<Coaching, UUID> {
+public interface CoachingRepository extends SimplyRepository<Coaching> {
 
     List<Coaching> findByCoach(User coach);
 
