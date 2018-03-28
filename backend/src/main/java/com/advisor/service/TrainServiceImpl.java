@@ -91,7 +91,9 @@ public class TrainServiceImpl implements TrainService {
             else {
                 training.getEvent().setRecurringPattern(null);
             }
-            recurringPatternService.create(training.getEvent().getRecurringPattern());
+
+            //TODO weird double inserting into database
+            //recurringPatternService.create(training.getEvent().getRecurringPattern());
             eventService.create(training.getEvent());
         }
         repository.save(trainList);
@@ -109,7 +111,7 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public UserTrain findUserTrainByTrainIdAndUser(Train train, User user) {
+    public UserTrain findByTrainAndUser(Train train, User user) {
         List<UserTrain> userTrains = userTrainService.findByUserAndTrain(user, train);
         if(userTrains.size()!=0){
             return userTrains.get(0);

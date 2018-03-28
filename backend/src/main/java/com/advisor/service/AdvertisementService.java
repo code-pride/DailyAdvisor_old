@@ -21,7 +21,7 @@ public interface AdvertisementService extends IService<Advertisement, UUID>{
 
     void updateAdvertisement(User user, AdvertisementRequest advertisementRequest);
 
-    void updateStatus(UUID advId, User user, String status) throws EntityNotFoundException;
+    void updateStatus(User user, String status) throws EntityNotFoundException;
 
     List<Advertisement> getByCriteria(List<User> user, String coachType);
 

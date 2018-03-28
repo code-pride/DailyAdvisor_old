@@ -48,8 +48,8 @@ public class TrainController {
         Train train = trainService.findByCreatorAndId(user, UUID.fromString(trainShareRequest.getTrainId()));
         Optional<User> user2 = userService.findById(UUID.fromString(trainShareRequest.getShareUser()));
         if(user2.isPresent()){
-            if(train != null && "disabled".equals(train.getStatus())){
-                if(trainService.findUserTrainByTrainIdAndUser(train, user2.get()) != null){
+            if(train != null && "published".equals(train.getStatus())){
+                if(trainService.findByTrainAndUser(train, user2.get()) != null){
                     return new ResponseEntity(HttpStatus.IM_USED);
                 }
                 trainService.addUserTrain(user2.get(), train);
@@ -67,7 +67,7 @@ public class TrainController {
 
         Train train = trainService.findTrainById(trainId);
         if(train!=null) {
-            UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
+            UserTrain userTrain = trainService.findByTrainAndUser(train, user);
             if (userTrain != null && userTrain.getStatus().equals("used")) {
                 return new ResponseEntity(HttpStatus.IM_USED);
             }
@@ -140,7 +140,7 @@ public class TrainController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         Train train = trainService.findTrainById(trainId);
-        UserTrain userTrain = trainService.findUserTrainByTrainIdAndUser(train, user);
+        UserTrain userTrain = trainService.findByTrainAndUser(train, user);
         if(userTrain != null && userTrain.getStatus().equals("used")){
             trainService.removeTrain(userTrain);
             return new ResponseEntity(HttpStatus.OK);

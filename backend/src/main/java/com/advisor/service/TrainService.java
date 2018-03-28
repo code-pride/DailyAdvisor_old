@@ -18,7 +18,7 @@ public interface TrainService extends IService<Train, UUID> {
 
     Train update(Train train) throws DataRepositoryException;
 
-    UserTrain findUserTrainByTrainIdAndUser(Train train, User user);
+    UserTrain findByTrainAndUser(Train train, User user);
 
     void addUserTrain(User user, Train train) throws DataRepositoryException;
 

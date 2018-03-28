@@ -31,7 +31,7 @@ public class Train {
     private String trainText;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="create_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
+    @Column(name="create_date")
     private Date createDate;
 
     @OneToMany(cascade = CascadeType.ALL)

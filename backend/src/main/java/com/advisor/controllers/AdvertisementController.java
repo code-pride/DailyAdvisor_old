@@ -50,7 +50,7 @@ public class AdvertisementController {
     public ResponseEntity<List<AdvertisementResponse>> getAllAdvertisement()
     {
         List<AdvertisementResponse> advertisementList = advertisementService.selectAll();
-        if (advertisementList.isEmpty()){
+        if (!advertisementList.isEmpty()){
             return new ResponseEntity<>(advertisementList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -58,21 +58,19 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = {"advertisement/get/{userId}"}, method = RequestMethod.GET)
-    public ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable UUID userId) throws DataRepositoryException {
+    public ResponseEntity<AdvertisementResponse> getAdvertisementByUserId(@PathVariable UUID userId) {
         Optional<User> user = userService.findById(userId);
         if (user.isPresent()) {
             Advertisement advertisement = advertisementService.findActiveAdvertisementByUser(user.get());
             if (advertisement != null) {
                 if (advertisement.getUser().equals(user.get())) {
-                    advertisementService.create(advertisement);
+                    return new ResponseEntity<>(new AdvertisementResponse(advertisement), HttpStatus.OK);
                 }
-                return new ResponseEntity<>(new AdvertisementResponse(advertisement), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = { "/advertisement/update" }, method = RequestMethod.PUT)
@@ -92,20 +90,20 @@ public class AdvertisementController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
     try {
-        advertisementService.updateStatus(advId, user, "active");
+        advertisementService.updateStatus(user, "active");
     } catch (EntityNotFoundException e) {
         return new ResponseEntity<>(e.getStandardResponseCode());
     }
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = { "/advertisement/disable/{advId}" }, method = RequestMethod.PUT)
-    public ResponseEntity disableAdvertisement(@PathVariable UUID advId)
+    @RequestMapping(value = { "/advertisement/disable" }, method = RequestMethod.PUT)
+    public ResponseEntity disableAdvertisement()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         try {
-            advertisementService.updateStatus(advId, user, "disabled");
+            advertisementService.updateStatus(user, "disabled");
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getStandardResponseCode());
         }
@@ -121,7 +119,7 @@ public class AdvertisementController {
         List<Advertisement> advertisementList = advertisementService.getByCriteria(users, advCriteriaRequest.getCoachType());
         List<AdvertisementResponse> advertisementResponses = new ArrayList<>();
         advertisementList.forEach(advertisement->advertisementResponses.add(new AdvertisementResponse(advertisement)));
-        if (advertisementList.isEmpty()){
+        if (!advertisementList.isEmpty()){
             return new ResponseEntity<>(advertisementResponses, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

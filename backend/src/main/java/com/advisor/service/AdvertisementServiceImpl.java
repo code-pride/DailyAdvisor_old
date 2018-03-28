@@ -104,8 +104,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public void updateStatus(UUID advId, User user, String status) throws EntityNotFoundException {
-        if(repository.updateStatus(advId, user, status) == 0){
+    public void updateStatus(User user, String status) throws EntityNotFoundException {
+        if(repository.updateStatus(user, status) == 0){
             throw new EntityNotFoundException(ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE);
         }
     }

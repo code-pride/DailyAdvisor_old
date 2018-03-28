@@ -114,15 +114,17 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws EntityNotFoundException {
+    public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws DataRepositoryException {
         Optional<Meeting> meeting = repository.findById(meetingId);
         if(meeting.isPresent()){
             if(meeting.get().getUserId().equals(user)) {
                 if (newStatus.equals("accept") && meeting.get().getStatus().equals("sent")) {
-                    repository.updateMeeting(user, "accepted");
+                    meeting.get().setStatus("accept");
+                    update(meeting.get());
                 }
                 else if(newStatus.equals("cancel")){
-                    repository.updateMeeting(user, "canceled");
+                    meeting.get().setStatus("cancel");
+                    update(meeting.get());
                 }
             }
         }

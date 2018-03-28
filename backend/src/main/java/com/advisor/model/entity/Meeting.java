@@ -28,11 +28,11 @@ public class Meeting {
     private String meetingText;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Location location;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(nullable = false)
     private Event event;
 
     @Column(name = "status", nullable = false)

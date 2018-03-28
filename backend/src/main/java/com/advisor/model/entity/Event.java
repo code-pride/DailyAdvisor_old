@@ -42,8 +42,9 @@ public class Event {
     @Column(nullable = false, name = "is_recurring")
     private boolean recurring;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="create_date", columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
+    //TODO create date on java part
+    //@Temporal(TemporalType.TIMESTAMP)
+    @Column(name="create_date")
     private Date createDate;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -99,8 +99,8 @@ public class MeetingController {
                     return new ResponseEntity(HttpStatus.NOT_FOUND);
             }
             meetingService.updateMeetingStatus(meetingId, user, "accept");
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(e.getStandardResponseCode());
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
         return new ResponseEntity(HttpStatus.OK);
     }

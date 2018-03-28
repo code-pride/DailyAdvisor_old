@@ -18,7 +18,7 @@ public interface MeetingService extends IService<Meeting, UUID> {
 
     List<MeetingResponse> findMeetingByUser(User user);
 
-    void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws EntityNotFoundException;
+    void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws DataRepositoryException;
 
     void updateMeeting(MeetingRequest meetingRequest, User user) throws DataRepositoryException;
 

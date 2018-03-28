@@ -71,6 +71,6 @@ public class UserTrainServiceImpl implements UserTrainService {
 
     @Override
     public List<UserTrain> findByUserAndTrain(User user, Train train) {
-        return repository.findByUserAndTrain(user, train);
+        return repository.findOneByUserAndTrain(user, train);
     }
 }
