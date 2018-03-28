@@ -1,6 +1,5 @@
 package com.advisor.service;
 
-import com.advisor.model.entity.Advertisement;
 import com.advisor.service.Exceptions.DataRepositoryException;
 
 import java.util.List;

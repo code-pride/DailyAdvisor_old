@@ -29,7 +29,7 @@ public class MessageController {
     public ResponseEntity addUserMessage(@Valid @RequestBody MessageRequest messageRequest) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        Optional<User> user2 = userService.findById(messageRequest.getReceiverId());
+        Optional<User> user2 = userService.findById(UUID.fromString(messageRequest.getReceiverId()));
 
         if(user2.isPresent()) {
             messageService.addUserMessage(user, user2.get(), messageRequest);
@@ -51,7 +51,7 @@ public class MessageController {
 
                 return new ResponseEntity<>(messageResponses, HttpStatus.OK);
             } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

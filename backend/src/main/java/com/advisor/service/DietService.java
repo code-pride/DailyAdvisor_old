@@ -32,4 +32,5 @@ public interface DietService extends IService<Diet, UUID>{
 
     List<Diet> getAllActiveDiets(User user);
 
+    Diet findOneByUserAndDiet(User user, Diet diet) throws EntityNotFoundException;
 }

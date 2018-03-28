@@ -1,7 +1,6 @@
 package com.advisor.service;
 
 import com.advisor.model.entity.RecurringPattern;
-import com.advisor.model.entity.RecurringType;
 import com.advisor.repository.RecurringPatternRepository;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityExists;

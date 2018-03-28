@@ -64,12 +64,12 @@ public class UserDietServiceImpl implements UserDietService {
     }
 
     @Override
-    public UserDiet findByDietIdAndUser(Diet diet, User user) throws EntityNotFoundException {
+    public UserDiet findByDietAndUser(Diet diet, User user) throws EntityNotFoundException {
         UserDiet userDiets = repository.findOneByUserAndDiet(user, diet);
-        if(Optional.of(diet).isPresent()){
+        if(userDiets != null){
             return userDiets;
         } else{
-            throw new EntityNotFoundException(USER_DIET_NOT_FOUND_MESSAGE_CODE);
+            return null;
         }
     }
 

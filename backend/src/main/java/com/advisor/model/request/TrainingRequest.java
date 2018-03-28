@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class TrainingRequest {
     @NotNull
-    private int id;
+    private String id;
 
     @NotNull
     private EventRequest event;

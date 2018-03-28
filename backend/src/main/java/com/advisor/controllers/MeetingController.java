@@ -36,8 +36,7 @@ public class MeetingController {
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-
-        if(meetingRequest.getUserId2() == user.getId()){
+        if(UUID.fromString(meetingRequest.getUserId2()) == user.getId()){
             logger.warn("Bad user request");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }

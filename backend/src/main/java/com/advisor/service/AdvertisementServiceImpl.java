@@ -112,11 +112,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public List<Advertisement> getByCriteria(List<User> users, String type) {
-        try {
-            CoachType coachType = coachTypeRepository.findByType(type);
-            return repository.findByUserInAndCoachTypeAndStatus(users, coachType, "active");
-        }catch (En){
-
-        }
+        CoachType coachType = coachTypeRepository.findByType(type);
+        return repository.findByUserInAndCoachTypeAndStatus(users, coachType, "active");
     }
 }

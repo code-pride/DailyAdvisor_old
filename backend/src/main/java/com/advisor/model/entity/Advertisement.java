@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -56,4 +57,25 @@ public class Advertisement {
         this.status = "disabled";
         this.coachType = coachType;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Advertisement that = (Advertisement) o;
+        return getVisits() == that.getVisits() &&
+                getAnswers() == that.getAnswers() &&
+                Objects.equals(getUser(), that.getUser()) &&
+                Objects.equals(getAdvText(), that.getAdvText()) &&
+                Objects.equals(getCreate_date(), that.getCreate_date()) &&
+                Objects.equals(getEdit_date(), that.getEdit_date()) &&
+                Objects.equals(getCoachType(), that.getCoachType()) &&
+                Objects.equals(getStatus(), that.getStatus());
+    }
+
 }

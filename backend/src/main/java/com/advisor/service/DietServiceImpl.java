@@ -98,7 +98,7 @@ public class DietServiceImpl implements DietService {
     @Override
     public Diet findByCreatorAndId(User user, UUID dietId) throws EntityNotFoundException {
         Diet diet = repository.findOneByCreatedByAndId(user, dietId);
-        if(Optional.of(diet).isPresent()){
+        if(diet != null){
             return diet;
         } else{
             throw new EntityNotFoundException(DIET_NOT_FOUND_MESSAGE_CODE);
@@ -141,13 +141,13 @@ public class DietServiceImpl implements DietService {
             if (diet.getCreatedBy().equals(user)) {
                 return diet;
             } else {
-                UserDiet userDiet = userDietService.findByDietIdAndUser(diet, user);
-                if(Optional.of(userDiet).isPresent()){
+                UserDiet userDiet = userDietService.findByDietAndUser(diet, user);
+                if(userDiet != null){
                     return userDiet.getDiet();
                 }
             }
         }
-        throw new EntityNotFoundException(DIET_NOT_FOUND_MESSAGE_CODE);
+        return null;
     }
 
     @Override
@@ -170,6 +170,19 @@ public class DietServiceImpl implements DietService {
             }
         }
         return dietList;
+    }
+
+    @Override
+    public Diet findOneByUserAndDiet(User user, Diet diet) throws EntityNotFoundException {
+        if (diet.getCreatedBy().equals(user)) {
+            return diet;
+        } else {
+            UserDiet userDiet = userDietService.findByDietAndUser(diet, user);
+            if(userDiet != null){
+                return userDiet.getDiet();
+            }
+            return null;
+        }
     }
 
 }

@@ -45,8 +45,8 @@ public class TrainController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        Train train = trainService.findByCreatorAndId(user, trainShareRequest.getTrainId());
-        Optional<User> user2 = userService.findById(trainShareRequest.getShareUser());
+        Train train = trainService.findByCreatorAndId(user, UUID.fromString(trainShareRequest.getTrainId()));
+        Optional<User> user2 = userService.findById(UUID.fromString(trainShareRequest.getShareUser()));
         if(user2.isPresent()){
             if(train != null && "disabled".equals(train.getStatus())){
                 if(trainService.findUserTrainByTrainIdAndUser(train, user2.get()) != null){

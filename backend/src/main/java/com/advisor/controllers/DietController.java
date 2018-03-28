@@ -57,15 +57,19 @@ public class DietController {
         User user = userService.findUserByEmail(auth.getName());
 
         try {
-            Diet diet = dietService.findByCreatorAndId(user, dietShareRequest.getDietId());
 
-            Optional<User> user2 = userService.findById(dietShareRequest.getShareUser());
-            if (user2.isPresent() && "disabled".equals(diet.getStatus())) {
-                dietService.findByUserAndDietId(user2.get(), diet.getId());
+            Diet diet = dietService.findByCreatorAndId(user, UUID.fromString((dietShareRequest.getDietId())));
 
-                dietService.addUserDiet(user2.get(), diet);
-                dietService.update(diet);
-                return new ResponseEntity(HttpStatus.OK);
+            Optional<User> user2 = userService.findById(UUID.fromString(dietShareRequest.getShareUser()));
+            if (user2.isPresent() && "published".equals(diet.getStatus())) {
+                Diet diet1 = dietService.findOneByUserAndDiet(user2.get(), diet);
+                if(diet1 == null) {
+                    dietService.addUserDiet(user2.get(), diet);
+                    dietService.update(diet);
+                    return new ResponseEntity(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.IM_USED);
+                }
             }
         } catch (DataRepositoryException e) {
             return new ResponseEntity(e.getStandardResponseCode());
@@ -81,7 +85,7 @@ public class DietController {
         Optional<Diet> diet = dietService.findById(dietId);
         try {
             if (diet.isPresent()) {
-                UserDiet userDiet = userDietService.findByDietIdAndUser(diet.get(), user);
+                UserDiet userDiet = userDietService.findByDietAndUser(diet.get(), user);
                 if (userDiet.getStatus().equals("used")) {
                     return new ResponseEntity(HttpStatus.IM_USED);
                 }
@@ -149,7 +153,7 @@ public class DietController {
         try {
             Optional<Diet> diet = dietService.findById(dietId);
             if (diet.isPresent()) {
-                UserDiet userDiet = userDietService.findByDietIdAndUser(diet.get(), user);
+                UserDiet userDiet = userDietService.findByDietAndUser(diet.get(), user);
                 if (userDiet != null && userDiet.getStatus().equals("used")) {
                     userDietService.removeDiet(userDiet);
                     return new ResponseEntity(HttpStatus.OK);

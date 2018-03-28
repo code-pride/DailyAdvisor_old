@@ -12,10 +12,10 @@ public class TrainListRequest {
     private Set<TrainingRequest> trainings;
 
     @NotNull
-    private long trainId;
+    private String trainId;
 
     @NotNull
-    private long creatorId;
+    private String creatorId;
 
     @NotBlank
     private String trainName;

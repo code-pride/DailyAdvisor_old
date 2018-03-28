@@ -87,4 +87,21 @@ public class Event {
     public int hashCode() {
         return Objects.hash(super.hashCode(), getId());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return getFullDayEvent() == event.getFullDayEvent() &&
+                getRecurring() == event.getRecurring() &&
+                Objects.equals(getRecurringPattern(), event.getRecurringPattern()) &&
+                Objects.equals(getStartDate(), event.getStartDate()) &&
+                Objects.equals(getEndDate(), event.getEndDate()) &&
+                Objects.equals(getStartTime(), event.getStartTime()) &&
+                Objects.equals(getEndTime(), event.getEndTime()) &&
+                Objects.equals(getCreateDate(), event.getCreateDate()) &&
+                Objects.equals(getParentEvent(), event.getParentEvent()) &&
+                Objects.equals(getEventsExceptions(), event.getEventsExceptions());
+    }
 }

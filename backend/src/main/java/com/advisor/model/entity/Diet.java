@@ -6,10 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Data
@@ -52,5 +49,20 @@ public class Diet {
         this.createDate = new Timestamp(System.currentTimeMillis());
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Diet diet = (Diet) o;
+        return Objects.equals(getCreatedBy(), diet.getCreatedBy()) &&
+                Objects.equals(getMeals(), diet.getMeals()) &&
+                Objects.equals(getStatus(), diet.getStatus()) &&
+                Objects.equals(getCreateDate(), diet.getCreateDate());
+    }
 }
 

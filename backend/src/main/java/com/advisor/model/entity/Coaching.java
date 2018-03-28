@@ -3,6 +3,7 @@ package com.advisor.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -15,10 +16,10 @@ public class Coaching {
     @Column(name = "id",unique=true, nullable = false)
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User coach;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User client;
 
     @Column(name = "status")
@@ -34,4 +35,18 @@ public class Coaching {
         this.status = "sent";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coaching coaching = (Coaching) o;
+        return Objects.equals(getCoach(), coaching.getCoach()) &&
+                Objects.equals(getClient(), coaching.getClient()) &&
+                Objects.equals(getStatus(), coaching.getStatus());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface UserDietService extends IService<UserDiet, UUID> {
 
-    UserDiet findByDietIdAndUser(Diet diet, User user) throws EntityNotFoundException;
+    UserDiet findByDietAndUser(Diet diet, User user) throws EntityNotFoundException;
 
     List<UserDiet> findByUser(User user);
 

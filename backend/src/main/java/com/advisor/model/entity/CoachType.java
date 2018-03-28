@@ -3,6 +3,7 @@ package com.advisor.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -25,4 +26,16 @@ public class CoachType {
         this.type = type;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CoachType coachType = (CoachType) o;
+        return Objects.equals(getType(), coachType.getType());
+    }
 }

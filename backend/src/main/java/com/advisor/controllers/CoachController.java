@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class CoachController {
@@ -37,7 +38,7 @@ public class CoachController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        Optional<User> client = userService.findById(coachingRequest.getClientId());
+        Optional<User> client = userService.findById(UUID.fromString(coachingRequest.getClientId()));
         if (client.isPresent()) {
             Coaching coaching = coachService.findByCoachAndClient(user, client.get());
             try {
@@ -89,7 +90,7 @@ public class CoachController {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userService.findUserByEmail(auth.getName());
-            Optional<User> coach = userService.findById(coachingRequest.getCoachId());
+            Optional<User> coach = userService.findById(UUID.fromString(coachingRequest.getCoachId()));
             if (coach.isPresent()) {
                 Coaching coaching = coachService.findByCoachAndClient(coach.get(), user);
                 if (coaching.getStatus().equals("sent")) {
@@ -112,7 +113,7 @@ public class CoachController {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userService.findUserByEmail(auth.getName());
-            Optional<User> coach = userService.findById(coachingRequest.getCoachId());
+            Optional<User> coach = userService.findById(UUID.fromString(coachingRequest.getCoachId()));
             if (coach.isPresent()) {
                 Coaching coaching = coachService.findByCoachAndClient(coach.get(), user);
                 if (coaching.getStatus().equals("sent") || coaching.getStatus().equals("accepted")) {

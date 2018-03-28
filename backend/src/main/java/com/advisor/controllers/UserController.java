@@ -3,7 +3,6 @@ package com.advisor.controllers;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.response.UserProfileResponse;
-import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 

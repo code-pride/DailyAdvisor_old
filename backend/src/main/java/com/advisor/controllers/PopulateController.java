@@ -101,7 +101,7 @@ public class PopulateController {
 
         //Meeting1
         try {
-            MeetingRequest meetingRequest = new MeetingRequest(user2.getId(), "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+            MeetingRequest meetingRequest = new MeetingRequest(user2.getId().toString(), "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
             meetingService.addMeeting(user, meetingRequest);
 
 
@@ -110,7 +110,7 @@ public class PopulateController {
             advertisementService.setAdvertisement(user2, advertisementRequest);
 
             //Meeting2
-            meetingRequest = new MeetingRequest(user.getId(), "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+            meetingRequest = new MeetingRequest(user.getId().toString(), "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
             meetingService.addMeeting(user2, meetingRequest);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);

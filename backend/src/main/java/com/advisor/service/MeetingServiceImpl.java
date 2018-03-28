@@ -34,6 +34,15 @@ public class MeetingServiceImpl implements MeetingService {
     @Qualifier("eventService")
     private EventService eventService;
 
+    private UUID fromStringToUUID(String strUUID){
+        return UUID.fromString(
+                strUUID
+                        .replaceFirst(
+                                "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
+                        )
+        );
+    }
+
     @Override
     public Meeting create(Meeting meeting) throws EntityExists {
         if(meeting.getId() == null || !repository.existsById(meeting.getId())) {
@@ -74,7 +83,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void addMeeting(User user, MeetingRequest meetingRequest) throws DataRepositoryException {
-        Optional<User> user2 = userService.findById(meetingRequest.getUserId2());
+        Optional<User> user2 = userService.findById(fromStringToUUID(meetingRequest.getUserId2()));
         if(user2.isPresent()) {
             Event event = new Event(meetingRequest.getEventRequest());
             eventService.create(event);
@@ -123,7 +132,7 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void updateMeeting(MeetingRequest meetingRequest, User user) throws DataRepositoryException {
-        Meeting meeting = repository.findOneByIdAndUserId(meetingRequest.getMeetingId(), user);
+        Meeting meeting = repository.findOneByIdAndUserId(fromStringToUUID(meetingRequest.getMeetingId()), user);
 
         Event event = new Event(meetingRequest.getEventRequest());
         if (!(event.equals(meeting.getEvent()))) {
