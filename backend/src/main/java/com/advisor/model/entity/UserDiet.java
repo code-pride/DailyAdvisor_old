@@ -3,6 +3,7 @@ package com.advisor.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -35,6 +36,20 @@ public class UserDiet {
         this.status = status;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDiet userDiet = (UserDiet) o;
+        return Objects.equals(getUser(), userDiet.getUser()) &&
+                Objects.equals(getDiet(), userDiet.getDiet()) &&
+                Objects.equals(getStatus(), userDiet.getStatus());
+    }
 }
 
 

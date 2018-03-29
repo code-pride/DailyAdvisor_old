@@ -4,6 +4,7 @@ import com.advisor.model.request.MealRequest;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +17,7 @@ public class Meal {
     @Column(name = "id",unique=true, nullable = false)
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "event")
     private Event event;
 
@@ -44,4 +45,20 @@ public class Meal {
         this.fat = mealRequest.getFat();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Meal meal = (Meal) o;
+        return getCal() == meal.getCal() &&
+                Float.compare(meal.getCarbohydrates(), getCarbohydrates()) == 0 &&
+                getFat() == meal.getFat() &&
+                Objects.equals(getEvent(), meal.getEvent()) &&
+                Objects.equals(getMealText(), meal.getMealText());
+    }
 }

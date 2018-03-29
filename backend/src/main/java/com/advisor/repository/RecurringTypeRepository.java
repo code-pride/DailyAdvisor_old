@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository("recurringTypeRepository")
 public interface RecurringTypeRepository extends SimplyRepository<RecurringType> {
 
-
-    RecurringType findByRecurringName(String type);
+    RecurringType findByRecurringName(String recurringName);
 }

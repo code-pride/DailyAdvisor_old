@@ -13,8 +13,8 @@ import java.util.List;
 @Repository("userTrainRepository")
 public interface UserTrainRepository extends SimplyRepository<UserTrain> {
 
-    @Query("SELECT u FROM UserTrain u WHERE u.train = :train AND u.user = :user")
-    List<UserTrain> findByUserAndTrain(@Param("user") User user, @Param("train") Train train);
+
+    List<UserTrain> findOneByUserAndTrain(User user, Train train);
 
     List<UserTrain> findByUser(User user);
 }

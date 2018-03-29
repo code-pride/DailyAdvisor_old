@@ -3,6 +3,7 @@ package com.advisor.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -42,4 +43,20 @@ public class Message {
         this.message = message;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message1 = (Message) o;
+        return Objects.equals(getSender(), message1.getSender()) &&
+                Objects.equals(getReceiver(), message1.getReceiver()) &&
+                Objects.equals(getStatus(), message1.getStatus()) &&
+                Objects.equals(getMsgTime(), message1.getMsgTime()) &&
+                Objects.equals(getMessage(), message1.getMessage());
+    }
 }

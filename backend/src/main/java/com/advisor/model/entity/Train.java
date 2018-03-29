@@ -5,10 +5,7 @@ import com.advisor.model.request.TrainingRequest;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
 @Entity
@@ -34,7 +31,7 @@ public class Train {
     private String trainText;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="create_date", nullable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
+    @Column(name="create_date")
     private Date createDate;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -59,4 +56,21 @@ public class Train {
         this.trainText = trainListRequest.getTrainText();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Train train = (Train) o;
+        return Objects.equals(getCreatedBy(), train.getCreatedBy()) &&
+                Objects.equals(getStatus(), train.getStatus()) &&
+                Objects.equals(getTrainName(), train.getTrainName()) &&
+                Objects.equals(getTrainText(), train.getTrainText()) &&
+                Objects.equals(getCreateDate(), train.getCreateDate()) &&
+                Objects.equals(getTrainings(), train.getTrainings());
+    }
 }

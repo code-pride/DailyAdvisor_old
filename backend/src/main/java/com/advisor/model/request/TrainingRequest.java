@@ -7,13 +7,13 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class TrainingRequest {
-    @NotNull
-    private int id;
 
-    @NotNull
+    private String id;
+
+
     private EventRequest event;
 
-    @NotBlank
+
     private String trainText;
 
 

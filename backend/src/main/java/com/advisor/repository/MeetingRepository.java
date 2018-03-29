@@ -26,16 +26,11 @@ public interface MeetingRepository extends SimplyRepository<Meeting> {
     @Query("UPDATE Meeting m SET m.status = :status WHERE m.userId2 = :user")
     void updateMeeting(@Param("user") User user, @Param("status") String status);
 
-    @Query("SELECT m FROM Meeting m WHERE m.id = :id AND (m.userId2 = :user OR m.userId = :user)")
-    List<Meeting> findMeetingByIdAndUserId(@Param("id") UUID meetingId, @Param("user") User user);
+    Meeting findOneByIdAndUserId(UUID meetingId, User user);
 
     @Transactional
     @Modifying
     @Query("UPDATE Meeting m SET m = :meeting WHERE m = :meeting")
     void updateMeeting(@Param("meeting") Meeting meeting);
-
-    @Query("SELECT m FROM Meeting m WHERE m.id=:id ")
-    Meeting findByIdd(@Param("id") UUID id);
-
 
 }

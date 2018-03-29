@@ -11,6 +11,9 @@ import com.advisor.model.response.UserProfileResponse;
 import com.advisor.repository.RoleRepository;
 import com.advisor.repository.UserProfileRepository;
 import com.advisor.repository.UserRepository;
+import com.advisor.service.Exceptions.DataRepositoryException;
+import com.advisor.service.Exceptions.EntityExists;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,9 +22,13 @@ import org.springframework.stereotype.Service;
 @Service("userService")
 public class UserServiceImpl implements UserService{
 
+    private static final String MESSAGE_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.meal";
+
+    private static final String MESSAGE_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.meal";
+
 	@Autowired
     @Qualifier("userRepository")
-	private UserRepository userRepository;
+	private UserRepository repository;
 
     @Autowired
     @Qualifier("userProfileRepository")
@@ -33,10 +40,47 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
+    @Override
+    public User create(User user) throws EntityExists {
+        if(user.getId() == null || !repository.existsById(user.getId())) {
+            return repository.save(user);
+        } else {
+            throw new EntityExists(MESSAGE_EXISTS_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public void delete(UUID id) throws DataRepositoryException {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(MESSAGE_NOT_FOUND_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public List<User> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Optional<User> findById(UUID id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public User update(User user) throws DataRepositoryException, NoSuchElementException {
+        if(repository.existsById(user.getId())){
+            return repository.save(user);
+        } else {
+            throw new EntityNotFoundException(MESSAGE_NOT_FOUND_MESSAGE_CODE);
+        }
+    }
+
 	@Override
 	public User findUserByEmail(String email) {
-		return userRepository.findByEmail(email);
+		return repository.findByEmail(email);
 	}
 
     @Override
@@ -47,16 +91,11 @@ public class UserServiceImpl implements UserService{
         Role userRole = roleRepository.findByRole("USER");
         Role userRole2 = roleRepository.findByRole("ADMIN");
         user.setRoles(new HashSet<>(Arrays.asList(userRole, userRole2)));
-		userRepository.save(user);
+		repository.save(user);
 
         UserProfile userProfile = new UserProfile(user, newUserRequest);
         userProfileRepository.save(userProfile);
 	}
-
-    @Override
-    public User findUserById(UUID userId) {
-        return userRepository.findByIdd(userId);
-    }
 
 	@Override
     public UserProfileResponse createUserProfileResponseByUser(User user){
@@ -75,7 +114,7 @@ public class UserServiceImpl implements UserService{
         Role coachRole = roleRepository.findByRole("COACH");
         if(!user.getRoles().contains(coachRole)) {
             user.getRoles().add(coachRole);
-            userRepository.save(user);}
+            repository.save(user);}
         }
 
     @Override

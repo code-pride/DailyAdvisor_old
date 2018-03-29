@@ -3,6 +3,7 @@ package com.advisor.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -50,4 +51,22 @@ public class RecurringPattern {
         this.recurringType = recurringType;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecurringPattern that = (RecurringPattern) o;
+        return Objects.equals(getSeparation_count(), that.getSeparation_count()) &&
+                Objects.equals(getMax_num_of_occurrences(), that.getMax_num_of_occurrences()) &&
+                Objects.equals(getDay_of_week(), that.getDay_of_week()) &&
+                Objects.equals(getWeek_of_month(), that.getWeek_of_month()) &&
+                Objects.equals(getDay_of_month(), that.getDay_of_month()) &&
+                Objects.equals(getMonth_of_year(), that.getMonth_of_year()) &&
+                Objects.equals(getRecurringType(), that.getRecurringType());
+    }
 }

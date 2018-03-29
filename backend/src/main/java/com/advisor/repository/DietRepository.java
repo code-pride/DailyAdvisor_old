@@ -13,10 +13,12 @@ import java.util.UUID;
 @Repository("dietRepository")
 public interface DietRepository extends SimplyRepository<Diet> {
 
-    @Query("SELECT d FROM Diet d WHERE d.id = :id AND d.createdBy = :creator")
-    List<Diet> findByCreatorAndId(@Param("creator") User creator, @Param("id") UUID id);
-
-    Diet findOneById(UUID dietId);
-
     List<Diet> findByCreatedBy(User user);
+
+    Diet findOneByCreatedByAndId(User user, UUID dietId);
+
+    @Query("SELECT d FROM Diet d WHERE d.id = :uuid")
+    Diet findOneByUUID(@Param("uuid") UUID uuid);
+
+    Diet findOneById(UUID id);
 }
