@@ -34,6 +34,15 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = { "/getUserProfile" }, method = RequestMethod.GET)
+    public ResponseEntity<UserProfileResponse> getUserProfile()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        UserProfileResponse userProfileResponse = userService.createUserProfileResponseByUser(user);
+        return new ResponseEntity<>(userProfileResponse, HttpStatus.OK);
+    }
+
     @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.PUT)
     public ResponseEntity updateUserProfile(@Valid @RequestBody UserProfileRequest userProfileRequest)
     {
