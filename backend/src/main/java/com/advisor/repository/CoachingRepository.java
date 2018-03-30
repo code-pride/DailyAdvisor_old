@@ -16,6 +16,7 @@ public interface CoachingRepository extends SimplyRepository<Coaching> {
 
     List<Coaching> findByClient(User client);
 
+    //TODO delete query
     @Query("SELECT c FROM Coaching c WHERE c.coach = :coach AND c.client = :client")
     List<Coaching>  findByCoachAndClient(@Param("coach") User coach, @Param("client") User client);
 

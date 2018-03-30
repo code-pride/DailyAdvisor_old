@@ -5,14 +5,13 @@ import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 @Data
 public class MeetingRequest {
 
-    private UUID meetingId;
+    private String meetingId;
 
-    private UUID userId2;
+    private String userId2;
 
     @NotBlank
     private String meetingText;
@@ -27,14 +26,14 @@ public class MeetingRequest {
     public MeetingRequest() {
     }
 
-    public MeetingRequest(UUID userId2, String meetingText, Location location, EventRequest event) {
+    public MeetingRequest(String userId2, String meetingText, Location location, EventRequest event) {
         this.userId2 = userId2;
         this.meetingText = meetingText;
         this.location = location;
         this.eventRequest = event;
     }
 
-    public MeetingRequest(UUID userId2, String meetingText, Location location, EventRequest eventRequest, UUID meetingId) {
+    public MeetingRequest(String userId2, String meetingText, Location location, EventRequest eventRequest, String meetingId) {
         this.meetingId = meetingId;
         this.userId2 = userId2;
         this.meetingText = meetingText;

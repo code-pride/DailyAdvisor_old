@@ -56,11 +56,6 @@ public class CalendarController {
 
         CalendarResponse calendarResponse = new CalendarResponse(meetingResponseList, trainResponses, dietResponses);
 
-        if(calendarResponse != null){
-            return new ResponseEntity<>(calendarResponse, HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(calendarResponse, HttpStatus.OK);
     }
 }

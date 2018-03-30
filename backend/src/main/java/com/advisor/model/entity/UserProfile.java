@@ -1,24 +1,29 @@
 package com.advisor.model.entity;
 
 import com.advisor.model.request.NewUserRequest;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "user_profile")
 public class UserProfile {
 
+    @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
     @Id
-    @org.hibernate.annotations.Type(type = "pg-uuid")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "generator")
     @Column(name = "id",unique=true, nullable = false)
     private UUID id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = false, name = "id")
     private User user;
 
     @Column(name = "name")
@@ -55,4 +60,21 @@ public class UserProfile {
         this.about = about;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserProfile)) return false;
+        if (!super.equals(o)) return false;
+        UserProfile that = (UserProfile) o;
+        return Objects.equals(getUser(), that.getUser()) &&
+                Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getLastName(), that.getLastName()) &&
+                Objects.equals(getCity(), that.getCity()) &&
+                Objects.equals(getAbout(), that.getAbout());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

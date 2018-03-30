@@ -2,39 +2,35 @@ package com.advisor.service;
 
 import com.advisor.model.entity.Diet;
 import com.advisor.model.entity.User;
-import com.advisor.model.entity.UserDiet;
 import com.advisor.model.request.DietListRequest;
-import com.advisor.service.Exceptions.DietNotFoundException;
+import com.advisor.service.Exceptions.DataRepositoryException;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface DietService {
+public interface DietService extends IService<Diet, UUID>{
 
-    void addDietList(User user, DietListRequest dietListRequest);
+    void addDietList(User user, DietListRequest dietListRequest) throws DataRepositoryException;
 
-    Diet findByCreatorAndId(User user, UUID dietId);
+    Diet findByCreatorAndId(User user, UUID dietId) throws EntityNotFoundException;
 
-    void updateDiet(Diet diet);
+    Diet update(Diet diet) throws DataRepositoryException;
 
-    UserDiet findUserDietByDietIdAndUser(Diet diet, User user);
+    void addUserDiet(User user, Diet diet) throws DataRepositoryException;
 
-    void addUserDiet(User user, Diet diet);
+    Optional<Diet> findById(UUID dietId);
 
-    void useDietList(UserDiet userDiet);
-
-    Diet findDietById(UUID dietId);
-
-    void setStatus(User user, UUID dietId, String disabled) throws DietNotFoundException;
+    void setStatus(User user, UUID dietId, String disabled) throws DataRepositoryException;
 
     List<Diet> getAllDietLists(User user);
 
-    void removeDiet(UserDiet userDiet);
+    Diet findByUserAndDietId(User user, UUID dietId) throws EntityNotFoundException;
 
-    Diet findDietByUserAndDietId(User user, UUID dietId) throws DietNotFoundException;
-
-    List<Diet> getAllDiets(User user);
+    List<Diet> findAllUserDiets(User user);
 
     List<Diet> getAllActiveDiets(User user);
 
+    Diet findOneByUserAndDiet(User user, Diet diet) throws EntityNotFoundException;
 }

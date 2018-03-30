@@ -31,5 +31,8 @@ public class LoginController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public ResponseEntity hello() {
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

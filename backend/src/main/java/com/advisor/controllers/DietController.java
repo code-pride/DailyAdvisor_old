@@ -7,7 +7,9 @@ import com.advisor.model.request.DietListRequest;
 import com.advisor.model.request.DietShareRequest;
 import com.advisor.model.response.DietResponse;
 import com.advisor.service.DietService;
-import com.advisor.service.Exceptions.DietNotFoundException;
+import com.advisor.service.Exceptions.DataRepositoryException;
+import com.advisor.service.Exceptions.EntityNotFoundException;
+import com.advisor.service.UserDietService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import com.advisor.validator.ValidationErrorBuilder;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -33,134 +36,136 @@ public class DietController {
     @Autowired
     private DietService dietService;
 
-    @RequestMapping(value = { "diet/addDietList" }, method = RequestMethod.POST)
-    public ResponseEntity addDietList(@Valid @RequestBody DietListRequest dietListRequest)
-    {
+    @Autowired
+    private UserDietService userDietService;
+
+    @RequestMapping(value = {"diet/addDietList"}, method = RequestMethod.POST)
+    public ResponseEntity addDietList(@Valid @RequestBody DietListRequest dietListRequest) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        dietService.addDietList(user, dietListRequest);
-
+        try {
+            dietService.addDietList(user, dietListRequest);
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = { "diet/share" }, method = RequestMethod.PUT)
-    public ResponseEntity shareDietPlan(@Valid @RequestBody DietShareRequest dietShareRequest)
-    {
+    @RequestMapping(value = {"diet/share"}, method = RequestMethod.PUT)
+    public ResponseEntity shareDietPlan(@Valid @RequestBody DietShareRequest dietShareRequest) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        Diet diet = dietService.findByCreatorAndId(user, dietShareRequest.getDietId());
-        User user2 = userService.findUserById(dietShareRequest.getShareUser());
-        if(diet != null && user2 !=null && diet.getStatus() != "disabled"){
-            if(dietService.findUserDietByDietIdAndUser(diet, user2) != null){
-                return new ResponseEntity(HttpStatus.IM_USED);
+        try {
+
+            Diet diet = dietService.findByCreatorAndId(user, UUID.fromString((dietShareRequest.getDietId())));
+
+            Optional<User> user2 = userService.findById(UUID.fromString(dietShareRequest.getShareUser()));
+            if (user2.isPresent() && "published".equals(diet.getStatus())) {
+                Diet diet1 = dietService.findOneByUserAndDiet(user2.get(), diet);
+                if(diet1 == null) {
+                    dietService.addUserDiet(user2.get(), diet);
+                    dietService.update(diet);
+                    return new ResponseEntity(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity(HttpStatus.IM_USED);
+                }
             }
-            if(user2 != null){
-                dietService.addUserDiet(user2, diet);
-                dietService.updateDiet(diet);
-                return new ResponseEntity(HttpStatus.OK);
-            }
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = { "diet/use" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"diet/use"}, method = RequestMethod.POST)
     public ResponseEntity useDietPlan(@Valid @RequestBody UUID dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
-        Diet diet = dietService.findDietById(dietId);
-        if(diet != null) {
-            UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
-            if (userDiet != null && userDiet.getStatus().equals("used")) {
-                return new ResponseEntity(HttpStatus.IM_USED);
-            }
-            if (diet != null && user != null) {
-                if (userDiet == null) {
-                    return new ResponseEntity(HttpStatus.NOT_FOUND);
-                } else {
-                    dietService.useDietList(userDiet);
-                    return new ResponseEntity(HttpStatus.OK);
+        Optional<Diet> diet = dietService.findById(dietId);
+        try {
+            if (diet.isPresent()) {
+                UserDiet userDiet = userDietService.findByDietAndUser(diet.get(), user);
+                if (userDiet.getStatus().equals("used")) {
+                    return new ResponseEntity(HttpStatus.IM_USED);
                 }
+                userDietService.useDietList(userDiet);
+                return new ResponseEntity(HttpStatus.OK);
             }
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = { "diet/disableDietList" }, method = RequestMethod.PUT)
-    public ResponseEntity disableDietList(@Valid @RequestBody UUID dietId)
-    {
+    @RequestMapping(value = {"diet/disableDietList"}, method = RequestMethod.PUT)
+    public ResponseEntity disableDietList(@Valid @RequestBody UUID dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        try{
+        try {
             dietService.setStatus(user, dietId, "disabled");
-        } catch (DietNotFoundException e){
+        } catch (DataRepositoryException e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = { "diet/getAllDietLists" }, method = RequestMethod.GET)
-    public ResponseEntity<List<DietResponse>> getAllDietLists()
-    {
+    @RequestMapping(value = {"diet/getAllDietLists"}, method = RequestMethod.GET)
+    public ResponseEntity<List<DietResponse>> getAllDietLists() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        try{
-            List<Diet> diets = dietService.getAllDiets(user);
-            List<DietResponse> dietResponses = new ArrayList<>();
-            for (Diet diet : diets) {
-                dietResponses.add(new DietResponse(diet));
-            }
-            return new ResponseEntity<>(dietResponses, HttpStatus.OK);
-        } catch (DietNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<Diet> diets = dietService.getAllDietLists(user);
+        List<DietResponse> dietResponseList = new ArrayList<>();
+        for (Diet diet : diets) {
+            dietResponseList.add(new DietResponse(diet));
         }
+        return new ResponseEntity<>(dietResponseList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = { "diet/getDietList/{dietId}" }, method = RequestMethod.GET)
-    public ResponseEntity<DietResponse> getDietList(@PathVariable UUID dietId)
-    {
+    @RequestMapping(value = {"diet/getDietList/{dietId}"}, method = RequestMethod.GET)
+    public ResponseEntity<DietResponse> getDietList(@PathVariable UUID dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        try{
-            Diet diet = dietService.findDietByUserAndDietId(user, dietId);
+        try {
+            Diet diet = dietService.findByUserAndDietId(user, dietId);
             return new ResponseEntity<>(new DietResponse(diet), HttpStatus.OK);
-        } catch (DietNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getStandardResponseCode());
         }
     }
 
-    @RequestMapping(value = { "train/getAllDiets" }, method = RequestMethod.GET)
-    public ResponseEntity<List<DietResponse>> getAllDiets()
-    {
+    @RequestMapping(value = {"diet/getAllDiets"}, method = RequestMethod.GET)
+    public ResponseEntity<List<DietResponse>> getAllDiets() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        try{
-            List<Diet> trainList = dietService.getAllDietLists(user);
-            List<DietResponse> trainResponses = new ArrayList<>();
-            for (Diet train : trainList) {
-                trainResponses.add(new DietResponse(train));
-            }
-            return new ResponseEntity<>(trainResponses, HttpStatus.OK);
-        } catch (DietNotFoundException e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        List<Diet> dietList = dietService.findAllUserDiets(user);
+        List<DietResponse> dietResponses = new ArrayList<>();
+        for (Diet diet : dietList) {
+            dietResponses.add(new DietResponse(diet));
         }
+        return new ResponseEntity<>(dietResponses, HttpStatus.OK);
     }
-    
-    @RequestMapping(value = { "diet/remove" }, method = RequestMethod.POST)
+
+    @RequestMapping(value = {"diet/remove"}, method = RequestMethod.POST)
     public ResponseEntity removeDiet(@Valid @RequestBody UUID dietId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-
-        Diet diet = dietService.findDietById(dietId);
-        UserDiet userDiet = dietService.findUserDietByDietIdAndUser(diet, user);
-        if(userDiet != null && userDiet.getStatus().equals("used")){
-            dietService.removeDiet(userDiet);
-            return new ResponseEntity(HttpStatus.OK);
-        } else{
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        try {
+            Optional<Diet> diet = dietService.findById(dietId);
+            if (diet.isPresent()) {
+                UserDiet userDiet = userDietService.findByDietAndUser(diet.get(), user);
+                if (userDiet != null && userDiet.getStatus().equals("used")) {
+                    userDietService.removeDiet(userDiet);
+                    return new ResponseEntity(HttpStatus.OK);
+                }
+            }
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
         }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+
     }
+
     @ExceptionHandler
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ValidationError handleException(MethodArgumentNotValidException exception) {

@@ -9,6 +9,8 @@ import com.advisor.repository.CoachTypeRepository;
 import com.advisor.repository.RecurringTypeRepository;
 import com.advisor.repository.RoleRepository;
 import com.advisor.service.AdvertisementService;
+import com.advisor.service.Exceptions.DataRepositoryException;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 import com.advisor.service.MeetingService;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Time;
@@ -53,7 +54,7 @@ public class PopulateController {
     public ResponseEntity populate()
     {
         //save roles
-        List<Role> roles = new ArrayList();
+        List<Role> roles = new ArrayList<>();
         roles.add(new Role("ADMIN"));
         roles.add(new Role("COACH"));
         roles.add(new Role("USER"));
@@ -62,7 +63,7 @@ public class PopulateController {
         }
 
         //save CoachTypes
-        List<CoachType> coachTypes = new ArrayList();
+        List<CoachType> coachTypes = new ArrayList<>();
         coachTypes.add(new CoachType("bodybuilding"));
         coachTypes.add(new CoachType("fitness"));
         for (CoachType c : coachTypes) {
@@ -70,7 +71,7 @@ public class PopulateController {
         }
 
         //save recurrence types
-        List<RecurringType> recurringTypes = new ArrayList();
+        List<RecurringType> recurringTypes = new ArrayList<>();
         recurringTypes.add(new RecurringType("daily"));
         recurringTypes.add(new RecurringType("weekly"));
         recurringTypes.add(new RecurringType("monthly"));
@@ -99,19 +100,23 @@ public class PopulateController {
         User user2 = userService.findUserByEmail(email);
 
         //Meeting1
-        MeetingRequest meetingRequest = new MeetingRequest(user2.getId(), "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
-        meetingService.addMeeting(user, meetingRequest);
+        try {
+            MeetingRequest meetingRequest = new MeetingRequest(user2.getId().toString(), "Ziom dzis rano ustawka", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+            meetingService.addMeeting(user, meetingRequest);
 
 
+            //adv2
+            advertisementRequest = new AdvertisementRequest("WYśmienite moje ogloszenie", "fitness");
+            advertisementService.setAdvertisement(user2, advertisementRequest);
 
-        //adv2
-        advertisementRequest = new AdvertisementRequest("WYśmienite moje ogloszenie", "fitness");
-        advertisementService.setAdvertisement(user2, advertisementRequest);
-
-        //Meeting2
-        meetingRequest = new MeetingRequest(user.getId(), "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
-        meetingService.addMeeting(user2, meetingRequest);
-
+            //Meeting2
+            meetingRequest = new MeetingRequest(user.getId().toString(), "Wieczorowe ciśnięcie na silowni", new Location(50.243788, 50.243788), new EventRequest(new Date(235423342), new Date(12313231), new Time(1231413), new Time(12414111), false, false, null, null, null));
+            meetingService.addMeeting(user2, meetingRequest);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (DataRepositoryException e) {
+            return new ResponseEntity(e.getStandardResponseCode());
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 }

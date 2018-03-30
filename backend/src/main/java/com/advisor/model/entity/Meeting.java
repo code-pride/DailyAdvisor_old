@@ -4,6 +4,7 @@ import com.advisor.model.request.MeetingRequest;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -27,11 +28,11 @@ public class Meeting {
     private String meetingText;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Location location;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(nullable = false)
     private Event event;
 
     @Column(name = "status", nullable = false)
@@ -50,4 +51,21 @@ public class Meeting {
         this.status = "sent";
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Meeting meeting = (Meeting) o;
+        return Objects.equals(getUserId(), meeting.getUserId()) &&
+                Objects.equals(getUserId2(), meeting.getUserId2()) &&
+                Objects.equals(getMeetingText(), meeting.getMeetingText()) &&
+                Objects.equals(getLocation(), meeting.getLocation()) &&
+                Objects.equals(getEvent(), meeting.getEvent()) &&
+                Objects.equals(getStatus(), meeting.getStatus());
+    }
 }

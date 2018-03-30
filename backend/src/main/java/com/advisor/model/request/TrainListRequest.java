@@ -8,19 +8,19 @@ import java.util.Set;
 
 @Data
 public class TrainListRequest {
-    @NotNull
+
     private Set<TrainingRequest> trainings;
 
-    @NotNull
-    private long trainId;
 
-    @NotNull
-    private long creatorId;
+    private String trainId;
 
-    @NotBlank
+
+    private String creatorId;
+
+
     private String trainName;
 
-    @NotBlank
+
     private String trainText;
 
 
