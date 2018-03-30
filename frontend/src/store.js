@@ -7,25 +7,29 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         isAuthenticated: false,
+        authenticationError: '',
     },
     getters: {
         isAuthenticated(state) {
             return state.isAuthenticated;
+        },
+        authenticationErrorOccured(state) {
+            return state.authenticationError !== '';
         },
     },
     mutations: {
         AUTHENTICATE(state) {
             state.authenticated = true;
         },
-        LOGOUT(state) {
-            state.authenticated = false;
+        ADD_AUTHENTICATION_ERROR(state, error) {
+            state.authenticationError = error;
         },
     },
     actions: {
         authenticate({ commit }, credentials) {
             auth.login(credentials).then(
                 () => commit('AUTHENTICATE'),
-                () => commit('LOGOUT'),
+                error => commit('ADD_AUTHENTICATION_ERROR', { error }),
             );
         },
     },
