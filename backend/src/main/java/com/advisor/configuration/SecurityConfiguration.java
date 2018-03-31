@@ -106,5 +106,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		return source;
 	}
-
 }

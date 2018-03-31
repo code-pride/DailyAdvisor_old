@@ -9,6 +9,6 @@
             "error",
             4
         ],
-        "import/prefer-default-export": ["off"],   
+        "no-param-reassign": 0
     }
 }
