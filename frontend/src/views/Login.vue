@@ -19,7 +19,6 @@
                     ></v-text-field>
                     <v-btn
                         @click="authenticate({email, password})"
-                        :disabled="!valid"
                         class="sign-in-btn"
                         color="secondary"
                     >Log in</v-btn>
@@ -33,11 +32,18 @@
                     >Sign up</v-btn>
             </v-card>
         </div>
+        <v-snackbar
+            :timeout="0"
+            :color="'error'"
+            :value="didAuthenticationErrorOccured">
+            {{ authenticationErrorMessage }}
+            <v-btn dark flat @click="clearAuthenticationErrors">Close</v-btn>
+        </v-snackbar>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data: () => ({
@@ -52,11 +58,26 @@ export default {
             v => !!v || 'Password is required',
         ],
     }),
-
+    computed: {
+        ...mapGetters([
+            'didAuthenticationErrorOccured',
+            'authenticationErrorMessage',
+        ]),
+    },
     methods: {
         ...mapActions([
             'authenticate',
+            'clearAuthenticationErrors',
         ]),
+    },
+    watch: {
+        didAuthenticationErrorOccured(val) {
+            if (val === true) {
+                setTimeout(() => {
+                    this.clearAuthenticationErrors();
+                }, 6000);
+            }
+        },
     },
 };
 </script>

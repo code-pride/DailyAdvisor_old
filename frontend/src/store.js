@@ -13,16 +13,22 @@ export default new Vuex.Store({
         isAuthenticated(state) {
             return state.isAuthenticated;
         },
-        authenticationErrorOccured(state) {
+        didAuthenticationErrorOccured(state) {
             return state.authenticationError !== '';
+        },
+        authenticationErrorMessage(state) {
+            return state.authenticationError;
         },
     },
     mutations: {
         AUTHENTICATE(state) {
             state.authenticated = true;
         },
-        ADD_AUTHENTICATION_ERROR(state, error) {
-            state.authenticationError = error;
+        ADD_AUTHENTICATION_ERROR(state, payload) {
+            state.authenticationError = payload.error;
+        },
+        CLEAR_AUTHENTICATION_ERRORS(state) {
+            state.authenticationError = '';
         },
     },
     actions: {
@@ -31,6 +37,9 @@ export default new Vuex.Store({
                 () => commit('AUTHENTICATE'),
                 error => commit('ADD_AUTHENTICATION_ERROR', { error }),
             );
+        },
+        clearAuthenticationErrors({ commit }) {
+            commit('CLEAR_AUTHENTICATION_ERRORS');
         },
     },
 });
