@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import SignUp from './views/SignUp.vue';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import NotFound from './views/NotFound.vue';
@@ -23,11 +22,6 @@ export default new Router({
             path: '*',
             name: 'NotFound',
             component: NotFound,
-        },
-        {
-            path: '/signup',
-            name: 'signup',
-            component: SignUp,
         },
     ],
 });
