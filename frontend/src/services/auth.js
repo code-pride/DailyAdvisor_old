@@ -1,3 +1,5 @@
+import * as axios from 'axios';
+
 const INCORRECT_CREDENTIALS_ERROR = 'Incorrect email or password.';
 
 const authService = {
@@ -10,6 +12,10 @@ const authService = {
                 reject(INCORRECT_CREDENTIALS_ERROR);
             }
         });
+    },
+
+    register() {
+        console.log('register function from authjs');
     },
 };
 

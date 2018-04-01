@@ -32,5 +32,10 @@ export default new Vuex.Store({
                 error => commit('ADD_AUTHENTICATION_ERROR', { error }),
             );
         },
+
+        register(something, data) {
+            console.log(something);
+            auth.register(data);
+        },
     },
 });

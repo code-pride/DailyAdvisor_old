@@ -1,26 +1,67 @@
 <template>
-    <div class="test-div">
-        <v-form v-model="valid" ref="form" lazy-validation>
-            <v-text-field
-                label="E-mail"
-                v-model="email"
-                :rules="emailRules"
-                :counter="10"
-                required
-            ></v-text-field>
-            <v-text-field
-                label="Password"
-                v-model="password"
-                :rules="passwordRules"
-                required
-            ></v-text-field>
-        </v-form>
+    <div class="background">
+        <img src="../assets/logo.png">
+        <div class="login-card-wrapper">
+            <v-card class="card-content">
+                <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
+                    <v-text-field
+                        label="Email"
+                        v-model="email"
+                        :rules="emailRules"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        label="Password"
+                        v-model="password"
+                        :rules="passwordRules"
+                        :type="'password'"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        label="Name"
+                        v-model="name"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        label="Lastname"
+                        v-model="lastname"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        label="City"
+                        v-model="city"
+                        required
+                    ></v-text-field>
+                    <v-btn
+                        @click="authenticate({email, password})"
+                        :disabled="!valid"
+                        class="sign-in-btn"
+                        color="secondary"
+                    >Log in</v-btn>
+                    <v-btn
+                        @click="register('something')"
+                        class="sign-in-btn"
+                        color="primary"
+                    >check</v-btn>
+                </v-form>
+                <v-btn
+                    flat
+                    small
+                    class="sign-up-btn"
+                    color="primary"
+                    to="register"
+                    >Sign up</v-btn>
+            </v-card>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     data: () => ({
+        valid: false,
         email: '',
         emailRules: [
             v => !!v || 'E-mail is required',
@@ -30,29 +71,64 @@ export default {
         passwordRules: [
             v => !!v || 'Password is required',
         ],
-        valid: true,
+        name: '',
+        lastname: '',
+        city: '',
     }),
 
     methods: {
-        submit() {
-            if (this.$refs.form.validate()) {
-                console.log('this is valid form');
-            }
-        },
+        ...mapActions([
+            'authenticate',
+            'register',
+        ]),
     },
 };
-
 </script>
 
 <style lang="scss" scoped>
-@import '../variables';
-
-.test-div {
-    border: 1px solid black;
-
-    h1 {
-        color: green;
+    img {
+        width: auto;
+        max-height: 100px;
+        margin-bottom: 30px;
     }
-}
 
+    .background {
+        background: #29D8F3;
+        display: flex;
+        flex: 1 1 0;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-card-wrapper {
+        height: 300px;
+        margin: 0 auto;
+        max-width: 400px;
+        width: 90%;
+    }
+
+    .card-content {
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .form-wrapper {
+        padding-top: 10px;
+        width: 80%;
+    }
+
+    .sign-in-btn {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .sign-up-btn {
+        height: 15px;
+    }
 </style>
