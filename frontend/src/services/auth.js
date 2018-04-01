@@ -20,21 +20,20 @@ const authService = {
         console.log('user data from auth.register method');
         console.dir(userData);
 
+        const mockData = {
+            email: 'mail@gmail.com',
+            password: '123456',
+            name: 'Marek',
+            lastName: 'Makowski',
+            city: 'Katowice',
+        };
+
 
         console.log(this.apiUrl);
-        return axios.get(`${this.apiUrl}/hello`);
 
-
-        // return axios.post('http://localhost:8080/api/registration', userData);
+        return axios.post(`${this.apiUrl}/registration`, mockData);
     },
 
-    // myLogin(credentials) {
-    //     // 'Content-Type': 'application/x-www-form-urlencoded'
-
-    //     const { email, password } = credentials;
-
-    //     return axios.post('http://localhost:8080/api/login');
-    // }
 };
 
 export default authService;
