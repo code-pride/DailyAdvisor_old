@@ -33,9 +33,11 @@ export default new Vuex.Store({
             );
         },
 
-        register(something, data) {
-            console.log(something);
-            auth.register(data);
+        register(something, userData) {
+            auth.register(userData).then(
+                response => console.log(response),
+                error => console.log(error),
+            );
         },
     },
 });

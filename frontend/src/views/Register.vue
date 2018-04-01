@@ -32,14 +32,14 @@
                         v-model="city"
                         required
                     ></v-text-field>
-                    <v-btn
+                    <!-- <v-btn
                         @click="authenticate({email, password})"
                         :disabled="!valid"
                         class="sign-in-btn"
                         color="secondary"
-                    >Log in</v-btn>
+                    >Log in</v-btn> -->
                     <v-btn
-                        @click="register('something')"
+                        @click="register({name: 'marcin', lastname: 'krawczyk'})"
                         class="sign-in-btn"
                         color="primary"
                     >check</v-btn>
@@ -78,7 +78,6 @@ export default {
 
     methods: {
         ...mapActions([
-            'authenticate',
             'register',
         ]),
     },
