@@ -79,13 +79,13 @@ export default {
     }
 
     .login-card-wrapper {
-        height: 300px;
         margin: 0 auto;
         max-width: 400px;
         width: 90%;
     }
 
     .card-content {
+        padding: 20px 0;
         display: flex;
         flex: 1 1 0;
         flex-direction: column;

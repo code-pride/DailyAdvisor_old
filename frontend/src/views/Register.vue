@@ -18,6 +18,13 @@
                         required
                     ></v-text-field>
                     <v-text-field
+                        label="Repeat password"
+                        v-model="passwordAgain"
+                        :rules="passwordRules"
+                        :type="'password'"
+                        required
+                    ></v-text-field>
+                    <v-text-field
                         label="Name"
                         v-model="name"
                         required
@@ -42,15 +49,15 @@
                         @click="register({name: 'marcin', lastname: 'krawczyk'})"
                         class="sign-in-btn"
                         color="primary"
-                    >check</v-btn>
+                    >sign up</v-btn>
                 </v-form>
                 <v-btn
                     flat
                     small
                     class="sign-up-btn"
                     color="primary"
-                    to="register"
-                    >Sign up</v-btn>
+                    to="login"
+                    >Login</v-btn>
             </v-card>
         </div>
     </div>
@@ -102,7 +109,6 @@ export default {
     }
 
     .login-card-wrapper {
-        height: 300px;
         margin: 0 auto;
         max-width: 400px;
         width: 90%;
