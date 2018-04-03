@@ -5,50 +5,98 @@ import com.advisor.model.entity.Meeting;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.MeetingRequest;
 import com.advisor.model.response.MeetingResponse;
-import com.advisor.repository.EventRepository;
 import com.advisor.repository.MeetingRepository;
-import com.advisor.service.Exceptions.MeetingNotFoundException;
-import com.advisor.service.Exceptions.UserNotFoundException;
+import com.advisor.service.Exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service("meetingService")
 public class MeetingServiceImpl implements MeetingService {
 
-    @Autowired
-    @Qualifier("eventRepository")
-    private EventRepository eventRepository;
+    private static final String USER_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.user";
+
+    private static final String MEETING_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.meal";
+
+    private static final String MEETING_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.meal";
 
     @Autowired
     @Qualifier("meetingRepository")
-    private MeetingRepository meetingRepository;
+    private MeetingRepository repository;
 
     @Autowired
+    @Qualifier("userService")
     private UserService userService;
 
+    @Autowired
+    @Qualifier("eventService")
+    private EventService eventService;
+
+    private UUID fromStringToUUID(String strUUID){
+        return UUID.fromString(
+                strUUID
+                        .replaceFirst(
+                                "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
+                        )
+        );
+    }
+
     @Override
-    public void addMeeting(User user, MeetingRequest meetingRequest) throws UserNotFoundException {
-        User user2 = userService.findUserById(meetingRequest.getUserId2());
-        if(user2 != null) {
-            Event event = new Event(meetingRequest.getEventRequest());
-
-
-            eventRepository.save(event);
-            Meeting meeting = new Meeting(user, user2, meetingRequest, event);
-            meetingRepository.save(meeting);
+    public Meeting create(Meeting meeting) throws EntityExists {
+        if(meeting.getId() == null || !repository.existsById(meeting.getId())) {
+            return repository.save(meeting);
         } else {
-            throw new UserNotFoundException();
+            throw new EntityExists(MEETING_EXISTS_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public void delete(UUID id) throws DataRepositoryException {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException(MEETING_NOT_FOUND_MESSAGE_CODE);
+        }
+    }
+
+    @Override
+    public List<Meeting> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Optional<Meeting> findById(UUID id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public Meeting update(Meeting meeting) throws DataRepositoryException, NoSuchElementException {
+        if(repository.existsById(meeting.getId())){
+            return repository.save(meeting);
+        } else {
+            throw new EntityNotFoundException(MEETING_NOT_FOUND_MESSAGE_CODE);
+        }
+    }
+
+
+    @Override
+    public void addMeeting(User user, MeetingRequest meetingRequest) throws DataRepositoryException {
+        Optional<User> user2 = userService.findById(fromStringToUUID(meetingRequest.getUserId2()));
+        if(user2.isPresent()) {
+            Event event = new Event(meetingRequest.getEventRequest());
+            eventService.create(event);
+            Meeting meeting = new Meeting(user, user2.get(), meetingRequest, event);
+            repository.save(meeting);
+        } else {
+            throw new EntityNotFoundException(USER_NOT_FOUND_MESSAGE_CODE);
         }
     }
 
     @Override
     public MeetingResponse findMeetingByIdAndUser(UUID meetingId, User user) {
-        Meeting meeting = meetingRepository.findMeetingById(meetingId);
+        Meeting meeting = repository.findMeetingById(meetingId);
         if(meeting != null && (meeting.getUserId().getId().equals(user.getId()) || meeting.getUserId2().getId().equals(user.getId()))){
             return new MeetingResponse(meeting);
         }
@@ -57,8 +105,8 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public List<MeetingResponse> findMeetingByUser(User user) {
-        List<Meeting> meetingList = meetingRepository.findMeetingsByUserIdOrUserId2(user, user);
-        List<MeetingResponse> meetingResponseList = new ArrayList<MeetingResponse>();
+        List<Meeting> meetingList = repository.findMeetingsByUserIdOrUserId2(user, user);
+        List<MeetingResponse> meetingResponseList = new ArrayList<>();
         for (Meeting meeting : meetingList) {
             meetingResponseList.add(new MeetingResponse(meeting));
         }
@@ -66,38 +114,35 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws MeetingNotFoundException{
-        Meeting meeting = meetingRepository.findByIdd(meetingId);
-        if(meeting != null && meeting.getUserId().equals(user)) {
-            if (newStatus.equals("accept") && meeting.getStatus().equals("sent")) {
-                meetingRepository.updateMeeting(user, "accepted");
-            }
-            else if(newStatus.equals("cancel")){
-                meetingRepository.updateMeeting(user, "canceled");
+    public void updateMeetingStatus(UUID meetingId, User user, String newStatus) throws DataRepositoryException {
+        Optional<Meeting> meeting = repository.findById(meetingId);
+        if(meeting.isPresent()){
+            if(meeting.get().getUserId().equals(user)) {
+                if (newStatus.equals("accept") && meeting.get().getStatus().equals("sent")) {
+                    meeting.get().setStatus("accept");
+                    update(meeting.get());
+                }
+                else if(newStatus.equals("cancel")){
+                    meeting.get().setStatus("cancel");
+                    update(meeting.get());
+                }
             }
         }
-        else {
-            throw new MeetingNotFoundException();
-        }
+        throw new EntityNotFoundException(MEETING_NOT_FOUND_MESSAGE_CODE);
+
     }
 
     @Override
-    public void updateMeeting(MeetingRequest meetingRequest, User user) throws MeetingNotFoundException {
-        List<Meeting> meetingList = meetingRepository.findMeetingByIdAndUserId(meetingRequest.getMeetingId(), user);
+    public void updateMeeting(MeetingRequest meetingRequest, User user) throws DataRepositoryException {
+        Meeting meeting = repository.findOneByIdAndUserId(fromStringToUUID(meetingRequest.getMeetingId()), user);
 
-        if(meetingList != null && meetingList.size() == 1){
-            Meeting meeting = meetingList.get(0);
-            Event event = new Event(meetingRequest.getEventRequest());
-            if (!(event.equals(meeting.getEvent()))){
-                event.setParentEvent(meeting.getEvent());
-                eventRepository.save(event);
-            }
-            meeting.setLocation(meetingRequest.getLocation());
-            meeting.setMeetingText(meetingRequest.getMeetingText());
-            meetingRepository.updateMeeting(meeting);
+        Event event = new Event(meetingRequest.getEventRequest());
+        if (!(event.equals(meeting.getEvent()))) {
+            event.setParentEvent(meeting.getEvent());
+            eventService.create(event);
         }
-        else {
-            throw new MeetingNotFoundException();
-        }
+        meeting.setLocation(meetingRequest.getLocation());
+        meeting.setMeetingText(meetingRequest.getMeetingText());
+        repository.updateMeeting(meeting);
     }
 }

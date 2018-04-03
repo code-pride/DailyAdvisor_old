@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -24,14 +25,22 @@ public class UserController {
     @RequestMapping(value = { "/getUserProfile/{userId}" }, method = RequestMethod.GET)
     public ResponseEntity<UserProfileResponse> getUserProfileByUserId(@PathVariable UUID userId)
     {
-        User user = userService.findUserById(userId);
-        if(user != null){
-            UserProfileResponse userProfileResponse = userService.createUserProfileResponseByUser(user);
+        Optional<User> user = userService.findById(userId);
+        if(user.isPresent()) {
+            UserProfileResponse userProfileResponse = userService.createUserProfileResponseByUser(user.get());
             return new ResponseEntity<>(userProfileResponse, HttpStatus.OK);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @RequestMapping(value = { "/getUserProfile" }, method = RequestMethod.GET)
+    public ResponseEntity<UserProfileResponse> getUserProfile()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        UserProfileResponse userProfileResponse = userService.createUserProfileResponseByUser(user);
+        return new ResponseEntity<>(userProfileResponse, HttpStatus.OK);
     }
 
     @RequestMapping(value = { "/updateUserProfile" }, method = RequestMethod.PUT)

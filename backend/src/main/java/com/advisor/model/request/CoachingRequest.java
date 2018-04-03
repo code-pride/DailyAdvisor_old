@@ -3,22 +3,20 @@ package com.advisor.model.request;
 
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 public class CoachingRequest {
 
-    private UUID coachingId;
+    private String coachingId;
 
-    private UUID coachId;
+    private String coachId;
 
-    private UUID clientId;
+    private String clientId;
 
 
     public CoachingRequest() {
     }
 
-    public CoachingRequest(UUID coachingId, UUID coachId, UUID clientId) {
+    public CoachingRequest(String coachingId, String coachId, String clientId) {
         this.coachingId = coachingId;
         this.coachId = coachId;
         this.clientId = clientId;

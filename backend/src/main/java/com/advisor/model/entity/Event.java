@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -41,8 +42,9 @@ public class Event {
     @Column(nullable = false, name = "is_recurring")
     private boolean recurring;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="create_date", columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
+    //TODO create date on java part
+    //@Temporal(TemporalType.TIMESTAMP)
+    @Column(name="create_date")
     private Date createDate;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -80,5 +82,27 @@ public class Event {
 
     public boolean getRecurring() {
         return recurring;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return getFullDayEvent() == event.getFullDayEvent() &&
+                getRecurring() == event.getRecurring() &&
+                Objects.equals(getRecurringPattern(), event.getRecurringPattern()) &&
+                Objects.equals(getStartDate(), event.getStartDate()) &&
+                Objects.equals(getEndDate(), event.getEndDate()) &&
+                Objects.equals(getStartTime(), event.getStartTime()) &&
+                Objects.equals(getEndTime(), event.getEndTime()) &&
+                Objects.equals(getCreateDate(), event.getCreateDate()) &&
+                Objects.equals(getParentEvent(), event.getParentEvent()) &&
+                Objects.equals(getEventsExceptions(), event.getEventsExceptions());
     }
 }

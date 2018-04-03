@@ -32,10 +32,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	@Qualifier("dataSource")
 	private DataSource dataSource;
-	
+
 	@Value("${spring.queries.users-query}")
 	private String usersQuery;
-	
+
 	@Value("${spring.queries.roles-query}")
 	private String rolesQuery;
 
@@ -52,13 +52,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+
 		http.
 			authorizeRequests()
 
 				.antMatchers("/").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/afterLogin").permitAll()
 				.antMatchers("/populate").permitAll()
+				.antMatchers("/hello").permitAll()
 				.antMatchers("/getUserProfile/**").hasAuthority("USER")
                 .antMatchers("/updateUserProfile").hasAuthority("USER")
                 .antMatchers("/advertisement/**").hasAuthority("USER")
@@ -86,14 +91,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.cors();
 	}
-	
+
 	@Override
 	public void configure(WebSecurity web) {
 	    web
 	       .ignoring()
 	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
 	}
-	
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		final CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedHeaders(Collections.singletonList("*"));
+		configuration.setAllowedOrigins(Collections.singletonList("*"));
+		configuration.setAllowedMethods(Collections.singletonList("*"));
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+
+		return source;
+	}
+
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();

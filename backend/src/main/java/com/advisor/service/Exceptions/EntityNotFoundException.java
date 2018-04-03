@@ -4,8 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class EntityNotFoundException extends DataRepositoryException {
 
-    private static final long serialVersionUID = 4579170430548337393L;
-
     private static final String STANDARD_MESSAGE_CODE = "exception.entityNotFoundException";
 
     private static final HttpStatus STANDARD_RESPONSE_CODE = HttpStatus.NOT_FOUND;
@@ -14,16 +12,16 @@ public class EntityNotFoundException extends DataRepositoryException {
         super();
     }
 
-    public EntityNotFoundException(String overridenMessaegCode, Object[] messageParams, String exceptionMessage) {
-        super(overridenMessaegCode, messageParams, exceptionMessage);
+    public EntityNotFoundException(String overriddenMessageCode, Object[] messageParams, String exceptionMessage) {
+        super(overriddenMessageCode, messageParams, exceptionMessage);
     }
 
-    public EntityNotFoundException(String overridenMessageCode, Object[] messageParams) {
-        super(overridenMessageCode, messageParams);
+    public EntityNotFoundException(String overriddenMessageCode, Object[] messageParams) {
+        super(overriddenMessageCode, messageParams);
     }
 
-    public EntityNotFoundException(String overridenMessageCode) {
-        super(overridenMessageCode);
+    public EntityNotFoundException(String overriddenMessageCode) {
+        super(overriddenMessageCode);
     }
 
     @Override

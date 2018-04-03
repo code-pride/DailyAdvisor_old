@@ -1,5 +1,6 @@
 package com.advisor.model.entity;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.*;
@@ -45,4 +46,20 @@ public class User {
     public User() {
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return getActive() == user.getActive() &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getRoles(), user.getRoles()) &&
+                Objects.equals(getUserProfile(), user.getUserProfile());
+    }
 }

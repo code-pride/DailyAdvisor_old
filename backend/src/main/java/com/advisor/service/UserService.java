@@ -7,15 +7,16 @@ import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.response.UserProfileResponse;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface UserService {
+public interface UserService extends IService<User, UUID> {
 
 	User findUserByEmail(String email);
 
 	void saveUser(NewUserRequest newUserRequest);
 
-	User findUserById(UUID userId);
+	Optional<User> findById(UUID userId);
 
 	UserProfileResponse createUserProfileResponseByUser(User user);
 

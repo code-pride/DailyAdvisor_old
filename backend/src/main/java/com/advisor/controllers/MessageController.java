@@ -14,9 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class MessageController {
@@ -31,24 +29,30 @@ public class MessageController {
     public ResponseEntity addUserMessage(@Valid @RequestBody MessageRequest messageRequest) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        User user2 = userService.findUserById(messageRequest.getReceiverId());
+        Optional<User> user2 = userService.findById(UUID.fromString(messageRequest.getReceiverId()));
 
-        messageService.addUserMessage(user, user2, messageRequest);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        if(user2.isPresent()) {
+            messageService.addUserMessage(user, user2.get(), messageRequest);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = { "message/{userId}" }, method = RequestMethod.GET)
     public ResponseEntity<List<MessageResponse>> getUserMessages(@PathVariable UUID userId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        User user2 = userService.findUserById(userId);
+            Optional<User> user2 = userService.findById(userId);
+            if(user2.isPresent()) {
+                List<Message> messages = messageService.getUserMessages(user, user2.get());
+                List<MessageResponse> messageResponses = new ArrayList<>();
+                messages.forEach(message -> messageResponses.add(new MessageResponse(message)));
 
-        List<Message> messages = messageService.getUserMessages(user, user2);
-        List<MessageResponse> messageResponses = new ArrayList<>();
-        messages.forEach(message->messageResponses.add(new MessageResponse(message)));
-
-        return new ResponseEntity<>(messageResponses, HttpStatus.OK);
+                return new ResponseEntity<>(messageResponses, HttpStatus.OK);
+            } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = { "message/" }, method = RequestMethod.GET)
