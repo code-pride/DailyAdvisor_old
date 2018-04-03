@@ -6,12 +6,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        isAuthenticated: false,
+        authenticated: false,
         authenticationError: '',
     },
     getters: {
         isAuthenticated(state) {
-            return state.isAuthenticated;
+            return state.authenticated;
         },
         didAuthenticationErrorOccured(state) {
             return state.authenticationError !== '';
