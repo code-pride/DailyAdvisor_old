@@ -6,6 +6,7 @@ import store from './store';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
+
 Vue.use(Vuetify, {
     theme: {
         primary: '#03A9F4',
