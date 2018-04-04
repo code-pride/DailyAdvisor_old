@@ -1,7 +1,12 @@
 <template>
     <div class="background">
         <img src="../assets/logo.png">
-        <div class="login-card-wrapper">
+
+        <div v-if="isAuthenticated" class="already-logged-in-message">
+            <h2>You're already logged in!</h2>
+        </div>
+
+        <div v-if="!isAuthenticated" class="login-card-wrapper">
             <v-card class="card-content">
                 <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
                     <v-text-field
@@ -32,6 +37,7 @@
                     >Sign up</v-btn>
             </v-card>
         </div>
+
         <v-snackbar
             :timeout="0"
             :color="'error'"
@@ -63,13 +69,13 @@ export default {
         ...mapGetters([
             'didAuthenticationErrorOccured',
             'authenticationErrorMessage',
+            'isAuthenticated',
         ]),
     },
     methods: {
         ...mapActions([
             'authenticate',
             'clearAuthenticationErrors',
-            'isAuthenticated',
         ]),
         authenticateAndTryReroute(credentials) {
             this.authenticate(credentials).then(() => {
@@ -96,6 +102,10 @@ export default {
         width: auto;
         max-height: 100px;
         margin-bottom: 30px;
+    }
+
+    .already-logged-in-message {
+        color: white;
     }
 
     .background {
