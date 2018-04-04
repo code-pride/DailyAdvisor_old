@@ -4,7 +4,6 @@ import store from './store';
 
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
-import NotFound from './views/NotFound.vue';
 import Home from './views/Home.vue';
 
 Vue.use(Router);
@@ -29,8 +28,8 @@ const router = new Router({
         },
         {
             path: '*',
-            name: 'NotFound',
-            component: NotFound,
+            name: 'Default',
+            component: Login,
         },
     ],
 });
