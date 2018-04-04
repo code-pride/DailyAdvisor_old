@@ -18,7 +18,7 @@
                         required
                     ></v-text-field>
                     <v-btn
-                        @click="authenticate({email, password})"
+                        @click="authenticateAndTryReroute({email, password})"
                         class="sign-in-btn"
                         color="secondary"
                     >Log in</v-btn>
@@ -44,6 +44,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import router from '../router';
 
 export default {
     data: () => ({
@@ -68,7 +69,15 @@ export default {
         ...mapActions([
             'authenticate',
             'clearAuthenticationErrors',
+            'isAuthenticated',
         ]),
+        authenticateAndTryReroute(credentials) {
+            this.authenticate(credentials).then(() => {
+                if (this.isAuthenticated) {
+                    router.push('/restricted');
+                }
+            });
+        },
     },
     watch: {
         didAuthenticationErrorOccured(val) {

@@ -22,7 +22,7 @@ const router = new Router({
         },
         {
             path: '/restricted',
-            name: 'restricted-stuff',
+            name: 'restricted',
             component: Home,
             meta: { requiresAuthentication: true },
         },
