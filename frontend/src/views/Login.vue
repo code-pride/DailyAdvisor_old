@@ -6,7 +6,7 @@
             <h2>You're already logged in!</h2>
         </div>
 
-        <div v-if="!isAuthenticated" class="login-card-wrapper">
+        <div v-else class="login-card-wrapper">
             <v-card class="card-content">
                 <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
                     <v-text-field
