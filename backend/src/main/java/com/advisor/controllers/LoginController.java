@@ -17,10 +17,16 @@ public class LoginController {
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ResponseEntity createNewUser(@Valid @RequestBody NewUserRequest newUserRequest) {
-		User userExists = userService.findUserByEmail(newUserRequest.getEmail());
-		if (userExists == null) {
-            userService.saveUser(newUserRequest);
-            return new ResponseEntity(HttpStatus.OK);
+		User user = userService.findUserByEmail(newUserRequest.getEmail());
+		if (user == null) {
+		    if("client".equals(newUserRequest.getUserType())){
+                userService.registerClient(newUserRequest);
+                return new ResponseEntity(HttpStatus.OK);
+            } else if ("coach".equals(newUserRequest.getUserType())){
+                userService.registerCoach(newUserRequest);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity(HttpStatus.IM_USED);
 		}

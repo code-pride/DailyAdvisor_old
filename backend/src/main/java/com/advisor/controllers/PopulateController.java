@@ -84,7 +84,7 @@ public class PopulateController {
         //User1register1
         String email = "m@m.mm";
         NewUserRequest newUserRequest = new NewUserRequest(email, "Marek", "Makowski", "Katowice", "111111", "client");
-        userService.saveUser(newUserRequest);
+        userService.registerClient(newUserRequest);
         User user = userService.findUserByEmail(email);
 
         //adv1
@@ -94,7 +94,7 @@ public class PopulateController {
         //User2register2
         email = "r@r.rr";
         newUserRequest = new NewUserRequest(email, "Marcin", "Krawczyk", "Gliwice", "111111", "client");
-        userService.saveUser(newUserRequest);
+        userService.registerClient(newUserRequest);
 
         //User2
         User user2 = userService.findUserByEmail(email);

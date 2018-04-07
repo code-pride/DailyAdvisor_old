@@ -26,6 +26,10 @@ public class UserServiceImpl implements UserService{
 
     private static final String MESSAGE_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.meal";
 
+    private static final String ROLE_COACH = "COACH";
+
+    private static final String ROLE_USER = "USER";
+
 	@Autowired
     @Qualifier("userRepository")
 	private UserRepository repository;
@@ -84,18 +88,27 @@ public class UserServiceImpl implements UserService{
 	}
 
     @Override
-	public void saveUser(NewUserRequest newUserRequest) {
-	    User user = new User(newUserRequest);
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	public void registerClient(NewUserRequest newUserRequest) {
+        registerUser(newUserRequest, ROLE_USER);
+	}
+
+    @Override
+    public void registerCoach(NewUserRequest newUserRequest) {
+        registerUser(newUserRequest, ROLE_COACH);
+    }
+
+    @Override
+    public void registerUser(NewUserRequest newUserRequest, String role) {
+        User user = new User(newUserRequest);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        Role userRole = roleRepository.findByRole("USER");
-        Role userRole2 = roleRepository.findByRole("ADMIN");
-        user.setRoles(new HashSet<>(Arrays.asList(userRole, userRole2)));
-		repository.save(user);
+        Role userRole = roleRepository.findByRole(role);
+        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+        repository.save(user);
 
         UserProfile userProfile = new UserProfile(user, newUserRequest);
         userProfileRepository.save(userProfile);
-	}
+    }
 
 	@Override
     public UserProfileResponse createUserProfileResponseByUser(User user){
@@ -111,7 +124,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void upgradeUserToCoach(User user){
 
-        Role coachRole = roleRepository.findByRole("COACH");
+        Role coachRole = roleRepository.findByRole(ROLE_COACH);
         if(!user.getRoles().contains(coachRole)) {
             user.getRoles().add(coachRole);
             repository.save(user);}
