@@ -14,9 +14,13 @@ public interface UserService extends IService<User, UUID> {
 
 	User findUserByEmail(String email);
 
-	void saveUser(NewUserRequest newUserRequest);
+	void registerClient(NewUserRequest newUserRequest);
 
 	Optional<User> findById(UUID userId);
+
+	void registerCoach(NewUserRequest newUserRequest);
+
+	void registerUser(NewUserRequest newUserRequest, String role);
 
 	UserProfileResponse createUserProfileResponseByUser(User user);
 
