@@ -54,9 +54,7 @@ export default {
     }),
 
     methods: {
-        ...mapActions([
-            'authenticate',
-        ]),
+        ...mapActions('authModule', ['authenticate']),
     },
 };
 </script>

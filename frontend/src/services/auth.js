@@ -1,10 +1,11 @@
 import * as axios from 'axios';
 
+
+axios.defaults.baseUrl = process.env.VUE_APP_API_LOCAL_URL;
+
 const INCORRECT_CREDENTIALS_ERROR = 'Incorrect email or password.';
 
 const authService = {
-    apiUrl: process.env.VUE_APP_API_LOCAL_URL,
-
     login(credentials) {
         // temporar solution, as API doesn't work yet
         return new Promise((resolve, reject) => {
@@ -31,8 +32,12 @@ const authService = {
 
         console.log(this.apiUrl);
 
-        return axios.post(`${this.apiUrl}/registration`, mockData);
+        return axios.post('/registration', mockData);
     },
+
+    hello() {
+        return axios.get('/hello');
+    }
 
 };
 
