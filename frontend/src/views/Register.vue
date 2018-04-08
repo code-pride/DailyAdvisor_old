@@ -3,42 +3,43 @@
         <img src="../assets/logo.png">
         <div class="login-card-wrapper">
             <v-card class="card-content">
-                <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
+                <v-form v-model="isFormValid" ref="form" lazy-validation class="form-wrapper">
+                    <v-text-field
+                        label="Name"
+                        v-model="userData.name"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        label="Lastname"
+                        v-model="userData.lastname"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        label="City"
+                        v-model="userData.city"
+                        required
+                    ></v-text-field>
                     <v-text-field
                         label="Email"
-                        v-model="email"
-                        :rules="emailRules"
+                        v-model="userData.email"
                         required
                     ></v-text-field>
                     <v-text-field
                         label="Password"
-                        v-model="password"
-                        :rules="passwordRules"
+                        v-model="userData.password"
                         :type="'password'"
                         required
                     ></v-text-field>
                     <v-text-field
                         label="Repeat password"
-                        v-model="passwordAgain"
-                        :rules="passwordRules"
+                        v-model="userData.repeatPassword"
                         :type="'password'"
                         required
                     ></v-text-field>
-                    <v-text-field
-                        label="Name"
-                        v-model="name"
-                        required
-                    ></v-text-field>
-                    <v-text-field
-                        label="Lastname"
-                        v-model="lastname"
-                        required
-                    ></v-text-field>
-                    <v-text-field
-                        label="City"
-                        v-model="city"
-                        required
-                    ></v-text-field>
+                    <v-radio-group v-model="userData.userType" row>
+                        <v-radio label="Coach" value="coach" ></v-radio>
+                        <v-radio label="Normal user" value="normalUser"></v-radio>
+                    </v-radio-group>
                     <!-- <v-btn
                         @click="authenticate({email, password})"
                         :disabled="!valid"
@@ -46,7 +47,7 @@
                         color="secondary"
                     >Log in</v-btn> -->
                     <v-btn
-                        @click="register({name: 'marcin', lastname: 'krawczyk'})"
+                        v-on:click="register(userData)"
                         class="sign-in-btn"
                         color="primary"
                     >sign up</v-btn>
@@ -68,23 +69,20 @@ import { mapActions } from 'vuex';
 
 export default {
     data: () => ({
-        valid: false,
-        email: '',
-        emailRules: [
-            v => !!v || 'E-mail is required',
-            v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
-        ],
-        password: '',
-        passwordRules: [
-            v => !!v || 'Password is required',
-        ],
-        name: '',
-        lastname: '',
-        city: '',
+        userData: {
+            name: '',
+            lastname: '',
+            city: '',
+            email: '',
+            password: '',
+            repeatPassword: '',
+            userType: '',
+        },
+        isFormValid: false,
     }),
 
     methods: {
-        ...mapActions([
+        ...mapActions('authModule', [
             'register',
         ]),
     },
