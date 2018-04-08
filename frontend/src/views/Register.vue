@@ -40,12 +40,6 @@
                         <v-radio label="Coach" value="coach" ></v-radio>
                         <v-radio label="Normal user" value="normalUser"></v-radio>
                     </v-radio-group>
-                    <!-- <v-btn
-                        @click="authenticate({email, password})"
-                        :disabled="!valid"
-                        class="sign-in-btn"
-                        color="secondary"
-                    >Log in</v-btn> -->
                     <v-btn
                         v-on:click="register(userData)"
                         class="sign-in-btn"
@@ -58,7 +52,7 @@
                     class="sign-up-btn"
                     color="primary"
                     to="login"
-                    >Login</v-btn>
+                >Login</v-btn>
             </v-card>
         </div>
     </div>
