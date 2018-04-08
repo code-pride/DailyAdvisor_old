@@ -7,54 +7,65 @@
                     <v-text-field
                         label="Name"
                         v-model.trim="userData.name"
+                        @input="$v.userData.name.$touch()"
                         required
                     ></v-text-field>
-                    <div class="error-test" v-if="!$v.userData.name.required">Field is required</div>
-                    <div class="error-test" v-if="!$v.userData.name.minLength">Field is to short</div>
-                    <div class="error-test" v-if="!$v.userData.name.maxLength">Field is to long</div>
-                    <div class="error-test" v-if="!$v.userData.name.alpha">It has to be only alpha letters (no numbers)</div>
+                    <error :input-validation-data="$v.userData.name"></error>
+
                     <v-text-field
                         label="Lastname"
                         v-model.trim="userData.lastname"
+                        @input="$v.userData.lastname.$touch()"
                         required
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.lastname"></error>
+
                     <v-text-field
                         label="City"
                         v-model.trim="userData.city"
+                        @input="$v.userData.city.$touch()"
                         required
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.city"></error>
+
                     <v-text-field
                         label="Email"
                         v-model.trim="userData.email"
+                        @input="$v.userData.email.$touch()"
                         required
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.email"></error>
+
                     <v-text-field
                         label="Password"
                         v-model.trim="userData.password"
-                        :type="'password'"
+                        @input="$v.userData.password.$touch()"
+                        :type="'text'"
                         required
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.password"></error>
+
                     <v-text-field
                         label="Repeat password"
                         v-model.trim="userData.repeatPassword"
-                        :type="'password'"
+                        @input="$v.userData.repeatPassword.$touch()"
+                        :type="'text'"
                         required
                     ></v-text-field>
-                    <v-radio-group v-model="userData.userType" row>
+                    <error :input-validation-data="$v.userData.repeatPassword"></error>
+
+                    <v-radio-group v-model="userData.userType" row @input="$v.userData.userType.$touch()">
                         <v-radio label="Coach" value="coach" ></v-radio>
                         <v-radio label="Normal user" value="normalUser"></v-radio>
                     </v-radio-group>
+                    <error :input-validation-data="$v.userData.userType"></error>
+
                     <v-btn
                         v-on:click="register(userData)"
                         class="sign-in-btn"
                         color="primary"
                     >sign up</v-btn>
                 </v-form>
-                <div>
-                    <pre>
-                        {{ $v.userData.name }}
-                    </pre>
-                </div>
                 <v-btn
                     flat
                     small
@@ -78,9 +89,12 @@ import {
     maxLength
 } from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
+import Error from './Error';
 
 export default {
-    components: {},
+    components: {
+        "error": Error,
+    },
     data: () => ({
         userData: {
             name: '',
@@ -117,15 +131,16 @@ export default {
                 minLength: minLength(4),
                 maxLength: maxLength(100),
             },
-            pasword: {
+            password: {
                 required,
                 minLength: minLength(7),
                 maxLength: maxLength(255),
             },
             repeatPassword: {
-                sameAs: sameAs('userData.password'),
-                minLength: minLength(7),
-                maxLength: maxLength(255),
+                sameAsPassword: sameAs('userData.password'),
+            },
+            userType: {
+                required,
             }
         },
     },
@@ -134,7 +149,8 @@ export default {
         // ...mapActions('authModule', [
         //     'register',
         // ]),
-        register() {
+        register(userData) {
+            // console.log(userData);
             console.log(this.$v);
         }
     },
@@ -185,9 +201,5 @@ export default {
 
     .sign-up-btn {
         height: 15px;
-    }
-
-    .error-test {
-        color: red;
     }
 </style>
