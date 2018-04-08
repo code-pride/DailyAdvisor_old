@@ -6,33 +6,37 @@
                 <v-form v-model="isFormValid" ref="form" lazy-validation class="form-wrapper">
                     <v-text-field
                         label="Name"
-                        v-model="userData.name"
+                        v-model.trim="userData.name"
                         required
                     ></v-text-field>
+                    <div class="error-test" v-if="!$v.userData.name.required">Field is required</div>
+                    <div class="error-test" v-if="!$v.userData.name.minLength">Field is to short</div>
+                    <div class="error-test" v-if="!$v.userData.name.maxLength">Field is to long</div>
+                    <div class="error-test" v-if="!$v.userData.name.alpha">It has to be only alpha letters (no numbers)</div>
                     <v-text-field
                         label="Lastname"
-                        v-model="userData.lastname"
+                        v-model.trim="userData.lastname"
                         required
                     ></v-text-field>
                     <v-text-field
                         label="City"
-                        v-model="userData.city"
+                        v-model.trim="userData.city"
                         required
                     ></v-text-field>
                     <v-text-field
                         label="Email"
-                        v-model="userData.email"
+                        v-model.trim="userData.email"
                         required
                     ></v-text-field>
                     <v-text-field
                         label="Password"
-                        v-model="userData.password"
+                        v-model.trim="userData.password"
                         :type="'password'"
                         required
                     ></v-text-field>
                     <v-text-field
                         label="Repeat password"
-                        v-model="userData.repeatPassword"
+                        v-model.trim="userData.repeatPassword"
                         :type="'password'"
                         required
                     ></v-text-field>
@@ -46,6 +50,11 @@
                         color="primary"
                     >sign up</v-btn>
                 </v-form>
+                <div>
+                    <pre>
+                        {{ $v.userData.name }}
+                    </pre>
+                </div>
                 <v-btn
                     flat
                     small
@@ -59,10 +68,19 @@
 </template>
 
 <script>
-import { required, minLength, maxLength } from 'vuelidate/lib/validators';
+import {
+    required,
+    alpha,
+    alphaNum,
+    sameAs,
+    email,
+    minLength,
+    maxLength
+} from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
 
 export default {
+    components: {},
     data: () => ({
         userData: {
             name: '',
@@ -77,22 +95,48 @@ export default {
     }),
 
     validations: {
-        name: {
-            required,
-            minLength: minLength(4),
-            maxLength: maxLength(10),
+        userData: {
+            name: {
+                required,
+                minLength: minLength(2),
+                maxLength: maxLength(100),
+            },
+            lastname: {
+                required,
+                minLength: minLength(2),
+                maxLength: maxLength(100),
+            },
+            city: {
+                required,
+                minLength: minLength(4),
+                maxLength: maxLength(100),
+            },
+            email: {
+                required,
+                email,
+                minLength: minLength(4),
+                maxLength: maxLength(100),
+            },
+            pasword: {
+                required,
+                minLength: minLength(7),
+                maxLength: maxLength(255),
+            },
+            repeatPassword: {
+                sameAs: sameAs('userData.password'),
+                minLength: minLength(7),
+                maxLength: maxLength(255),
+            }
         },
-        lastname: {
-            required,
-            minLength: minLength(4),
-            maxLength: maxLength(10),
-        }
     },
 
     methods: {
-        ...mapActions('authModule', [
-            'register',
-        ]),
+        // ...mapActions('authModule', [
+        //     'register',
+        // ]),
+        register() {
+            console.log(this.$v);
+        }
     },
 };
 </script>
@@ -141,5 +185,9 @@ export default {
 
     .sign-up-btn {
         height: 15px;
+    }
+
+    .error-test {
+        color: red;
     }
 </style>
