@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
 
 export default {
@@ -74,6 +75,19 @@ export default {
         },
         isFormValid: false,
     }),
+
+    validations: {
+        name: {
+            required,
+            minLength: minLength(4),
+            maxLength: maxLength(10),
+        },
+        lastname: {
+            required,
+            minLength: minLength(4),
+            maxLength: maxLength(10),
+        }
+    },
 
     methods: {
         ...mapActions('authModule', [
