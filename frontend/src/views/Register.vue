@@ -125,6 +125,8 @@ export default {
             },
             password: {
                 required,
+                minLength: minLength(7),
+                maxLength: maxLength(255),
             },
             repeatPassword: {
                 sameAs: sameAs('password'),
