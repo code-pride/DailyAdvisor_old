@@ -32,10 +32,7 @@ const actions =  {
     },
 
     register(something, userData) {
-        auth.register(userData).then(
-            response => console.log(response),
-            error => console.log(error),
-        );
+        console.log(userData);
     },
 };
 
