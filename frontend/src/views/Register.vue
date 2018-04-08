@@ -79,7 +79,6 @@ import {
     email,
     minLength,
     maxLength,
-    requiredUnless,
 } from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
 import Error from './Error';
@@ -138,9 +137,6 @@ export default {
     },
 
     methods: {
-        // ...mapActions('authModule', [
-        //     'register',
-        // ]),
         register(userData) {
             this.$v.userData.$touch();
             if (this.$v.userData.$invalid) {
@@ -149,8 +145,6 @@ export default {
                 // make reqyuest cause data passed frontend validation
                 console.log(`Making request with this data: ${userData}`);
             }
-            // console.log(userData);
-            console.log(this.$v.userData);
         },
     },
 };
