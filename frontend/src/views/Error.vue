@@ -23,9 +23,7 @@ export default {
             sameAs: 'Password are different',
         },
     }),
-
-    mounted() {},
-}
+};
 
 </script>
 

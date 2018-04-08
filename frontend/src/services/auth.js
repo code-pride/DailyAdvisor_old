@@ -37,7 +37,7 @@ const authService = {
 
     hello() {
         return axios.get('/hello');
-    }
+    },
 
 };
 

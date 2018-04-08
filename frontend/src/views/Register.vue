@@ -34,17 +34,17 @@
 
                     <v-text-field
                         label="Password"
-                        v-model.trim="userData.password"
+                        v-model="userData.password"
+                        :type="'password'"
                         @input="$v.userData.password.$touch()"
-                        :type="'text'"
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.password"></error>
 
                     <v-text-field
                         label="Repeat password"
-                        v-model.trim="userData.repeatPassword"
+                        v-model="userData.repeatPassword"
+                        :type="'password'"
                         @input="$v.userData.repeatPassword.$touch()"
-                        :type="'text'"
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.repeatPassword"></error>
 
@@ -78,14 +78,15 @@ import {
     sameAs,
     email,
     minLength,
-    maxLength
+    maxLength,
+    requiredUnless,
 } from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
 import Error from './Error';
 
 export default {
     components: {
-        "error": Error,
+        error: Error,
     },
     data: () => ({
         userData: {
@@ -124,15 +125,13 @@ export default {
             },
             password: {
                 required,
-                minLength: minLength(7),
-                maxLength: maxLength(255),
             },
             repeatPassword: {
-                sameAsPassword: sameAs('password'),
+                sameAs: sameAs('password'),
             },
             userType: {
                 required,
-            }
+            },
         },
     },
 
@@ -146,11 +145,11 @@ export default {
                 console.log('You have to fix your form');
             } else {
                 // make reqyuest cause data passed frontend validation
-                console.log(`Making request with this data: ${userData}`)
+                console.log(`Making request with this data: ${userData}`);
             }
             // console.log(userData);
             console.log(this.$v.userData);
-        }
+        },
     },
 };
 </script>
