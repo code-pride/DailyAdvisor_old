@@ -1,6 +1,6 @@
 <template>
 
-    <div class="error-test">
+    <div class="error-test" v-if="inputValidationData.$dirty">
         <div v-for="validation of inputValidationData.$params" :key="validation.type">
             <span v-if="!inputValidationData[validation.type]">{{errorMsgs[validation.type]}}</span>
         </div>
@@ -24,9 +24,7 @@ export default {
         },
     }),
 
-    mounted() {
-        console.log(this.inputValidationData);
-    },
+    mounted() {},
 }
 
 </script>

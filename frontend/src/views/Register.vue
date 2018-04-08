@@ -3,12 +3,11 @@
         <img src="../assets/logo.png">
         <div class="login-card-wrapper">
             <v-card class="card-content">
-                <v-form v-model="isFormValid" ref="form" lazy-validation class="form-wrapper">
+                <v-form class="form-wrapper">
                     <v-text-field
                         label="Name"
                         v-model.trim="userData.name"
                         @input="$v.userData.name.$touch()"
-                        required
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.name"></error>
 
@@ -16,7 +15,6 @@
                         label="Lastname"
                         v-model.trim="userData.lastname"
                         @input="$v.userData.lastname.$touch()"
-                        required
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.lastname"></error>
 
@@ -24,7 +22,6 @@
                         label="City"
                         v-model.trim="userData.city"
                         @input="$v.userData.city.$touch()"
-                        required
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.city"></error>
 
@@ -32,7 +29,6 @@
                         label="Email"
                         v-model.trim="userData.email"
                         @input="$v.userData.email.$touch()"
-                        required
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.email"></error>
 
@@ -41,7 +37,6 @@
                         v-model.trim="userData.password"
                         @input="$v.userData.password.$touch()"
                         :type="'text'"
-                        required
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.password"></error>
 
@@ -50,7 +45,6 @@
                         v-model.trim="userData.repeatPassword"
                         @input="$v.userData.repeatPassword.$touch()"
                         :type="'text'"
-                        required
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.repeatPassword"></error>
 
@@ -81,8 +75,6 @@
 <script>
 import {
     required,
-    alpha,
-    alphaNum,
     sameAs,
     email,
     minLength,
@@ -105,7 +97,6 @@ export default {
             repeatPassword: '',
             userType: '',
         },
-        isFormValid: false,
     }),
 
     validations: {
@@ -137,7 +128,7 @@ export default {
                 maxLength: maxLength(255),
             },
             repeatPassword: {
-                sameAsPassword: sameAs('userData.password'),
+                sameAsPassword: sameAs('password'),
             },
             userType: {
                 required,
@@ -150,8 +141,15 @@ export default {
         //     'register',
         // ]),
         register(userData) {
+            this.$v.userData.$touch();
+            if (this.$v.userData.$invalid) {
+                console.log('You have to fix your form');
+            } else {
+                // make reqyuest cause data passed frontend validation
+                console.log(`Making request with this data: ${userData}`)
+            }
             // console.log(userData);
-            console.log(this.$v);
+            console.log(this.$v.userData);
         }
     },
 };
