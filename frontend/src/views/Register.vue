@@ -50,7 +50,7 @@
 
                     <v-radio-group v-model="userData.userType" row @input="$v.userData.userType.$touch()">
                         <v-radio label="Coach" value="coach" ></v-radio>
-                        <v-radio label="Normal user" value="user"></v-radio>
+                        <v-radio label="Normal user" value="client"></v-radio>
                     </v-radio-group>
                     <error :input-validation-data="$v.userData.userType"></error>
 
@@ -70,13 +70,13 @@
             </v-card>
         </div>
 
-        <!-- <v-snackbar
+        <v-snackbar
             :timeout="0"
-            :color="'error'"
+            :color="registerSnackBarColor"
             :value="didRegisterSuccess">
             {{ registerErrorMessage }} {{ registerSuccessMessage }}
             <v-btn dark flat @click="clearRegisterMessages">Close</v-btn>
-        </v-snackbar> -->
+        </v-snackbar>
     </div>
 </template>
 
@@ -105,6 +105,7 @@ export default {
             repeatPassword: '',
             userType: '',
         },
+        snackbarType: 'error',
     }),
 
     validations: {
@@ -150,6 +151,7 @@ export default {
             'didRegisterSuccess',
             'registerSuccessMessage',
             'registerErrorMessage',
+            'registerSnackBarColor',
         ]),
     },
 
@@ -161,11 +163,8 @@ export default {
 
         validate(userData) {
             this.$v.userData.$touch();
-            if (this.$v.userData.$invalid) {
-                console.log('You have to fix your form');
-            } else {
-                const rawData = {...userData};
-                this.register(rawData);
+            if (!this.$v.userData.$invalid) {
+                this.register({...userData});
             }
         },
     },

@@ -2,28 +2,32 @@ import auth from '../services/auth';
 
 const state = {
     registerErrorMessage: '',
-    registerSuccessMsg: 'jhvjhvj',
+    registerSuccessMessage: '',
+    registerSnackBarColor: 'error',
     isAuthenticated: false,
     authenticationError: '',
 };
 
 const getters = {
-    didRegisterErrorOccured(state) {
+    registerSnackBarColor() {
+        return state.registerSnackBarColor;
+    },
+    didRegisterErrorOccured() {
         return state.registerErrorMessage !== '';
     },
-    didRegisterSuccess(state) {
+    didRegisterSuccess() {
         return state.registerSuccessMessage !== '';
     },
-    registerErrorMessage(state) {
+    registerErrorMessage() {
         return state.registerErrorMessage;
     },
-    registerSuccessMessage(state) {
-        return state.registerSuccessMsg;
+    registerSuccessMessage() {
+        return state.registerSuccessMessage;
     },
-    isAuthenticated(state) {
+    isAuthenticated() {
         return state.isAuthenticated;
     },
-    authenticationErrorOccured(state) {
+    authenticationErrorOccured() {
         return state.authenticationError !== '';
     },
 };
@@ -32,8 +36,9 @@ const mutations = {
     ADD_REGISTER_ERROR(state, error) {
         state.registerError = error.response.statusText;
     },
-    ADD_REGISTER_SUCCES_MESSAGES(statem, statusText) {
-        state.registerSuccessMsg = data.statusText;
+    ADD_REGISTER_SUCCES_MESSAGES(state, data) {
+        state.registerSnackBarColor = 'success';
+        state.registerSuccessMessage = data.statusText;
     },
     CLEAR_REGISTER_MESSAGES(state) {
         state.registerErrorMessage = '';
