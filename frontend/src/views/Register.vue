@@ -3,43 +3,57 @@
         <img src="../assets/logo.png">
         <div class="login-card-wrapper">
             <v-card class="card-content">
-                <v-form v-model="isFormValid" ref="form" lazy-validation class="form-wrapper">
+                <v-form class="form-wrapper">
                     <v-text-field
                         label="Name"
-                        v-model="userData.name"
-                        required
+                        v-model.trim="userData.name"
+                        @input="$v.userData.name.$touch()"
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.name"></error>
+
                     <v-text-field
                         label="Lastname"
-                        v-model="userData.lastname"
-                        required
+                        v-model.trim="userData.lastname"
+                        @input="$v.userData.lastname.$touch()"
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.lastname"></error>
+
                     <v-text-field
                         label="City"
-                        v-model="userData.city"
-                        required
+                        v-model.trim="userData.city"
+                        @input="$v.userData.city.$touch()"
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.city"></error>
+
                     <v-text-field
                         label="Email"
-                        v-model="userData.email"
-                        required
+                        v-model.trim="userData.email"
+                        @input="$v.userData.email.$touch()"
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.email"></error>
+
                     <v-text-field
                         label="Password"
                         v-model="userData.password"
                         :type="'password'"
-                        required
+                        @input="$v.userData.password.$touch()"
                     ></v-text-field>
+                    <error :input-validation-data="$v.userData.password"></error>
+
                     <v-text-field
                         label="Repeat password"
                         v-model="userData.repeatPassword"
                         :type="'password'"
-                        required
+                        @input="$v.userData.repeatPassword.$touch()"
                     ></v-text-field>
-                    <v-radio-group v-model="userData.userType" row>
+                    <error :input-validation-data="$v.userData.repeatPassword"></error>
+
+                    <v-radio-group v-model="userData.userType" row @input="$v.userData.userType.$touch()">
                         <v-radio label="Coach" value="coach" ></v-radio>
                         <v-radio label="Normal user" value="normalUser"></v-radio>
                     </v-radio-group>
+                    <error :input-validation-data="$v.userData.userType"></error>
+
                     <v-btn
                         v-on:click="register(userData)"
                         class="sign-in-btn"
@@ -59,9 +73,20 @@
 </template>
 
 <script>
+import {
+    required,
+    sameAs,
+    email,
+    minLength,
+    maxLength,
+} from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
+import Error from '../components/Error';
 
 export default {
+    components: {
+        error: Error,
+    },
     data: () => ({
         userData: {
             name: '',
@@ -72,13 +97,55 @@ export default {
             repeatPassword: '',
             userType: '',
         },
-        isFormValid: false,
     }),
 
+    validations: {
+        userData: {
+            name: {
+                required,
+                minLength: minLength(2),
+                maxLength: maxLength(100),
+            },
+            lastname: {
+                required,
+                minLength: minLength(2),
+                maxLength: maxLength(100),
+            },
+            city: {
+                required,
+                minLength: minLength(4),
+                maxLength: maxLength(100),
+            },
+            email: {
+                required,
+                email,
+                minLength: minLength(4),
+                maxLength: maxLength(100),
+            },
+            password: {
+                required,
+                minLength: minLength(7),
+                maxLength: maxLength(255),
+            },
+            repeatPassword: {
+                sameAs: sameAs('password'),
+            },
+            userType: {
+                required,
+            },
+        },
+    },
+
     methods: {
-        ...mapActions('authModule', [
-            'register',
-        ]),
+        register(userData) {
+            this.$v.userData.$touch();
+            if (this.$v.userData.$invalid) {
+                console.log('You have to fix your form');
+            } else {
+                // make reqyuest cause data passed frontend validation
+                console.log(`Making request with this data: ${userData}`);
+            }
+        },
     },
 };
 </script>

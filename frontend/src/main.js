@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
+import Vuelidate from 'vuelidate';
 import App from './App.vue';
 import router from './router';
 import store from './store/store';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
+
+Vue.use(Vuelidate);
+
 Vue.use(Vuetify, {
     theme: {
         primary: '#03A9F4',

@@ -23,7 +23,7 @@ const mutations = {
     },
 };
 
-const actions =  {
+const actions = {
     authenticate({ commit }, credentials) {
         auth.login(credentials).then(
             () => commit('AUTHENTICATE'),
@@ -42,4 +42,4 @@ export default {
     getters,
     actions,
     mutations,
-}
+};
