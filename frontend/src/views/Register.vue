@@ -81,7 +81,7 @@ import {
     maxLength,
 } from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
-import Error from './Error';
+import Error from '../components/Error';
 
 export default {
     components: {
