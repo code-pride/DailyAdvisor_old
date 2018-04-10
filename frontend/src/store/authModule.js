@@ -1,11 +1,25 @@
 import auth from '../services/auth';
 
 const state = {
+    registerErrorMessage: '',
+    registerSuccessMsg: 'jhvjhvj',
     isAuthenticated: false,
     authenticationError: '',
 };
 
 const getters = {
+    didRegisterErrorOccured(state) {
+        return state.registerErrorMessage !== '';
+    },
+    didRegisterSuccess(state) {
+        return state.registerSuccessMessage !== '';
+    },
+    registerErrorMessage(state) {
+        return state.registerErrorMessage;
+    },
+    registerSuccessMessage(state) {
+        return state.registerSuccessMsg;
+    },
     isAuthenticated(state) {
         return state.isAuthenticated;
     },
@@ -15,11 +29,21 @@ const getters = {
 };
 
 const mutations = {
+    ADD_REGISTER_ERROR(state, error) {
+        state.registerError = error.response.statusText;
+    },
+    ADD_REGISTER_SUCCES_MESSAGES(statem, statusText) {
+        state.registerSuccessMsg = data.statusText;
+    },
+    CLEAR_REGISTER_MESSAGES(state) {
+        state.registerErrorMessage = '';
+        state.registerSuccessMessage = '';
+    },
     AUTHENTICATE(state) {
         state.isAuthenticated = true;
     },
     ADD_AUTHENTICATION_ERROR(state, error) {
-        state.authenticationError = error;
+        state.authenticationError = 'asdasd';
     },
 };
 
@@ -31,8 +55,15 @@ const actions = {
         );
     },
 
-    register(something, userData) {
-        console.log(userData);
+    register({ commit }, userData) {
+        auth.register(userData).then(
+            data => commit('ADD_REGISTER_SUCCES_MESSAGES', data),
+            error => commit('ADD_REGISTER_ERROR', error),
+        )
+    },
+
+    clearRegisterMessages({ commit }) {
+        commit('CLEAR_REGISTER_MESSAGES');
     },
 };
 
