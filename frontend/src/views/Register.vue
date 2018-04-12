@@ -48,14 +48,17 @@
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.repeatPassword"></error>
 
-                    <v-radio-group v-model="userData.userType" row @input="$v.userData.userType.$touch()">
+                    <v-radio-group
+                        v-model="userData.userType"
+                        row
+                        @input="$v.userData.userType.$touch()">
                         <v-radio label="Coach" value="coach" ></v-radio>
-                        <v-radio label="Normal user" value="normalUser"></v-radio>
+                        <v-radio label="Normal user" value="client"></v-radio>
                     </v-radio-group>
                     <error :input-validation-data="$v.userData.userType"></error>
 
                     <v-btn
-                        v-on:click="register(userData)"
+                        @click="validate(userData)"
                         class="sign-in-btn"
                         color="primary"
                     >sign up</v-btn>
@@ -69,6 +72,14 @@
                 >Login</v-btn>
             </v-card>
         </div>
+
+        <v-snackbar
+            :timeout="0"
+            :color="registerSnackBarColor"
+            :value="didRegisterSuccess">
+            {{ registerErrorMessage }} {{ registerSuccessMessage }}
+            <v-btn dark flat @click="clearRegisterMessages">Close</v-btn>
+        </v-snackbar>
     </div>
 </template>
 
@@ -80,8 +91,8 @@ import {
     minLength,
     maxLength,
 } from 'vuelidate/lib/validators';
-import { mapActions } from 'vuex';
-import Error from '../components/Error';
+import { mapActions, mapGetters } from 'vuex';
+import Error from '../components/Error.vue';
 
 export default {
     components: {
@@ -97,6 +108,7 @@ export default {
             repeatPassword: '',
             userType: '',
         },
+        snackbarType: 'error',
     }),
 
     validations: {
@@ -136,14 +148,26 @@ export default {
         },
     },
 
+    computed: {
+        ...mapGetters('authModule', [
+            'didRegisterErrorOccured',
+            'didRegisterSuccess',
+            'registerSuccessMessage',
+            'registerErrorMessage',
+            'registerSnackBarColor',
+        ]),
+    },
+
     methods: {
-        register(userData) {
+        ...mapActions('authModule', [
+            'register',
+            'clearRegisterMessages',
+        ]),
+
+        validate(userData) {
             this.$v.userData.$touch();
-            if (this.$v.userData.$invalid) {
-                console.log('You have to fix your form');
-            } else {
-                // make reqyuest cause data passed frontend validation
-                console.log(`Making request with this data: ${userData}`);
+            if (!this.$v.userData.$invalid) {
+                this.register({ ...userData });
             }
         },
     },
