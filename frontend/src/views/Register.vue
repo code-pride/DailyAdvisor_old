@@ -48,7 +48,10 @@
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.repeatPassword"></error>
 
-                    <v-radio-group v-model="userData.userType" row @input="$v.userData.userType.$touch()">
+                    <v-radio-group
+                        v-model="userData.userType"
+                        row
+                        @input="$v.userData.userType.$touch()">
                         <v-radio label="Coach" value="coach" ></v-radio>
                         <v-radio label="Normal user" value="client"></v-radio>
                     </v-radio-group>
@@ -89,7 +92,7 @@ import {
     maxLength,
 } from 'vuelidate/lib/validators';
 import { mapActions, mapGetters } from 'vuex';
-import Error from '../components/Error';
+import Error from '../components/Error.vue';
 
 export default {
     components: {
@@ -164,7 +167,7 @@ export default {
         validate(userData) {
             this.$v.userData.$touch();
             if (!this.$v.userData.$invalid) {
-                this.register({...userData});
+                this.register({ ...userData });
             }
         },
     },

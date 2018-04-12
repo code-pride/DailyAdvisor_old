@@ -48,7 +48,7 @@ const mutations = {
         state.isAuthenticated = true;
     },
     ADD_AUTHENTICATION_ERROR(state, error) {
-        state.authenticationError = 'asdasd';
+        state.authenticationError = error.statusText;
     },
 };
 
@@ -64,7 +64,7 @@ const actions = {
         auth.register(userData).then(
             data => commit('ADD_REGISTER_SUCCES_MESSAGES', data),
             error => commit('ADD_REGISTER_ERROR', error),
-        )
+        );
     },
 
     clearRegisterMessages({ commit }) {
