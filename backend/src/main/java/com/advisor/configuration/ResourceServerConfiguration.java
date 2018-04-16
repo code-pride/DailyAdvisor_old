@@ -15,7 +15,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableResourceServer
-public class ResurceServerConfiguration extends ResourceServerConfigurerAdapter {
+public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -44,17 +44,7 @@ public class ResurceServerConfiguration extends ResourceServerConfigurerAdapter 
 		 		.antMatchers("/message/**").hasAuthority("USER")
 				.antMatchers("/login").permitAll()
 				.antMatchers("/registration").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-				.authenticated().and().csrf().disable().formLogin()
-				.loginPage("/login").permitAll()
-                .failureUrl("/login?error=true")
-				.defaultSuccessUrl("/afterLogin")
-				.usernameParameter("email")
-				.passwordParameter("password")
-				.and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling()
-				.accessDeniedPage("/access-denied")
+				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.and()
 				.cors();
 	}
