@@ -16,7 +16,6 @@ const authService = {
                 password: credentials.password,
                 redirect_uri: 'http://localhost:8091/swagger-ui.html',
                 client_id: 'frontendClientId',
-                
                 // tests
                 response_type: 'token',
                 state: 'gowno',
