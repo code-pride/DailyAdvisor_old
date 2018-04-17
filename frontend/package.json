@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
+    "serve:https": "http-server ./dist -S -C ./dist/server.crt -K ./dist/key.pem -o",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test",
     "e2e": "vue-cli-service e2e",
@@ -12,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "http-server": "^0.11.1",
     "qs": "^6.5.1",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.13",

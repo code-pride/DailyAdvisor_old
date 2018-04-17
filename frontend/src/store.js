@@ -42,7 +42,7 @@ export default new Vuex.Store({
                 (error) => {
                     console.log('jest chuj');
                     console.log(error);
-                    commit('ADD_AUTHENTICATION_ERROR', { error });
+                    commit('ADD_AUTHENTICATION_ERROR', { error: error.message });
                 },
             );
         },

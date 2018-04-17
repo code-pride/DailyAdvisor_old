@@ -1,3 +1,5 @@
+/* global FB */
+
 import * as axios from 'axios';
 import qs from 'qs';
 
@@ -12,9 +14,23 @@ const authService = {
                 grant_type: 'password',
                 username: credentials.email,
                 password: credentials.password,
-                redirect_uri: 'http://localhost:8080/restricted',
+                redirect_uri: 'http://localhost:8091/swagger-ui.html',
                 client_id: 'frontendClientId',
+                
+                // tests
+                response_type: 'token',
+                state: 'gowno',
             }),
+        );
+    },
+    loginWithFacebook() {
+        FB.getLoginStatus(
+            (response) => {
+                console.log(response);
+            },
+            (error) => {
+                console.log(error);
+            },
         );
     },
 };
