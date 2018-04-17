@@ -1,3 +1,5 @@
+/* global FB */
+
 const INCORRECT_CREDENTIALS_ERROR = 'Incorrect email or password.';
 
 const authService = {
@@ -10,6 +12,16 @@ const authService = {
                 reject(INCORRECT_CREDENTIALS_ERROR);
             }
         });
+    },
+    loginWithFacebook() {
+        FB.getLoginStatus(
+            (response) => {
+                console.log(response);
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
     },
 };
 
