@@ -35,14 +35,16 @@ export default new Vuex.Store({
         authenticate({ commit }, credentials) {
             auth.login(credentials).then(
                 (response) => {
-                    console.log('jest ok');
+                    console.log('Seems like everything is fine...');
                     console.log(response);
                     commit('AUTHENTICATE');
                 },
                 (error) => {
-                    console.log('jest chuj');
+                    console.log('There is an error...');
                     console.log(error);
-                    commit('ADD_AUTHENTICATION_ERROR', { error: error.message });
+                    commit('ADD_AUTHENTICATION_ERROR', {
+                        error: error.message,
+                    });
                 },
             );
         },

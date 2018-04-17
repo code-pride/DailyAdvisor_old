@@ -7,7 +7,6 @@ import qs from 'qs';
 
 const authService = {
     login(credentials) {
-        console.log(credentials);
         return axios.post(
             'http://localhost:8091/oauth/authorize',
             qs.stringify({
