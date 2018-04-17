@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class OAuth2Test {
 
-    private static final String PARENT_URL = "http://localhost:8080/";
+    private static final String PARENT_URL = "http://localhost:8091/";
 
     @BeforeClass
     public void setUp() {
