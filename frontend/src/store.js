@@ -34,8 +34,16 @@ export default new Vuex.Store({
     actions: {
         authenticate({ commit }, credentials) {
             auth.login(credentials).then(
-                () => commit('AUTHENTICATE'),
-                error => commit('ADD_AUTHENTICATION_ERROR', { error }),
+                (response) => {
+                    console.log('jest ok');
+                    console.log(response);
+                    commit('AUTHENTICATE');
+                },
+                (error) => {
+                    console.log('jest chuj');
+                    console.log(error);
+                    commit('ADD_AUTHENTICATION_ERROR', { error });
+                },
             );
         },
         clearAuthenticationErrors({ commit }) {
