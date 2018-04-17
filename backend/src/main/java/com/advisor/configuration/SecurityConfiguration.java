@@ -62,7 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.csrf().disable()
 				.anonymous().disable()
 				.authorizeRequests()
-				.antMatchers("/oauth/token").permitAll();
+				.antMatchers("/oauth/**").permitAll();
 	}
 
 	/*@Override
