@@ -10,9 +10,9 @@ const authService = {
             'http://localhost:8091/oauth/authorize',
             qs.stringify({
                 grant_type: 'password',
-                username: 'm@m.mm',
-                password: '111111',
-                redirect_uri: 'http://localhost:8080/swagger-ui.html',
+                username: credentials.email,
+                password: credentials.password,
+                redirect_uri: 'http://localhost:8080/restricted',
                 client_id: 'frontendClientId',
             }),
         );
