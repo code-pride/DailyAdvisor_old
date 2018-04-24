@@ -1,5 +1,6 @@
 package com.advisor.configuration;
 
+import javax.servlet.Filter;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 
 
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +22,12 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,10 +37,14 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@EnableOAuth2Client
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	OAuth2ClientContext oauth2ClientContext;
 
 	@Bean
 	public AuthenticationManager customAuthenticationManager() throws Exception {
@@ -62,8 +78,39 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.csrf().disable()
 				.anonymous().disable()
 				.authorizeRequests()
-				.antMatchers("/oauth/**").permitAll();
+				//.antMatchers("/oauth/**").permitAll()
+				.antMatchers("/login").permitAll()
+				.and()
+				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
 	}
+
+	private Filter ssoFilter() {
+		OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/facebook");
+		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
+		facebookFilter.setRestTemplate(facebookTemplate);
+		UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
+		tokenServices.setRestTemplate(facebookTemplate);
+		facebookFilter.setTokenServices(tokenServices);
+		return facebookFilter;
+	}
+
+	@Bean
+	@ConfigurationProperties("facebook.client")
+	public AuthorizationCodeResourceDetails facebook() {
+		return new AuthorizationCodeResourceDetails();
+	}
+
+	@Bean
+    @Primary
+	@ConfigurationProperties("facebook.resource")
+	public ResourceServerProperties facebookResource() {
+		return new ResourceServerProperties();
+	}
+
+	/*@Bean
+	public OAuth2ResourceServerConfiguration oAuth2ResourceServerConfiguration() {
+		return new OAuth2ResourceServerConfiguration(facebookResource());
+	}*/
 
 	/*@Override
 	protected void configure(HttpSecurity http) throws Exception {

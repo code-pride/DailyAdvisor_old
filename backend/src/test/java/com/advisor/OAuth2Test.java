@@ -1,10 +1,8 @@
 package com.advisor;
 
+import com.advisor.model.request.LoginRequest;
 import com.advisor.model.response.UserProfileResponse;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -15,6 +13,8 @@ import org.testng.annotations.Test;
 
 import java.util.Collections;
 import java.util.Map;
+
+import static org.testng.Assert.fail;
 
 public class OAuth2Test {
 
@@ -59,20 +59,40 @@ public class OAuth2Test {
 
     @Test
     public void implicitFlowTest() {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setPassword("111111");
+        loginRequest.setUsername("m@m.mm");
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<?> jwtResponse = restTemplate.postForEntity(PARENT_URL + "/login", loginRequest, Object.class);
+        String jwt =  jwtResponse.getHeaders().getFirst("authorization").substring(7);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("Authorization","Bearer " + jwt);
+
 
         MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
         map.add("grant_type", "password");
-        map.add("username", "m@m.mm");
-        map.add("password", "111111");
         map.add("client_id", "frontendClientId");
         map.add("redirect_uri","https://www.google.pl");
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+        HttpEntity entity = new HttpEntity(headers);
+        //HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Object> response = restTemplate.postForEntity( PARENT_URL + "/oauth/authorize", request , Object.class );
-        response.getStatusCode();
+
+        try {
+            ResponseEntity<String> response = restTemplate
+                    .exchange(
+                            PARENT_URL + "oauth/authorize?redirect_uri=http://google.pl/&client_id=frontendClientId&response_type=token&audience=fdsfdsf&scope=read&state=fsdfsdfsdfsdf",
+                            HttpMethod.GET,
+                            entity,
+                            String.class);
+            response.getStatusCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 }

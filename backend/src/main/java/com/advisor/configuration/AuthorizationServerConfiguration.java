@@ -2,6 +2,7 @@ package com.advisor.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,7 +48,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .inMemory()
                 .withClient("frontendClientId")
                 .secret(bCryptPasswordEncoder.encode("frontendClientSecret"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+                .autoApprove(true)
+                .scopes("read", "write")
                 .accessTokenValiditySeconds(3600)
                 .refreshTokenValiditySeconds(28 * 24 * 3600)
                 .scopes("read");
@@ -63,5 +66,25 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Bean
     public TokenStore tokenStore() {
         return new CustomJdbcTokenStore(dataSource);
+    }
+
+    @Bean
+    public FilterRegistrationBean authenticationFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new JWTAuthenticationFilter(authenticationManager));
+        registration.addUrlPatterns("/login");
+        registration.setName("authenticationFilter");
+        registration.setOrder(1);
+        return registration;
+    }
+
+    @Bean
+    public FilterRegistrationBean jwtFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new JWTAuthorizationFilter(authenticationManager));
+        registration.addUrlPatterns("/oauth/authorize");
+        registration.setName("jwtFilter");
+        registration.setOrder(2);
+        return registration;
     }
 }

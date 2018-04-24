@@ -1,12 +1,16 @@
 package com.advisor.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -19,17 +23,26 @@ import java.util.Collections;
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
+	@Autowired
+	AuthenticationManager authenticationManager;
+
+	@Override
+	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+		//resources.
+	}
+
     @Override
 	public void configure(HttpSecurity http) throws Exception {
 
 		http.
 			authorizeRequests()
+				.antMatchers("/oauth/authorize").authenticated()
+				.antMatchers("/login").permitAll()
 				.antMatchers("/").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
-				.antMatchers("/oauth/**").permitAll()
                 .antMatchers("/afterLogin").permitAll()
 				.antMatchers("/populate").permitAll()
 				.antMatchers("/hello").permitAll()
@@ -44,7 +57,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 				.antMatchers("/train/**").hasAuthority("USER")
 				.antMatchers("/calendar/**").hasAuthority("USER")
 		 		.antMatchers("/message/**").hasAuthority("USER")
-				.antMatchers("/login").permitAll()
 				.antMatchers("/registration").permitAll()
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.and()
@@ -82,5 +94,17 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
 		bean.setOrder(0);
 		return bean;
+	}
+
+	@Bean
+	public FilterRegistrationBean internalOauth2Filter() {
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		OAuth2AuthenticationProcessingFilter filter = new OAuth2AuthenticationProcessingFilter();
+		filter.setAuthenticationManager(authenticationManager);
+		registration.setFilter(filter);
+		registration.addUrlPatterns("/getUserProfile");
+		registration.setName("oauth2Filter");
+		registration.setOrder(3);
+		return registration;
 	}
 }
