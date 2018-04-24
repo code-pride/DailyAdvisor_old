@@ -1,18 +1,26 @@
 <template>
     <div class="sample-div">
-        Kliknales w link. Jestes bardziej pojebany niż myslalem! {{ sampleData }}
+        Kliknales w link. Jestes bardziej pojebany niż myslalem!
     </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     data: () => ({
-        sampleData: 'asdasdas',
+        token: '',
     }),
 
+    created() {
+        this.token = this.$route.params.token;
+
+        this.registerConfirmation(this.token);
+    },
+
     methods: {
-        sampleMethod() {
-            console.log('Sample message');
-        },
+        ...mapActions('authModule', [
+            'registerConfirmation',
+        ]),
     },
 };
 </script>

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
+import RegistrationConfirm from './views/RegistrationConfirm.vue';
 import NotFound from './views/NotFound.vue';
 
 Vue.use(Router);

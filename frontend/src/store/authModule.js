@@ -40,6 +40,12 @@ const mutations = {
         state.registerSnackBarColor = 'success';
         state.registerSuccessMessage = data.statusText;
     },
+    ADD_REGISTER_CONFIRMATION_SUCCES() {
+        console.log('user registration confirmed successfully');
+    },
+    ADD_REGISTER_CONFIRMATION_ERROR() {
+        console.log('user registration confirmation error');
+    },
     CLEAR_REGISTER_MESSAGES(state) {
         state.registerErrorMessage = '';
         state.registerSuccessMessage = '';
@@ -64,6 +70,13 @@ const actions = {
         auth.register(userData).then(
             data => commit('ADD_REGISTER_SUCCES_MESSAGES', data),
             error => commit('ADD_REGISTER_ERROR', error),
+        );
+    },
+
+    registerConfirmation({ commit }, token) {
+        auth.registerConfirmation(token).then(
+            () => commit('ADD_REGISTER_CONFIRMATION_SUCCES'),
+            () => commit('ADD_REGISTER_CONFIRMATION_ERROR'),
         );
     },
 
