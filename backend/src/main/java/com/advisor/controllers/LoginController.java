@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import com.advisor.Events.OnRegistrationCompleteEvent;
 import com.advisor.model.entity.User;
 import com.advisor.model.request.NewUserRequest;
+import com.advisor.model.request.RegistrationConfirmRequest;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,9 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.POST)
-    public ResponseEntity confirmRegistration(@RequestBody String token) {
+    public ResponseEntity confirmRegistration(@RequestBody RegistrationConfirmRequest registrationConfirmRequest) {
         try {
-            userService.confirmRegistration(token);
+            userService.confirmRegistration(registrationConfirmRequest.getToken());
         } catch (DataRepositoryException e) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
@@ -65,6 +66,5 @@ public class LoginController {
     public ResponseEntity hello() {
         return new ResponseEntity(HttpStatus.OK);
     }
-
 
 }
