@@ -21,11 +21,6 @@ export default new Router({
             component: Register,
         },
         {
-            path: '/registrationConfirm/:token',
-            name: 'registrationConfirm',
-            component: RegistrationConfirm,
-        },
-        {
             path: '*',
             name: 'NotFound',
             component: NotFound,
