@@ -2,7 +2,11 @@ package com.advisor;
 
 import com.advisor.model.request.LoginRequest;
 import com.advisor.model.response.UserProfileResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -81,7 +85,17 @@ public class OAuth2Test {
         HttpEntity entity = new HttpEntity(headers);
         //HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-
+        final HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        final HttpClient httpClient = HttpClientBuilder.create()
+                .setRedirectStrategy(new LaxRedirectStrategy() {
+                    @Override
+                    protected boolean isRedirectable(final String method) {
+                        return false;
+                    }
+                })
+                .build();
+        factory.setHttpClient(httpClient);
+        restTemplate.setRequestFactory(factory);
         try {
             ResponseEntity<String> response = restTemplate
                     .exchange(
