@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2Res
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -25,15 +26,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CompositeFilter;
+import org.springframework.web.filter.CorsFilter;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -45,6 +54,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
+
+	@Autowired
+    ResourceServerProperties resourceServerProperties;
+
+	@Autowired
+    AuthorizationCodeResourceDetails authorizationCodeResourceDetails;
 
 	@Bean
 	public AuthenticationManager customAuthenticationManager() throws Exception {
@@ -72,27 +87,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(bCryptPasswordEncoder);
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-				.csrf().disable()
-				.anonymous().disable()
-				.authorizeRequests()
-				//.antMatchers("/oauth/**").permitAll()
-				.antMatchers("/login").permitAll()
-				.and()
-				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
-	}
+    @Bean
+    public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
+        FilterRegistrationBean<OAuth2ClientContextFilter> registration = new FilterRegistrationBean<OAuth2ClientContextFilter>();
+        registration.setFilter(filter);
+        registration.setOrder(-100);
+        return registration;
+    }
 
-	private Filter ssoFilter() {
-		OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/facebook");
-		OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
-		facebookFilter.setRestTemplate(facebookTemplate);
-		UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
-		tokenServices.setRestTemplate(facebookTemplate);
-		facebookFilter.setTokenServices(tokenServices);
-		return facebookFilter;
-	}
+    private Filter ssoFilter() {
+        CompositeFilter filter = new CompositeFilter();
+        List<Filter> filters = new ArrayList<>();
+        filters.add(ssoFilter(facebook(), facebookResource(), "/login/facebook"));
+        filters.add(ssoFilter(authorizationCodeResourceDetails,resourceServerProperties, "/login/github"));
+        filter.setFilters(filters);
+        return filter;
+    }
+
+    private Filter ssoFilter(AuthorizationCodeResourceDetails client, ResourceServerProperties resource, String path) {
+        OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
+                path);
+        OAuth2RestTemplate template = new OAuth2RestTemplate(client, oauth2ClientContext);
+        filter.setRestTemplate(template);
+        UserInfoTokenServices tokenServices = new UserInfoTokenServices(
+                resource.getUserInfoUri(), client.getClientId());
+        tokenServices.setRestTemplate(template);
+        filter.setTokenServices(tokenServices);
+        return filter;
+    }
 
 	@Bean
 	@ConfigurationProperties("facebook.client")
@@ -100,69 +122,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return new AuthorizationCodeResourceDetails();
 	}
 
-	@Bean
-    @Primary
 	@ConfigurationProperties("facebook.resource")
 	public ResourceServerProperties facebookResource() {
 		return new ResourceServerProperties();
 	}
 
-	/*@Bean
-	public OAuth2ResourceServerConfiguration oAuth2ResourceServerConfiguration() {
-		return new OAuth2ResourceServerConfiguration(facebookResource());
-	}*/
+	//@Autowired
+	//AuthenticationManager authenticationManager;
 
-	/*@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
 
 		http.
-			authorizeRequests()
-
-				.antMatchers("/").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers("/v2/api-docs").permitAll()
-                .antMatchers("/swagger-ui.html").permitAll()
-				.antMatchers("/oauth/**").permitAll()
-                .antMatchers("/afterLogin").permitAll()
-				.antMatchers("/populate").permitAll()
-				.antMatchers("/hello").permitAll()
-				.antMatchers("/getUserProfile/**").hasAuthority("USER")
-                .antMatchers("/updateUserProfile").hasAuthority("USER")
-                .antMatchers("/advertisement/**").hasAuthority("USER")
-                .antMatchers("/upgradeToCoach/**").hasAuthority("USER")
-				.antMatchers("/coaching/**").hasAuthority("COACH")
-				.antMatchers("/client/**").hasAuthority("USER")
-				.antMatchers("/meeting/**").hasAuthority("USER")
-				.antMatchers("/diet/**").hasAuthority("USER")
-				.antMatchers("/train/**").hasAuthority("USER")
-				.antMatchers("/calendar/**").hasAuthority("USER")
-		 		.antMatchers("/message/**").hasAuthority("USER")
+				authorizeRequests()
+				.antMatchers("/oauth/authorize").authenticated()
 				.antMatchers("/login").permitAll()
-				.antMatchers("/registration").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-				.authenticated().and().csrf().disable().formLogin()
-				.loginPage("/login").permitAll()
-                .failureUrl("/login?error=true")
-				.defaultSuccessUrl("/afterLogin")
-				.usernameParameter("email")
-				.passwordParameter("password")
-				.and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").and().exceptionHandling()
-				.accessDeniedPage("/access-denied")
+				.antMatchers("/").permitAll()
 				.and()
 				.cors();
 	}
 
-	@Override
-	public void configure(WebSecurity web) {
-	    web
-	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-	}*/
-
-	/*@Bean
+	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -172,6 +152,32 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", configuration);
 
 		return source;
-	}*/
+	}
+
+	@Bean
+	public FilterRegistrationBean corsFilterBean() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("*");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
+		source.registerCorsConfiguration("/**", config);
+		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+		bean.setOrder(0);
+		return bean;
+	}
+
+	@Bean
+	public FilterRegistrationBean internalOauth2Filter() throws Exception {
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		OAuth2AuthenticationProcessingFilter filter = new OAuth2AuthenticationProcessingFilter();
+		filter.setAuthenticationManager(authenticationManager());
+		registration.setFilter(filter);
+		registration.addUrlPatterns("/getUserProfile");
+		registration.setName("oauth2Filter");
+		registration.setOrder(3);
+		return registration;
+	}
 
 }

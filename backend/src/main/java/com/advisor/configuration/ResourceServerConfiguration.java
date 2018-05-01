@@ -23,22 +23,22 @@ import java.util.Collections;
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-	@Autowired
+	/*@Autowired
 	AuthenticationManager authenticationManager;
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
 		//resources.
-	}
+	}*/
 
     @Override
 	public void configure(HttpSecurity http) throws Exception {
 
 		http.
 			authorizeRequests()
-				.antMatchers("/oauth/authorize").authenticated()
-				.antMatchers("/login").permitAll()
-				.antMatchers("/").permitAll()
+				//.antMatchers("/oauth/authorize").authenticated()
+				//.antMatchers("/login").permitAll()
+				//.antMatchers("/").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
@@ -70,7 +70,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
 	}*/
 
-	@Bean
+	/*@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -94,17 +94,5 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
 		bean.setOrder(0);
 		return bean;
-	}
-
-	@Bean
-	public FilterRegistrationBean internalOauth2Filter() {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
-		OAuth2AuthenticationProcessingFilter filter = new OAuth2AuthenticationProcessingFilter();
-		filter.setAuthenticationManager(authenticationManager);
-		registration.setFilter(filter);
-		registration.addUrlPatterns("/getUserProfile");
-		registration.setName("oauth2Filter");
-		registration.setOrder(3);
-		return registration;
-	}
+	}*/
 }
