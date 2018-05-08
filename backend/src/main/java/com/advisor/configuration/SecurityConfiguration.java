@@ -3,10 +3,7 @@ package com.advisor.configuration;
 import javax.servlet.Filter;
 import javax.sql.DataSource;
 
-import com.advisor.security.JWTAuthenticationFilter;
-import com.advisor.security.JWTAuthorizationFilter;
-import com.advisor.security.JWTManager;
-import com.advisor.security.LoginAuthenticationSuccessHandler;
+import com.advisor.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +28,7 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -89,9 +87,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 
 		http
+		.logout().addLogoutHandler(new LogoutHandler()).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-				.logout().disable()
+				.logout().addLogoutHandler(new LogoutHandler()).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.and()
                 .csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/oauth/authorize").authenticated()
@@ -102,7 +103,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				//.antMatchers("/logout")
                 .and()
                 .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(),jwtManager), BasicAuthenticationFilter.class)
-				.cors();
+				.cors()
+				.and()
+				.logout().addLogoutHandler(new LogoutHandler()).logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	}
 
 	@Bean

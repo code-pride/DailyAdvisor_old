@@ -17,7 +17,7 @@ public class LogoutController {
     @Autowired
     private JWTManager jwtManager;
 
-    @RequestMapping(value = "/logout1", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ResponseEntity logout() {
         ServletRequestAttributes attributes =
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes());

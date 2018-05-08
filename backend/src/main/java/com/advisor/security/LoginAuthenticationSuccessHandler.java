@@ -30,8 +30,8 @@ public class LoginAuthenticationSuccessHandler implements AuthenticationSuccessH
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         jwtManager.jwtLogin(request,response,authentication);
-        //response.sendRedirect(frontendUrl);
-        response.getWriter().write("Test");
-        response.flushBuffer();
+        response.sendRedirect(frontendUrl);
+        //response.getWriter().write("Test");
+        //response.flushBuffer();
     }
 }
