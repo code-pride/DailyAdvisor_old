@@ -23,14 +23,6 @@ const authService = {
 
     registerConfirmation(token) {
         return axios.post(`${apiUrl}/registrationConfirm`, { token });
-
-        // return new Promise((resolve, reject) => {
-        //     if (token === 'twoja_stara') {
-        //         resolve('OK');
-        //     } else {
-        //         reject(REGISTER_CONFIRMATION_ERROR);
-        //     }
-        // });
     },
 
     hello() {
