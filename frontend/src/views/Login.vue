@@ -8,8 +8,10 @@
 
         <div v-else class="login-card-wrapper">
             <v-card class="card-content">
-                <SocialMediaLogin media="facebook"></SocialMediaLogin>
-                <SocialMediaLogin media="google"></SocialMediaLogin>
+                <SocialMediaLogin media="facebook" @click="authenticateWithFacebook()"
+                ></SocialMediaLogin>
+                <SocialMediaLogin media="google" @click="authenticateWithGoogle()"
+                ></SocialMediaLogin>
                 <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
                     <v-text-field
                         label="Email"
@@ -53,7 +55,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import router from '../router';
-import auth from '../services/auth';
 import SocialMediaLogin from '../components/SocialMediaLogin.vue';
 
 export default {
@@ -82,6 +83,8 @@ export default {
     methods: {
         ...mapActions([
             'authenticate',
+            'googleAuthenticate',
+            'facebookAuthenticate',
             'clearAuthenticationErrors',
         ]),
         authenticateAndTryReroute(credentials) {
@@ -91,8 +94,15 @@ export default {
                 }
             });
         },
+        authenticateWithGoogle() {
+            this.googleAuthenticate().then(() => {
+                if (this.isAuthenticated) {
+                    router.push('/restricted');
+                }
+            });
+        },
         authenticateWithFacebook() {
-            auth.loginWithFacebook();
+            this.facebookAuthenticate();
         },
     },
     watch: {
