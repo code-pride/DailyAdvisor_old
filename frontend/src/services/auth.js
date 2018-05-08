@@ -34,7 +34,7 @@ const authService = {
                 () => reject(FACEBOOK_LOGIN_FAILED),
             );
         });
-    }
+    },
 };
 
 export default authService;

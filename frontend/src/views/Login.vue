@@ -8,7 +8,8 @@
 
         <div v-else class="login-card-wrapper">
             <v-card class="card-content">
-                <SocialMediaLogin media="facebook" @click="authenticateWithFacebook()"></SocialMediaLogin>
+                <SocialMediaLogin media="facebook" @click="authenticateWithFacebook()"
+                ></SocialMediaLogin>
                 <SocialMediaLogin media="google" @click="authenticateWithGoogle()"
                 ></SocialMediaLogin>
                 <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
