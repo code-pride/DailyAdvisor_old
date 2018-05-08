@@ -1,4 +1,4 @@
-package com.advisor.configuration;
+package com.advisor.security;
 
 import com.advisor.repository.BlacklistTokenJWTRepository;
 import io.jsonwebtoken.Claims;
@@ -25,11 +25,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     public static final String HEADER_STRING = "Authorization";
     public static final String SECRET = "SecretKeyToGenJWTs";
 
-    @Autowired
     private BlacklistTokenJWTRepository blacklistTokenJWTRepository;
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager) {
+    public JWTAuthorizationFilter(AuthenticationManager authManager, BlacklistTokenJWTRepository blacklistTokenJWTRepository) {
         super(authManager);
+        this.blacklistTokenJWTRepository = blacklistTokenJWTRepository;
     }
 
     @Override
@@ -46,16 +46,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        HttpServletRequest wrapper = new HttpServletRequestWrapper(req) {
-          @Override
-          public String getHeader(String name) {
-              if(name != null && name.equals(HEADER_STRING)) {
-                  return null;
-              }
-              return super.getHeader(name);
-          }
-        };
-        chain.doFilter(wrapper, res);
+        chain.doFilter(req, res);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {

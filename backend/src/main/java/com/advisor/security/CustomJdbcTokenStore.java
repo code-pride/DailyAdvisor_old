@@ -1,4 +1,4 @@
-package com.advisor.configuration;
+package com.advisor.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

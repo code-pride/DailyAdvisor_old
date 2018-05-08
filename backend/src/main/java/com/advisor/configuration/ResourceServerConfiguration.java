@@ -23,20 +23,20 @@ import java.util.Collections;
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-	/*@Autowired
+	@Autowired
 	AuthenticationManager authenticationManager;
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		//resources.
-	}*/
+		//resources.authenticationManager(authenticationManager).authenticationEntryPoint();
+	}
 
     @Override
 	public void configure(HttpSecurity http) throws Exception {
 
 		http.
 			authorizeRequests()
-				//.antMatchers("/oauth/authorize").authenticated()
+				//.antMatchers("/oauth/authorize").permitAll()
 				//.antMatchers("/login").permitAll()
 				//.antMatchers("/").permitAll()
                 .antMatchers("/webjars/**").permitAll()

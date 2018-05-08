@@ -24,6 +24,8 @@ public class OAuth2Test {
 
     private static final String PARENT_URL = "http://localhost:8091/";
 
+    private static final String FACEBOOK_TOKEN="EAAODZAZB1mqu8BACgTNo9mGMAsAa7KWybXXiP77SSLDBWlNoIQ2A9xBeOqY511qZCbZAhaS56NZC02S8gL9RS9WvUyTW20o21dRJJz1urbyK0flB1MhCnnzf6pSEekZAlXmMDNZBSl3nPW1aqNLOYx7imcqrxWZBPaFAuZAu6IBCViovfc1nCDPPWBrnjv7VoTVlVQR00PleVmFLrTuOQYiZCNNI1nk4IIntRatz8eJoH0rcJ0YZAueAeEf";
+
     @BeforeClass
     public void setUp() {
         RestTemplate restTemplate = new RestTemplate();
@@ -53,11 +55,17 @@ public class OAuth2Test {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization","Bearer " + accessToken);
 
-        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        HttpEntity entity = new HttpEntity(headers);
         try{
-            restTemplate.getForEntity(PARENT_URL + "/getUserProfile", UserProfileResponse.class, entity);
+            restTemplate.exchange(
+                    PARENT_URL + "/getUserProfile",
+                    HttpMethod.GET,
+                    entity,
+                    UserProfileResponse.class
+            );
         } catch (HttpClientErrorException e) {
-            e.getMessage();
+            e.printStackTrace();
+            fail();
         }
     }
 
@@ -69,7 +77,7 @@ public class OAuth2Test {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<?> jwtResponse = restTemplate.postForEntity(PARENT_URL + "/login", loginRequest, Object.class);
+        ResponseEntity<?> jwtResponse = restTemplate.postForEntity(PARENT_URL + "/login", loginRequest, String.class);
         String jwt =  jwtResponse.getHeaders().getFirst("authorization").substring(7);
 
         HttpHeaders headers = new HttpHeaders();
@@ -84,6 +92,66 @@ public class OAuth2Test {
 
         HttpEntity entity = new HttpEntity(headers);
         //HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+        final HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        final HttpClient httpClient = HttpClientBuilder.create()
+                .setRedirectStrategy(new LaxRedirectStrategy() {
+                    @Override
+                    protected boolean isRedirectable(final String method) {
+                        return false;
+                    }
+                })
+                .build();
+        factory.setHttpClient(httpClient);
+        restTemplate.setRequestFactory(factory);
+        try {
+            ResponseEntity<String> response = restTemplate
+                    .exchange(
+                            PARENT_URL + "oauth/authorize?redirect_uri=http://google.pl/&client_id=frontendClientId&response_type=token&audience=fdsfdsf&scope=read&state=fsdfsdfsdfsdf",
+                            HttpMethod.GET,
+                            entity,
+                            String.class);
+            response.getStatusCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    //@Test
+    public void facebookTest() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("Authorization","Bearer " + FACEBOOK_TOKEN);
+        HttpEntity entity = new HttpEntity(headers);
+
+        ResponseEntity<?> jwtResponse = null;
+        try{
+            jwtResponse = restTemplate.exchange(
+                    PARENT_URL + "/login/facebook/?code=" + FACEBOOK_TOKEN + "&state=ozwFqF#_=_",
+                    HttpMethod.GET,
+                    entity,
+                    Object.class
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        String jwt =  jwtResponse.getHeaders().getFirst("authorization").substring(7);
+
+        headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("Authorization","Bearer " + jwt);
+
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("grant_type", "password");
+        map.add("client_id", "frontendClientId");
+        map.add("redirect_uri","https://www.google.pl");
+
+        entity = new HttpEntity(headers);
 
         final HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         final HttpClient httpClient = HttpClientBuilder.create()
