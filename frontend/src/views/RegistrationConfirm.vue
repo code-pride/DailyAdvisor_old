@@ -1,6 +1,16 @@
 <template>
-    <div class="sample-div">
-        Kliknales w link. Jestes bardziej pojebany niż myslalem!
+    <div class="background">
+        <div class="registration-confirm-wrapper">
+            <div class="content">
+                <p>Twoje konto zostało potwierdzone. </p>
+                <p>Możesz się teraz bezpiecznie zalogować.</p>
+                <v-btn
+                    class="login-btn"
+                    color="primary"
+                    to="../login"
+                >Login</v-btn>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -26,7 +36,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .sample-div {
-        color: red;
+    .background {
+        background: #29D8F3;
+        display: flex;
+        flex: 1 1 0;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .registration-confirm-wrapper {
+        margin: 0 auto;
+        max-width: 400px;
+        width: 90%;
+    }
+
+    .content {
+        padding: 20px;
+        margin: 30px;
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: white;
+    }
+
+    .login-btn {
+        display: block;
+        margin: 0 auto;
     }
 </style>
