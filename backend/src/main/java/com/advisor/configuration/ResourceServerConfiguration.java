@@ -28,7 +28,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		//resources.authenticationManager(authenticationManager).authenticationEntryPoint();
+
 	}
 
     @Override
@@ -36,9 +36,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
 		http.
 			authorizeRequests()
-				//.antMatchers("/oauth/authorize").permitAll()
-				//.antMatchers("/login").permitAll()
-				//.antMatchers("/").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
@@ -62,37 +59,4 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 				.and()
 				.cors();
 	}
-
-	/*@Override
-	public void configure(WebSecurity web) {
-	    web
-	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-	}*/
-
-	/*@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
-		final CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedHeaders(Collections.singletonList("*"));
-		configuration.setAllowedOrigins(Collections.singletonList("*"));
-		configuration.setAllowedMethods(Collections.singletonList("*"));
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-
-		return source;
-	}
-
-	@Bean
-	public FilterRegistrationBean corsFilterBean() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("*");
-		source.registerCorsConfiguration("/**", config);
-		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-		bean.setOrder(0);
-		return bean;
-	}*/
 }

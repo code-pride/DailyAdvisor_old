@@ -6,6 +6,7 @@ import com.advisor.repository.BlacklistTokenJWTRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,11 +29,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private AuthenticationManager authenticationManager;
 
-    private BlacklistTokenJWTRepository blacklistTokenJWTRepository;
-
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, BlacklistTokenJWTRepository blacklistTokenJWTRepository) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-        this.blacklistTokenJWTRepository = blacklistTokenJWTRepository;
     }
 
     @Override
@@ -49,7 +47,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                             new ArrayList<>())
             );
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new AuthenticationCredentialsNotFoundException("Invalid JSON request.");
         }
     }
 }

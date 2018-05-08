@@ -3,9 +3,9 @@ package com.advisor.configuration;
 import javax.servlet.Filter;
 import javax.sql.DataSource;
 
-import com.advisor.repository.BlacklistTokenJWTRepository;
 import com.advisor.security.JWTAuthenticationFilter;
 import com.advisor.security.JWTAuthorizationFilter;
+import com.advisor.security.JWTManager;
 import com.advisor.security.LoginAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,10 +54,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private OAuth2ClientContextFilter oauth2ClientContextFilter;
 
     @Autowired
-    private BlacklistTokenJWTRepository blacklistTokenJWTRepository;
+    private LoginAuthenticationSuccessHandler successHandler;
 
     @Autowired
-    private LoginAuthenticationSuccessHandler successHandler;
+	private JWTManager jwtManager;
 
 	@Bean
 	public AuthenticationManager customAuthenticationManager() throws Exception {
@@ -91,16 +91,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+				.logout().disable()
                 .csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/oauth/authorize").authenticated()
-				.antMatchers("/logout").authenticated()
 				.antMatchers("/**").permitAll()
 				.and()
                 .requestMatchers()
                 .antMatchers("/oauth/authorize")
+				//.antMatchers("/logout")
                 .and()
-                .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(),blacklistTokenJWTRepository), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(),jwtManager), BasicAuthenticationFilter.class)
 				.cors();
 	}
 
@@ -134,7 +135,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public FilterRegistrationBean authenticationFilterRegistration() throws Exception {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager(),blacklistTokenJWTRepository);
+        JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager());
         filter.setAuthenticationSuccessHandler(successHandler);
         registration.setFilter(filter);
         registration.addUrlPatterns("/login");
@@ -142,6 +143,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         registration.setOrder(-100);
         return registration;
     }
+
+	/*@Bean
+	public FilterRegistrationBean authorizationFilterRegistration() throws Exception {
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		JWTAuthorizationFilter filter = new JWTAuthorizationFilter(authenticationManager(),jwtManager);
+		registration.setFilter(filter);
+		registration.addUrlPatterns("/oauth/authorize");
+		registration.addUrlPatterns("/logout");
+		registration.setName("authenticationFilter");
+		registration.setOrder(-100);
+		return registration;
+	}*/
 
     @Bean
     public FilterRegistrationBean facebookFilter() {

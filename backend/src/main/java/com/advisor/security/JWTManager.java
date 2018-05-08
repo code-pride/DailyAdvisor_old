@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Component
-public class JWTUtils {
+public class JWTManager {
 
     @Autowired
     UserRepository userRepository;
@@ -28,15 +28,15 @@ public class JWTUtils {
     @Autowired
     BlacklistTokenJWTRepository blacklistTokenJWTRepository;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-
     private static final String TOKEN_COOKIE_NAME = "_secu";
     private static final String SECRET = "SecretKeyToGenJWTs";
     private static final long EXPIRATION_TIME = 864_000_0000L; // 100 days
 
     public void jwtLogout(HttpServletRequest req, HttpServletResponse res) {
         Cookie[] cookies = req.getCookies();
+        if(cookies == null) {
+            return;
+        }
         Arrays.stream(cookies)
                 .filter(cookie -> cookie.getName().equals(TOKEN_COOKIE_NAME))
                 .findFirst()
@@ -49,7 +49,7 @@ public class JWTUtils {
                         User user = userRepository.findByEmail(userName);
                         Optional.ofNullable(user).ifPresent(lUser -> {
                             BlacklistTokenJWT jwtBlacklist = new BlacklistTokenJWT();
-                            jwtBlacklist.setTokenId(jws.getBody().getId());
+                            jwtBlacklist.setTokenId(UUID.fromString(jws.getBody().getId()));
                             jwtBlacklist.setUser(lUser);
                             blacklistTokenJWTRepository.save(jwtBlacklist);
                         });
@@ -74,26 +74,27 @@ public class JWTUtils {
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .setId(UUID.randomUUID().toString())
                 .compact();
-        response.addCookie(new Cookie(TOKEN_COOKIE_NAME,token));
+        Cookie jwtCookie = new Cookie(TOKEN_COOKIE_NAME,token);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setPath("/");
+        response.addCookie(jwtCookie);
     }
 
     public UsernamePasswordAuthenticationToken authenticateJwt(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
-        UsernamePasswordAuthenticationToken authenticationToken = null;
-        Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals(TOKEN_COOKIE_NAME))
-                .findFirst()
-                .ifPresent(cookie -> Optional.ofNullable(cookie.getValue()).ifPresent(value -> {
-                    Jws<Claims> jws = Jwts.parser()
-                            .setSigningKey(SECRET.getBytes())
-                            .parseClaimsJws(value);
-                    String user = jws.getBody().getSubject();
-
-                    //  && blacklistTokenJWTRepository.getOne(UUID.fromString(jws.getBody().getId())) == null
-                    if (user != null) {
-                        //authenticationToken = new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-                    }
-                    }));
+        Optional<Cookie> jwtCookie = Arrays.stream(cookies)
+                .filter(cookie -> cookie.getName().equals(TOKEN_COOKIE_NAME) && cookie.getValue()!=null)
+                .findFirst();
+        if(jwtCookie.isPresent()) {
+            Jws<Claims> jws = Jwts.parser()
+                    .setSigningKey(SECRET.getBytes())
+                    .parseClaimsJws(jwtCookie.get().getValue());
+            String user = jws.getBody().getSubject();
+            if (user != null
+                    && !blacklistTokenJWTRepository.existsById(UUID.fromString(jws.getBody().getId()))) {
+                        return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+            }
+        }
         return null;
     }
 }

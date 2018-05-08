@@ -78,17 +78,18 @@ public class OAuth2Test {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<?> jwtResponse = restTemplate.postForEntity(PARENT_URL + "/login", loginRequest, String.class);
-        String jwt =  jwtResponse.getHeaders().getFirst("authorization").substring(7);
+        HttpHeaders headers = null;
+        String jwt = jwtResponse.getHeaders().getFirst(headers.SET_COOKIE);
 
-        HttpHeaders headers = new HttpHeaders();
+        headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.add("Authorization","Bearer " + jwt);
+        headers.add(headers.COOKIE, jwt);
 
 
-        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
         map.add("grant_type", "password");
         map.add("client_id", "frontendClientId");
-        map.add("redirect_uri","https://www.google.pl");
+        map.add("redirect_uri", "https://www.google.pl");
 
         HttpEntity entity = new HttpEntity(headers);
         //HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
@@ -108,6 +109,18 @@ public class OAuth2Test {
             ResponseEntity<String> response = restTemplate
                     .exchange(
                             PARENT_URL + "oauth/authorize?redirect_uri=http://google.pl/&client_id=frontendClientId&response_type=token&audience=fdsfdsf&scope=read&state=fsdfsdfsdfsdf",
+                            HttpMethod.GET,
+                            entity,
+                            String.class);
+            response.getStatusCode();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail();
+        }
+        try {
+            ResponseEntity<String> response = restTemplate
+                    .exchange(
+                            PARENT_URL + "logout",
                             HttpMethod.GET,
                             entity,
                             String.class);

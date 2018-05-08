@@ -20,11 +20,6 @@ import java.util.Date;
 
 @RestController
 public class LoginController {
-
-    public static final String SECRET = "SecretKeyToGenJWTs";
-    public static final long EXPIRATION_TIME = 864_000_000; // 10 days
-    public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String HEADER_STRING = "Authorization";
 	
 	@Autowired
 	private UserService userService;
@@ -48,27 +43,5 @@ public class LoginController {
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public ResponseEntity hello() {
         return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/login")
-    public ResponseEntity login() {
-        return buildTokenResponse(((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-    }
-
-    @RequestMapping(value = "/login/google")
-    public ResponseEntity loginFacebook(String s) {
-        HttpServletRequest currentRequest =
-                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-                        .getRequest();
-        return buildTokenResponse(((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-    }
-
-    private ResponseEntity buildTokenResponse(String principal) {
-        String token = Jwts.builder()
-                .setSubject(principal)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
-                .compact();
-        return ResponseEntity.ok().header(HEADER_STRING, TOKEN_PREFIX + token).build();
     }
 }
