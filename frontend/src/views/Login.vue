@@ -58,7 +58,7 @@ import SocialMediaLogin from '../components/SocialMediaLogin.vue';
 
 export default {
     components: {
-        SocialMediaLogin
+        SocialMediaLogin,
     },
     data: () => ({
         valid: false,

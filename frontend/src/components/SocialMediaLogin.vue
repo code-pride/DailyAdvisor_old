@@ -8,7 +8,7 @@
 export default {
     name: 'SocialMediaLogin',
     props: {
-        media: String
+        media: String,
     },
     methods: {
         getClass() {
@@ -16,9 +16,9 @@ export default {
         },
         getText() {
             return this.media === 'facebook' ? 'Login with Facebook' : 'Login with Google';
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style>
