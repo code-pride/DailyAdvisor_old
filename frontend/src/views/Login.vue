@@ -54,7 +54,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import router from '../router';
-import auth from '../services/auth';
 import SocialMediaLogin from '../components/SocialMediaLogin.vue';
 
 export default {
