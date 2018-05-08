@@ -5,6 +5,8 @@ import com.advisor.model.entity.UserProfile;
 import com.advisor.model.request.NewUserRequest;
 import com.advisor.model.request.UserProfileRequest;
 import com.advisor.model.response.UserProfileResponse;
+import com.advisor.service.Exceptions.DataRepositoryException;
+import com.advisor.service.Exceptions.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +16,13 @@ public interface UserService extends IService<User, UUID> {
 
 	User findUserByEmail(String email);
 
-	void saveUser(NewUserRequest newUserRequest);
+	void registerClient(NewUserRequest newUserRequest);
 
 	Optional<User> findById(UUID userId);
+
+	void registerCoach(NewUserRequest newUserRequest);
+
+	void registerUser(NewUserRequest newUserRequest, String role);
 
 	UserProfileResponse createUserProfileResponseByUser(User user);
 
@@ -27,4 +33,8 @@ public interface UserService extends IService<User, UUID> {
     List<UserProfile> findByUsers(List<User> users);
 
 	List<UserProfile> findByCity(String city);
+
+	User enableUser(User user) throws DataRepositoryException;
+
+	boolean confirmRegistration(String token) throws DataRepositoryException;
 }
