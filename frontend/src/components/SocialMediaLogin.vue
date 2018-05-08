@@ -1,5 +1,5 @@
 <template>
-    <button class="login-btn" v-bind:class="getClass()">
+    <button class="login-btn" v-bind:class="getClass()" @click="$emit('click')">
         {{getText()}}
     </button>
 </template>
