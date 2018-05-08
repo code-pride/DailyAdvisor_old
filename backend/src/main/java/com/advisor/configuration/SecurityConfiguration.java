@@ -87,11 +87,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 
 		http
-		.logout().addLogoutHandler(new LogoutHandler()).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.csrf().disable()
+				.logout().addLogoutHandler(new LogoutHandler()).logoutRequestMatcher(new AntPathRequestMatcher("/logout1"))
 				.and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-				.logout().addLogoutHandler(new LogoutHandler()).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.and()
                 .csrf().disable()
 				.authorizeRequests()
@@ -103,9 +102,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				//.antMatchers("/logout")
                 .and()
                 .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(),jwtManager), BasicAuthenticationFilter.class)
-				.cors()
-				.and()
-				.logout().addLogoutHandler(new LogoutHandler()).logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+				.cors();
 	}
 
 	@Bean
