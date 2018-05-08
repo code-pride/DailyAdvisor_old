@@ -5,6 +5,7 @@ import Register from './views/Register.vue';
 import RegistrationConfirm from './views/RegistrationConfirm.vue';
 import AfterRegistration from './views/AfterRegistration.vue';
 import NotFound from './views/NotFound.vue';
+import About from './views/About.vue';
 
 Vue.use(Router);
 
@@ -15,6 +16,11 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: Login,
+        },
+        {
+            path: '/about',
+            name: 'about',
+            component: About,
         },
         {
             path: '/register',
