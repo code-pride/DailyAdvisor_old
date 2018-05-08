@@ -16,6 +16,7 @@ const getters = {
         return state.registerErrorMessage !== '';
     },
     didRegisterSuccess() {
+        console.log('cycki');
         return state.registerSuccessMessage !== '';
     },
     registerErrorMessage() {
@@ -33,12 +34,15 @@ const getters = {
 };
 
 const mutations = {
-    ADD_REGISTER_ERROR(state, error) {
-        state.registerError = error.response.statusText;
+    ADD_REGISTER_ERROR(state, data) {
+        state.registerSnackBarColor = 'error';
+        state.registerErrorMessage = data.statusText;
+        state.registerSuccessMessage = '';
     },
     ADD_REGISTER_SUCCES_MESSAGES(state, data) {
         state.registerSnackBarColor = 'success';
         state.registerSuccessMessage = data.statusText;
+        state.registerErrorMessage = '';
     },
     ADD_REGISTER_CONFIRMATION_SUCCES() {
         console.log('user registration confirmed successfully');
@@ -67,8 +71,15 @@ const actions = {
     },
 
     register({ commit }, userData) {
-        auth.register(userData).then(
-            data => commit('ADD_REGISTER_SUCCES_MESSAGES', data),
+        return auth.register(userData).then(
+            (data) => {
+                if (data.status === 226) {
+                    console.log("asdasds");
+                    commit('ADD_REGISTER_ERROR', data);
+                } else {
+                    commit('ADD_REGISTER_SUCCES_MESSAGES', data);
+                }
+            },
             error => commit('ADD_REGISTER_ERROR', error),
         );
     },
