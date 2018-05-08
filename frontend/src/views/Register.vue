@@ -75,9 +75,9 @@
 
         <v-snackbar
             :timeout="0"
-            :color="registerSnackBarColor"
-            :value="didRegisterSuccess">
-            {{ registerErrorMessage }} {{ registerSuccessMessage }}
+            :color="'error'"
+            :value="registerErrorOccured">
+                {{ registerErrorMessage }}
             <v-btn dark flat @click="clearRegisterMessages">Close</v-btn>
         </v-snackbar>
     </div>
@@ -92,6 +92,7 @@ import {
     maxLength,
 } from 'vuelidate/lib/validators';
 import { mapActions, mapGetters } from 'vuex';
+import router from '../router';
 import Error from '../components/Error.vue';
 
 export default {
@@ -150,11 +151,9 @@ export default {
 
     computed: {
         ...mapGetters('authModule', [
-            'didRegisterErrorOccured',
-            'didRegisterSuccess',
-            'registerSuccessMessage',
+            'registerErrorOccured',
             'registerErrorMessage',
-            'registerSnackBarColor',
+            'isRegistered',
         ]),
     },
 
@@ -167,7 +166,14 @@ export default {
         validate(userData) {
             this.$v.userData.$touch();
             if (!this.$v.userData.$invalid) {
-                this.register({ ...userData });
+                this.register({ ...userData }).then(
+                    () => {
+                        if (this.isRegistered) {
+                            router.push('../afterRegistration');
+                        }
+                    },
+                    error => console.log(error),
+                );
             }
         },
     },

@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import RegistrationConfirm from './views/RegistrationConfirm.vue';
+import AfterRegistration from './views/AfterRegistration.vue';
 import NotFound from './views/NotFound.vue';
 
 Vue.use(Router);
@@ -19,6 +20,11 @@ export default new Router({
             path: '/register',
             name: 'register',
             component: Register,
+        },
+        {
+            path: '/afterRegistration',
+            name: 'afterRegistration',
+            component: AfterRegistration,
         },
         {
             path: '/registrationConfirm/:token',
