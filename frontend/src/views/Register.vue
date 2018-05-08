@@ -75,9 +75,9 @@
 
         <v-snackbar
             :timeout="0"
-            :color="registerSnackBarColor"
-            :value="didRegisterErrorOccured">
-            {{ registerErrorMessage }} {{ registerSuccessMessage }}
+            :color="'error'"
+            :value="registerErrorOccured">
+                {{ registerErrorMessage }}
             <v-btn dark flat @click="clearRegisterMessages">Close</v-btn>
         </v-snackbar>
     </div>
@@ -151,11 +151,9 @@ export default {
 
     computed: {
         ...mapGetters('authModule', [
-            'didRegisterErrorOccured',
-            'didRegisterSuccess',
-            'registerSuccessMessage',
+            'registerErrorOccured',
             'registerErrorMessage',
-            'registerSnackBarColor',
+            'isRegistered',
         ]),
     },
 
@@ -170,13 +168,7 @@ export default {
             if (!this.$v.userData.$invalid) {
                 this.register({ ...userData }).then(
                     () => {
-                        const dupa = this.didRegisterSuccess;
-                        console.log(`success ?: ${this.didRegisterSuccess}`);
-                        console.log(`error ?: ${this.didRegisterErrorOccured}`);
-                        console.log(`success msg ?: ${this.registerSuccessMessage}`);
-                        console.log(`error msg ?: ${this.registerErrorMessage}`);
-                        console.log(`snackbar ?: ${this.registerSnackBarColor}`);
-                        if (this.didRegisterSuccess) {
+                        if (this.isRegistered) {
                             router.push('../afterRegistration');
                         }
                     },

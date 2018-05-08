@@ -2,28 +2,20 @@ import auth from '../services/auth';
 
 const state = {
     registerErrorMessage: '',
-    registerSuccessMessage: '',
-    registerSnackBarColor: 'error',
+    isRegistered: false,
     isAuthenticated: false,
     authenticationError: '',
 };
 
 const getters = {
-    registerSnackBarColor() {
-        return state.registerSnackBarColor;
-    },
-    didRegisterErrorOccured() {
+    registerErrorOccured() {
         return state.registerErrorMessage !== '';
-    },
-    didRegisterSuccess() {
-        console.log('cycki');
-        return state.registerSuccessMessage !== '';
     },
     registerErrorMessage() {
         return state.registerErrorMessage;
     },
-    registerSuccessMessage() {
-        return state.registerSuccessMessage;
+    isRegistered() {
+        return state.isRegistered;
     },
     isAuthenticated() {
         return state.isAuthenticated;
@@ -34,15 +26,9 @@ const getters = {
 };
 
 const mutations = {
-    ADD_REGISTER_ERROR(state, data) {
-        state.registerSnackBarColor = 'error';
-        state.registerErrorMessage = data.statusText;
-        state.registerSuccessMessage = '';
-    },
-    ADD_REGISTER_SUCCES_MESSAGES(state, data) {
-        state.registerSnackBarColor = 'success';
-        state.registerSuccessMessage = data.statusText;
-        state.registerErrorMessage = '';
+    ADD_REGISTER_ERROR(state) {
+        state.isRegistered = false;
+        state.registerErrorMessage = 'Użytkownik z takim adresem email już istnieje.';
     },
     ADD_REGISTER_CONFIRMATION_SUCCES() {
         console.log('user registration confirmed successfully');
@@ -52,7 +38,13 @@ const mutations = {
     },
     CLEAR_REGISTER_MESSAGES(state) {
         state.registerErrorMessage = '';
-        state.registerSuccessMessage = '';
+    },
+    CLEAR_REGISTRATION_STATE(state) {
+        state.isRegistered = false;
+    },
+    REGISTER(state) {
+        state.isRegistered = true;
+        state.registerErrorMessage = '';
     },
     AUTHENTICATE(state) {
         state.isAuthenticated = true;
@@ -74,10 +66,9 @@ const actions = {
         return auth.register(userData).then(
             (data) => {
                 if (data.status === 226) {
-                    console.log("asdasds");
-                    commit('ADD_REGISTER_ERROR', data);
+                    commit('ADD_REGISTER_ERROR');
                 } else {
-                    commit('ADD_REGISTER_SUCCES_MESSAGES', data);
+                    commit('REGISTER');
                 }
             },
             error => commit('ADD_REGISTER_ERROR', error),
