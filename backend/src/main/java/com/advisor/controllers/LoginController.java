@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class LoginController {
 
+    final private static String ROLE_CLIENT = "client";
+    final private static String ROLE_COACH = "coach";
+
     @Autowired
     private UserService userService;
 
@@ -30,14 +33,11 @@ public class LoginController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ResponseEntity createNewUser(@Valid @RequestBody NewUserRequest newUserRequest) {
         if (userService.findUserByEmail(newUserRequest.getEmail()) == null) {
-            if ("client".equals(newUserRequest.getUserType())) {
-                userService.registerClient(newUserRequest);
+            if (ROLE_CLIENT.equals(newUserRequest.getUserType())) {
+                registerUser(ROLE_CLIENT, newUserRequest);
                 return new ResponseEntity(HttpStatus.OK);
-            } else if ("coach".equals(newUserRequest.getUserType())) {
-                userService.registerCoach(newUserRequest);
-                User user = userService.findUserByEmail(newUserRequest.getEmail());
-                eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
-
+            } else if (ROLE_COACH.equals(newUserRequest.getUserType())) {
+                registerUser(ROLE_COACH, newUserRequest);
                 return new ResponseEntity(HttpStatus.OK);
             }
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -56,15 +56,20 @@ public class LoginController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //TODO to delete
-    @RequestMapping(value = "/afterLogin", method = RequestMethod.GET)
-    public ResponseEntity afterLogin() {
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public ResponseEntity hello() {
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    private void registerUser(String role, NewUserRequest newUserRequest){
+        if(role.equals(ROLE_COACH)){
+            userService.registerCoach(newUserRequest);
+        } else if (role.equals(ROLE_CLIENT)) {
+            userService.registerClient(newUserRequest);
+        }
+
+        User user = userService.findUserByEmail(newUserRequest.getEmail());
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
     }
 
 }
