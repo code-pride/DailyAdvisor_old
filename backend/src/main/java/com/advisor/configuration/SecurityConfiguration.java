@@ -27,6 +27,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -87,11 +88,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 
 		http
-				.csrf().disable()
-				.logout().addLogoutHandler(new LogoutHandler()).logoutRequestMatcher(new AntPathRequestMatcher("/logout1"))
-				.and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
                 .csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/oauth/authorize").authenticated()
@@ -99,7 +95,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
                 .requestMatchers()
                 .antMatchers("/oauth/authorize")
-				//.antMatchers("/logout")
                 .and()
                 .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(),jwtManager), BasicAuthenticationFilter.class)
 				.cors();
@@ -135,7 +130,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public FilterRegistrationBean authenticationFilterRegistration() throws Exception {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager());
+        JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager(), jwtManager);
         filter.setAuthenticationSuccessHandler(successHandler);
         registration.setFilter(filter);
         registration.addUrlPatterns("/login");
@@ -173,6 +168,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         registration.setOrder(-102);
         return registration;
     }
+
+	@Bean
+	public FilterRegistrationBean preLoginFilter() {
+		FilterRegistrationBean registration = new FilterRegistrationBean();
+		registration.setFilter(new AnonymousAuthenticationFilter("ALREADY"));
+		registration.setName("preLoginFilter");
+		registration.setOrder(-103);
+		return registration;
+	}
 
     private Filter ssoFilter(ClientResources client, String path) {
         OAuth2ClientAuthenticationProcessingFilter oAuth2ClientAuthenticationFilter = new OAuth2ClientAuthenticationProcessingFilter(path);

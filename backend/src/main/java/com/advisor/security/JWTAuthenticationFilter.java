@@ -29,8 +29,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private AuthenticationManager authenticationManager;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private JWTManager jwtManager;
+
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTManager jwtManager) {
         this.authenticationManager = authenticationManager;
+        this.jwtManager = jwtManager;
     }
 
     @Override
@@ -39,6 +42,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             LoginRequest creds = new ObjectMapper()
                     .readValue(req.getInputStream(), LoginRequest.class);
+            Authentication jwtAuthentication = jwtManager.authenticateJwt(req);
+            if(jwtAuthentication != null) {
+                return jwtAuthentication;
+            }
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

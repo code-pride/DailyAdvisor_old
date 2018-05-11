@@ -82,6 +82,9 @@ public class JWTManager {
 
     public UsernamePasswordAuthenticationToken authenticateJwt(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
+        if(cookies == null) {
+            return null;
+        }
         Optional<Cookie> jwtCookie = Arrays.stream(cookies)
                 .filter(cookie -> cookie.getName().equals(TOKEN_COOKIE_NAME) && cookie.getValue()!=null)
                 .findFirst();
