@@ -41,7 +41,7 @@ export default new Vuex.Store({
         googleAuthenticate({ commit }) {
             // not sure what loginWithGoogle will return yet, so it's just guessing for now
             auth.loginWithGoogle().then(
-                () => commit('authenticate'),
+                () => commit('AUTHENTICATE'),
                 error => commit('ADD_AUTHENTICATION_ERROR', { error }),
             );
         },
