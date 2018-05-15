@@ -14,9 +14,10 @@ const authService = {
         return new Promise((resolve, reject) => {
             console.log(authService.getCookie('XSRF-TOKEN'));
             const request = axios.create({
-                // withCredentials: true,
+                withCredentials: true,
                 headers: {
-                    'XSRF-TOKEN': authService.getCookie('XSRF-TOKEN'),
+                    // 'XSRF-TOKEN': authService.getCookie('XSRF-TOKEN'),
+                    Cookie: document.cookie,
                 },
             });
 
