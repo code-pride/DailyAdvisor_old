@@ -1,35 +1,39 @@
-/* global FB */
-
 import * as axios from 'axios';
-import qs from 'qs';
 
-// const INCORRECT_CREDENTIALS_ERROR = 'Incorrect email or password.';
+const apiUrl = process.env.VUE_APP_API_LOCAL_URL;
+
+const INCORRECT_CREDENTIALS_ERROR = 'Incorrect email or password.';
+const GOOGLE_LOGIN_FAILED = 'Google login failed, as it is not implemented yet';
+const FACEBOOK_LOGIN_FAILED = 'Facebook login failed, as it is not implemented yet';
 
 const authService = {
     login(credentials) {
-        return axios.post(
-            'http://localhost:8091/oauth/authorize',
-            qs.stringify({
-                grant_type: 'password',
-                username: credentials.email,
-                password: credentials.password,
-                redirect_uri: 'http://localhost:8091/swagger-ui.html',
-                client_id: 'frontendClientId',
-                // tests
-                response_type: 'token',
-                state: 'gowno',
-            }),
-        );
+        // temporar solution, as API doesn't work yet
+        return new Promise((resolve, reject) => {
+            if (credentials.email === 'm@m.mm' && credentials.password === '111111') {
+                resolve();
+            } else {
+                reject(INCORRECT_CREDENTIALS_ERROR);
+            }
+        });
+},
+    loginWithGoogle() {
+        return new Promise((resolve, reject) => {
+            // lets just see what will happen here
+            axios.get(`${apiUrl}/login/google`).then(
+                () => resolve(),
+                () => reject(GOOGLE_LOGIN_FAILED),
+            );
+        });
     },
     loginWithFacebook() {
-        FB.getLoginStatus(
-            (response) => {
-                console.log(response);
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
+        return new Promise((resolve, reject) => {
+            // lets just see what will happen here
+            axios.get(`${apiUrl}/login/facebook`).then(
+                () => resolve(),
+                () => reject(FACEBOOK_LOGIN_FAILED),
+            );
+        });
     },
 };
 

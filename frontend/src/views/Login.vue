@@ -8,15 +8,10 @@
 
         <div v-else class="login-card-wrapper">
             <v-card class="card-content">
-                <div
-                    class="fb-login-button"
-                    data-max-rows="1"
-                    data-size="large"
-                    data-button-type="continue_with"
-                    data-show-faces="true"
-                    data-auto-logout-link="false"
-                    data-use-continue-as="false">
-                </div>
+                <SocialMediaLogin media="facebook" @click="authenticateWithFacebook()"
+                ></SocialMediaLogin>
+                <SocialMediaLogin media="google" @click="authenticateWithGoogle()"
+                ></SocialMediaLogin>
                 <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
                     <v-text-field
                         label="Email"
@@ -60,9 +55,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import router from '../router';
-import auth from '../services/auth';
+import SocialMediaLogin from '../components/SocialMediaLogin.vue';
 
 export default {
+    components: {
+        SocialMediaLogin,
+    },
     data: () => ({
         valid: false,
         email: '',
@@ -85,6 +83,8 @@ export default {
     methods: {
         ...mapActions([
             'authenticate',
+            'googleAuthenticate',
+            'facebookAuthenticate',
             'clearAuthenticationErrors',
         ]),
         authenticateAndTryReroute(credentials) {
@@ -94,8 +94,15 @@ export default {
                 }
             });
         },
+        authenticateWithGoogle() {
+            this.googleAuthenticate().then(() => {
+                if (this.isAuthenticated) {
+                    router.push('/restricted');
+                }
+            });
+        },
         authenticateWithFacebook() {
-            auth.loginWithFacebook();
+            this.facebookAuthenticate();
         },
     },
     watch: {
@@ -139,6 +146,7 @@ export default {
     }
 
     .card-content {
+        padding-top: 10px;
         display: flex;
         flex: 1 1 0;
         flex-direction: column;

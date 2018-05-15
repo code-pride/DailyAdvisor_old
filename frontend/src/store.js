@@ -34,18 +34,21 @@ export default new Vuex.Store({
     actions: {
         authenticate({ commit }, credentials) {
             auth.login(credentials).then(
-                (response) => {
-                    console.log('Seems like everything is fine...');
-                    console.log(response);
-                    commit('AUTHENTICATE');
-                },
-                (error) => {
-                    console.log('There is an error...');
-                    console.log(error);
-                    commit('ADD_AUTHENTICATION_ERROR', {
-                        error: error.message,
-                    });
-                },
+                () => commit('AUTHENTICATE'),
+                error => commit('ADD_AUTHENTICATION_ERROR', { error }),
+            );
+        },
+        googleAuthenticate({ commit }) {
+            // not sure what loginWithGoogle will return yet, so it's just guessing for now
+            auth.loginWithGoogle().then(
+                () => commit('authenticate'),
+                error => commit('ADD_AUTHENTICATION_ERROR', { error }),
+            );
+        },
+        facebookAuthenticate({ commit }) {
+            auth.loginWithFacebook().then(
+                () => commit('authenticate'),
+                error => commit('ADD_AUTHENTICATION_ERROR', { error }),
             );
         },
         clearAuthenticationErrors({ commit }) {
