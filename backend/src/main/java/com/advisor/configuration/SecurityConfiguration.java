@@ -28,14 +28,18 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CompositeFilter;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -45,18 +49,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-	@Autowired
-	private OAuth2ClientContext oauth2ClientContext;
-
-    @Autowired
-    private OAuth2ClientContextFilter oauth2ClientContextFilter;
-
-    @Autowired
-    private LoginAuthenticationSuccessHandler successHandler;
-
-    @Autowired
-	private JWTManager jwtManager;
 
 	@Bean
 	public AuthenticationManager customAuthenticationManager() throws Exception {
@@ -88,15 +80,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 
 		http
-                .csrf().disable()
+
 				.authorizeRequests()
 				.antMatchers("/oauth/authorize").authenticated()
+                .antMatchers("login/**").authenticated()
 				.antMatchers("/**").permitAll()
 				.and()
-                .requestMatchers()
-                .antMatchers("/oauth/authorize")
-                .and()
-                .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(),jwtManager), BasicAuthenticationFilter.class)
 				.cors();
 	}
 
@@ -125,90 +114,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		bean.setOrder(0);
 		return bean;
 	}
-
-
-    @Bean
-    public FilterRegistrationBean authenticationFilterRegistration() throws Exception {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager(), jwtManager);
-        filter.setAuthenticationSuccessHandler(successHandler);
-        registration.setFilter(filter);
-        registration.addUrlPatterns("/login");
-        registration.setName("authenticationFilter");
-        registration.setOrder(-100);
-        return registration;
-    }
-
-	/*@Bean
-	public FilterRegistrationBean authorizationFilterRegistration() throws Exception {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
-		JWTAuthorizationFilter filter = new JWTAuthorizationFilter(authenticationManager(),jwtManager);
-		registration.setFilter(filter);
-		registration.addUrlPatterns("/oauth/authorize");
-		registration.addUrlPatterns("/logout");
-		registration.setName("authenticationFilter");
-		registration.setOrder(-100);
-		return registration;
-	}*/
-
-    @Bean
-    public FilterRegistrationBean facebookFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(ssoFilter(facebook(), "/login/facebook"));
-        registration.setName("facebookFilter");
-        registration.setOrder(-102);
-        return registration;
-    }
-
-    @Bean
-    public FilterRegistrationBean googleFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(ssoFilter(google(), "/login/google"));
-        registration.setName("googleFilter");
-        registration.setOrder(-102);
-        return registration;
-    }
-
-	@Bean
-	public FilterRegistrationBean preLoginFilter() {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setFilter(new AnonymousAuthenticationFilter("ALREADY"));
-		registration.setName("preLoginFilter");
-		registration.setOrder(-103);
-		return registration;
-	}
-
-    private Filter ssoFilter(ClientResources client, String path) {
-        OAuth2ClientAuthenticationProcessingFilter oAuth2ClientAuthenticationFilter = new OAuth2ClientAuthenticationProcessingFilter(path);
-        OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
-        oAuth2ClientAuthenticationFilter.setRestTemplate(oAuth2RestTemplate);
-        UserInfoTokenServices tokenServices = new UserInfoTokenServices(client.getResource().getUserInfoUri(),
-                client.getClient().getClientId());
-        tokenServices.setRestTemplate(oAuth2RestTemplate);
-        oAuth2ClientAuthenticationFilter.setTokenServices(tokenServices);
-        oAuth2ClientAuthenticationFilter.setAuthenticationSuccessHandler(successHandler);
-        return oAuth2ClientAuthenticationFilter;
-    }
-
-	@Bean
-	public FilterRegistrationBean oauth2ClientFilterRegistration(
-			OAuth2ClientContextFilter filter) {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setFilter(filter);
-		registration.setOrder(-103);
-		return registration;
-	}
-
-    @Bean
-    @ConfigurationProperties("google")
-    public ClientResources google() {
-        return new ClientResources();
-    }
-
-    @Bean
-    @ConfigurationProperties("facebook")
-    public ClientResources facebook() {
-        return new ClientResources();
-    }
-
 }

@@ -77,6 +77,12 @@ public class OAuth2Test {
 
         RestTemplate restTemplate = new RestTemplate();
 
+        try{
+            restTemplate.postForEntity(PARENT_URL + "/login", loginRequest, String.class);
+        } catch (Exception e) {
+
+        }
+
         ResponseEntity<?> jwtResponse = restTemplate.postForEntity(PARENT_URL + "/login", loginRequest, String.class);
         HttpHeaders headers = null;
         String jwt = jwtResponse.getHeaders().getFirst(headers.SET_COOKIE);

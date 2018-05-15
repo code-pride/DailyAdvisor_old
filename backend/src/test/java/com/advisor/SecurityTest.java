@@ -38,25 +38,7 @@ import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
 
-//@SpringBootTest
-//@DataJpaTest
-//@ContextConfiguration
-//@WebAppConfiguration
 public class SecurityTest extends AbstractTestNGSpringContextTests {
-
-    //@Autowired
-    private WebApplicationContext context;
-
-    //@Autowired
-    private Filter springSecurityFilterChain;
-
-    //@Autowired
-    private MockMvc mvc;
-
-    public void setUp() throws Exception{
-
-
-    }
 
     @Test
     public void normalFlowTest() throws Exception{

@@ -1,9 +1,10 @@
 package com.advisor.configuration;
 
-import com.advisor.repository.BlacklistTokenJWTRepository;
+import com.advisor.repository.TokenJWTRepository;
 import com.advisor.security.CustomJdbcTokenStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,8 +32,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Value("${frontend.url.parent}")
+    String frontendUrl;
+
     @Autowired
-    BlacklistTokenJWTRepository blacklistTokenJWTRepository;
+    TokenJWTRepository tokenJWTRepository;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
@@ -49,6 +53,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .secret(bCryptPasswordEncoder.encode("frontendClientSecret"))
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
                 .autoApprove(true)
+                .redirectUris(frontendUrl + "/")
                 .scopes("read", "write")
                 .accessTokenValiditySeconds(3600)
                 .refreshTokenValiditySeconds(28 * 24 * 3600)
