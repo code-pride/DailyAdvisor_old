@@ -22,7 +22,7 @@
                         :disabled="!valid"
                         class="sign-in-btn"
                         color="secondary"
-                    >Log in</v-btn>
+                    >{{ $t("common.login") }}</v-btn>
                 </v-form>
                 <v-btn
                     flat
@@ -30,7 +30,7 @@
                     class="sign-up-btn"
                     color="primary"
                     to="register"
-                    >Sign up</v-btn>
+                    >{{ $t("common.signUp") }}</v-btn>
             </v-card>
         </div>
     </div>

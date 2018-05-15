@@ -7,7 +7,7 @@
                     class="login-btn"
                     color="primary"
                     to="../login"
-                >Login</v-btn>
+                >{{ $t("common.login") }}</v-btn>
             </div>
         </div>
     </div>

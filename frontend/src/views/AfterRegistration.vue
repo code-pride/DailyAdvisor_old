@@ -2,16 +2,13 @@
     <div class="background">
         <div class="after-registration-wrapper">
             <div class="content">
-                <p>Brawo!</p>
-                <p>
-                    Wysłaliśmy do Ciebie wiadomość z potwierdzeniem rejestracji.
-                    Kliknij w link i korzystaj z Daily Advisor!
-                </p>
+                <p>{{ $t("common.brawo") }}!</p>
+                <p>{{ $t("afterRegistrationInfo") }}</p>
                 <v-btn
                     class="login-btn"
                     color="primary"
                     to="../login"
-                >Login</v-btn>
+                >{{ $t("common.login") }}</v-btn>
             </div>
         </div>
     </div>

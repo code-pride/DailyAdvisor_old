@@ -13,6 +13,7 @@ export const messages = {
             signUp: 'Sign Up',
             login: 'Login',
             close: 'Close',
+            brawo: 'Brawo',
         },
         formErrorMsgs: {
             provideShorterInput: 'Please provide shorter input',
@@ -24,6 +25,7 @@ export const messages = {
         userExist: 'User exist',
         yourAccountIsConfirmed: 'Your account is confirmed. You can login now.',
         yourAccountHasBenActivatedEarlier: 'Your account has been activated earlier.',
+        afterRegistrationInfo: 'We have sent you a confirmation message. Click the link and use Daily Advisor!',
     },
     pl: {
         common: {
@@ -39,6 +41,7 @@ export const messages = {
             signUp: 'Zarejestruj',
             login: 'Zaloguj',
             close: 'Anuluj',
+            brawo: 'Brawo',
         },
         formErrorMsgs: {
             provideShorterInput: 'Wprowadzony tekst jest za długi.',
@@ -50,6 +53,8 @@ export const messages = {
         userExist: 'Użytkownik z takim adresem email już istnieje.',
         yourAccountIsConfirmed: 'Twoje konto zostało potwierdzone. Możesz się teraz bezpiecznie zalogować.',
         yourAccountHasBenActivatedEarlier: 'Konto zostało już wcześniej aktywowane.',
+        afterRegistrationInfo: `Wysłaliśmy do Ciebie wiadomość z potwierdzeniem rejestracji.
+            Kliknij w link i korzystaj z Daily Advisor!`,
     },
 };
 
