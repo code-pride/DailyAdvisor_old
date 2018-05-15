@@ -61,7 +61,7 @@
                         @click="validate(userData)"
                         class="sign-in-btn"
                         color="primary"
-                    >sign up</v-btn>
+                    >{{ $t("signUp") }}</v-btn>
                 </v-form>
                 <v-btn
                     flat

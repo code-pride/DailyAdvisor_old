@@ -1,4 +1,5 @@
 import auth from '../services/auth';
+import i18n from '../translations/locale-configuration';
 
 const state = {
     registerErrorMessage: '',
@@ -32,7 +33,7 @@ const getters = {
 const mutations = {
     ADD_REGISTER_ERROR(state) {
         state.isRegistered = false;
-        state.registerErrorMessage = 'Użytkownik z takim adresem email już istnieje.';
+        state.registerErrorMessage = i18n.t('userExist');
     },
     ADD_REGISTER_CONFIRMATION_SUCCES(state) {
         state.registerConfirmationMessage = 'Twoje konto zostało potwierdzone. Możesz się teraz bezpiecznie zalogować.';

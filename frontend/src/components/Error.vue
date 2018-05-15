@@ -9,18 +9,18 @@
 </template>
 
 <script>
+import i18n from '../translations/locale-configuration';
 
 export default {
-
     props: ['inputValidationData'],
 
     data: () => ({
         errorMsgs: {
-            maxLength: 'Please provide shorter input',
-            minLength: 'Please provide longer input',
-            email: 'This is wrong addres',
-            required: 'This field is required',
-            sameAs: 'Password are different',
+            maxLength: i18n.t('formErrorMsgs.provideShorterInput'),
+            minLength: i18n.t('formErrorMsgs.provideLongerInput'),
+            email: i18n.t('formErrorMsgs.wrongEmailAddres'),
+            required: i18n.t('formErrorMsgs.requiredField'),
+            sameAs: i18n.t('formErrorMsgs.passwordAreDifferent'),
         },
     }),
 };
