@@ -2,8 +2,7 @@
     <div class="background">
         <div class="registration-confirm-wrapper">
             <div class="content">
-                <p>Twoje konto zostało potwierdzone. </p>
-                <p>Możesz się teraz bezpiecznie zalogować.</p>
+                <p>{{ registerConfirmationMessage }}</p>
                 <v-btn
                     class="login-btn"
                     color="primary"
@@ -14,7 +13,7 @@
     </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data: () => ({
@@ -25,6 +24,12 @@ export default {
         this.token = this.$route.params.token;
 
         this.registerConfirmation(this.token);
+    },
+
+    computed: {
+        ...mapGetters('authModule', [
+            'registerConfirmationMessage',
+        ]),
     },
 
     methods: {
