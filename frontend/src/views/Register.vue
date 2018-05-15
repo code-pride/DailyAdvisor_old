@@ -5,35 +5,35 @@
             <v-card class="card-content">
                 <v-form class="form-wrapper">
                     <v-text-field
-                        label="Name"
+                        v-bind:label="$t('common.name')"
                         v-model.trim="userData.name"
                         @input="$v.userData.name.$touch()"
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.name"></error>
 
                     <v-text-field
-                        label="Lastname"
+                        v-bind:label="$t('common.lastname')"
                         v-model.trim="userData.lastname"
                         @input="$v.userData.lastname.$touch()"
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.lastname"></error>
 
                     <v-text-field
-                        label="City"
+                        v-bind:label="$t('common.city')"
                         v-model.trim="userData.city"
                         @input="$v.userData.city.$touch()"
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.city"></error>
 
                     <v-text-field
-                        label="Email"
+                        v-bind:label="$t('common.email')"
                         v-model.trim="userData.email"
                         @input="$v.userData.email.$touch()"
                     ></v-text-field>
                     <error :input-validation-data="$v.userData.email"></error>
 
                     <v-text-field
-                        label="Password"
+                        v-bind:label="$t('common.password')"
                         v-model="userData.password"
                         :type="'password'"
                         @input="$v.userData.password.$touch()"
@@ -41,7 +41,7 @@
                     <error :input-validation-data="$v.userData.password"></error>
 
                     <v-text-field
-                        label="Repeat password"
+                        v-bind:label="$t('common.repeatPassword')"
                         v-model="userData.repeatPassword"
                         :type="'password'"
                         @input="$v.userData.repeatPassword.$touch()"
@@ -52,8 +52,8 @@
                         v-model="userData.userType"
                         row
                         @input="$v.userData.userType.$touch()">
-                        <v-radio label="Casual user" value="client"></v-radio>
-                        <v-radio label="Coach" value="coach" ></v-radio>
+                        <v-radio v-bind:label="$t('common.casualUser')" value="client"></v-radio>
+                        <v-radio v-bind:label="$t('common.coach')" value="coach" ></v-radio>
                     </v-radio-group>
                     <error :input-validation-data="$v.userData.userType"></error>
 
@@ -61,7 +61,7 @@
                         @click="validate(userData)"
                         class="sign-in-btn"
                         color="primary"
-                    >{{ $t("signUp") }}</v-btn>
+                    >{{ $t("common.signUp") }}</v-btn>
                 </v-form>
                 <v-btn
                     flat
@@ -69,7 +69,7 @@
                     class="sign-up-btn"
                     color="primary"
                     to="login"
-                >Login</v-btn>
+                >{{ $t("common.login") }}</v-btn>
             </v-card>
         </div>
 
@@ -78,7 +78,7 @@
             :color="'error'"
             :value="registerErrorOccured">
                 {{ registerErrorMessage }}
-            <v-btn dark flat @click="clearRegisterMessages">Close</v-btn>
+            <v-btn dark flat @click="clearRegisterMessages">{{ $t("common.close") }}</v-btn>
         </v-snackbar>
     </div>
 </template>

@@ -36,10 +36,10 @@ const mutations = {
         state.registerErrorMessage = i18n.t('userExist');
     },
     ADD_REGISTER_CONFIRMATION_SUCCES(state) {
-        state.registerConfirmationMessage = 'Twoje konto zostało potwierdzone. Możesz się teraz bezpiecznie zalogować.';
+        state.registerConfirmationMessage = i18n.t('yourAccountIsConfirmed');
     },
     ADD_REGISTER_CONFIRMATION_ERROR() {
-        state.registerConfirmationMessage = 'Konto zostało już wcześniej aktywowane';
+        state.registerConfirmationMessage = i18n.t('yourAccountHasBenActivatedEarlier');
     },
     CLEAR_REGISTER_MESSAGES(state) {
         state.registerErrorMessage = '';

@@ -1,9 +1,19 @@
 export const messages = {
     en: {
-        hello: 'Hello',
-        userExist: 'User exist',
-        signUp: 'Sign Up',
-        login: 'Login',
+        common: {
+            name: 'Name',
+            lastname: 'Lastname',
+            city: 'City',
+            email: 'Email',
+            password: 'Password',
+            repeatPassword: 'Repeat password',
+            user: 'User',
+            coach: 'Coach',
+            casualUser: 'Casual user',
+            signUp: 'Sign Up',
+            login: 'Login',
+            close: 'Close',
+        },
         formErrorMsgs: {
             provideShorterInput: 'Please provide shorter input',
             provideLongerInput: 'Please provide longer input',
@@ -11,12 +21,25 @@ export const messages = {
             requiredField: 'This field is required',
             passwordAreDifferent: 'Password are different',
         },
+        userExist: 'User exist',
+        yourAccountIsConfirmed: 'Your account is confirmed. You can login now.',
+        yourAccountHasBenActivatedEarlier: 'Your account has been activated earlier.',
     },
     pl: {
-        hello: 'Dzień dobry',
-        userExist: 'Użytkownik z takim adresem email już istnieje.',
-        signUp: 'Zarejestruj',
-        login: 'Zaloguj',
+        common: {
+            name: 'Imię',
+            lastname: 'Nazwisko',
+            city: 'Miasto',
+            email: 'Email',
+            password: 'Hasło',
+            repeatPassword: 'Powtórz hasło',
+            user: 'Użytkownik',
+            coach: 'Trener',
+            casualUser: 'Zwykły użytkownik',
+            signUp: 'Zarejestruj',
+            login: 'Zaloguj',
+            close: 'Anuluj',
+        },
         formErrorMsgs: {
             provideShorterInput: 'Wprowadzony tekst jest za długi.',
             provideLongerInput: 'Wprowadzony tekst jest za krótki.',
@@ -24,6 +47,9 @@ export const messages = {
             requiredField: 'To pole jest obowiązkowe.',
             passwordAreDifferent: 'Hasła się od siebie różnią.',
         },
+        userExist: 'Użytkownik z takim adresem email już istnieje.',
+        yourAccountIsConfirmed: 'Twoje konto zostało potwierdzone. Możesz się teraz bezpiecznie zalogować.',
+        yourAccountHasBenActivatedEarlier: 'Konto zostało już wcześniej aktywowane.',
     },
 };
 
