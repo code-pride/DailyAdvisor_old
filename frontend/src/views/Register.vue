@@ -52,8 +52,8 @@
                         v-model="userData.userType"
                         row
                         @input="$v.userData.userType.$touch()">
+                        <v-radio label="Casual user" value="client"></v-radio>
                         <v-radio label="Coach" value="coach" ></v-radio>
-                        <v-radio label="Normal user" value="client"></v-radio>
                     </v-radio-group>
                     <error :input-validation-data="$v.userData.userType"></error>
 
@@ -107,7 +107,7 @@ export default {
             email: '',
             password: '',
             repeatPassword: '',
-            userType: '',
+            userType: 'client',
         },
         snackbarType: 'error',
     }),
