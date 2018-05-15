@@ -16,7 +16,7 @@ const authService = {
                 reject(INCORRECT_CREDENTIALS_ERROR);
             }
         });
-},
+    },
     loginWithGoogle() {
         return new Promise((resolve, reject) => {
             // lets just see what will happen here
