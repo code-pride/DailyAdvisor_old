@@ -1,7 +1,7 @@
 <template>
     <div class="background">
-        <img src="../assets/logo.png">
-        <div class="login-card-wrapper">
+        <img class="logo" src="../assets/logo.png">
+        <div class="registration-card-wrapper">
             <v-card class="card-content">
                 <v-form class="form-wrapper">
                     <v-text-field
@@ -52,8 +52,8 @@
                         v-model="userData.userType"
                         row
                         @input="$v.userData.userType.$touch()">
+                        <v-radio label="Casual user" value="client"></v-radio>
                         <v-radio label="Coach" value="coach" ></v-radio>
-                        <v-radio label="Normal user" value="client"></v-radio>
                     </v-radio-group>
                     <error :input-validation-data="$v.userData.userType"></error>
 
@@ -107,7 +107,7 @@ export default {
             email: '',
             password: '',
             repeatPassword: '',
-            userType: '',
+            userType: 'client',
         },
         snackbarType: 'error',
     }),
@@ -181,48 +181,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    img {
-        width: auto;
-        max-height: 100px;
-        margin-bottom: 30px;
-    }
-
     .background {
         background: #29D8F3;
-        display: flex;
-        flex: 1 1 0;
-        flex-wrap: nowrap;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        text-align: center;
+        height: 100%;
+
+        .logo {
+            margin: 20px;
+            max-height: 100px;
+        }
+
+        .registration-card-wrapper {
+            margin: 20px auto 60px auto;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .card-content {
+            display: flex;
+            flex: 1 1 0;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .form-wrapper {
+            padding-top: 10px;
+            width: 80%;
+        }
+
+        .sign-in-btn {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .sign-up-btn {
+            height: 15px;
+        }
     }
 
-    .login-card-wrapper {
-        margin: 0 auto;
-        max-width: 400px;
-        width: 90%;
-    }
 
-    .card-content {
-        display: flex;
-        flex: 1 1 0;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        align-items: center;
-    }
-
-    .form-wrapper {
-        padding-top: 10px;
-        width: 80%;
-    }
-
-    .sign-in-btn {
-        display: block;
-        margin: 0 auto;
-    }
-
-    .sign-up-btn {
-        height: 15px;
-    }
 </style>

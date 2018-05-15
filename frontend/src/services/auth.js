@@ -3,7 +3,6 @@ import * as axios from 'axios';
 const apiUrl = process.env.VUE_APP_API_LOCAL_URL;
 
 const INCORRECT_CREDENTIALS_ERROR = 'Incorrect email or password.';
-const REGISTER_CONFIRMATION_ERROR = 'Error';
 
 const authService = {
     login(credentials) {

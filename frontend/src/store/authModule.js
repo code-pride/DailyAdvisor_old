@@ -2,6 +2,7 @@ import auth from '../services/auth';
 
 const state = {
     registerErrorMessage: '',
+    registerConfirmationMessage: '',
     isRegistered: false,
     isAuthenticated: false,
     authenticationError: '',
@@ -13,6 +14,9 @@ const getters = {
     },
     registerErrorMessage() {
         return state.registerErrorMessage;
+    },
+    registerConfirmationMessage() {
+        return state.registerConfirmationMessage;
     },
     isRegistered() {
         return state.isRegistered;
@@ -30,11 +34,11 @@ const mutations = {
         state.isRegistered = false;
         state.registerErrorMessage = 'Użytkownik z takim adresem email już istnieje.';
     },
-    ADD_REGISTER_CONFIRMATION_SUCCES() {
-        console.log('user registration confirmed successfully');
+    ADD_REGISTER_CONFIRMATION_SUCCES(state) {
+        state.registerConfirmationMessage = 'Twoje konto zostało potwierdzone. Możesz się teraz bezpiecznie zalogować.';
     },
     ADD_REGISTER_CONFIRMATION_ERROR() {
-        console.log('user registration confirmation error');
+        state.registerConfirmationMessage = 'Konto zostało już wcześniej aktywowane';
     },
     CLEAR_REGISTER_MESSAGES(state) {
         state.registerErrorMessage = '';
