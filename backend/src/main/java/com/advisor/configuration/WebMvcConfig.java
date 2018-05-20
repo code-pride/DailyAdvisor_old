@@ -3,6 +3,7 @@ package com.advisor.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -26,6 +27,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/login")
+				.allowCredentials(true)
+				.allowedOrigins("http://localhost:8091/");
+		registry.addMapping("/logout")
+				.allowCredentials(true)
+				.allowedOrigins("http://localhost:8091/");
 	}
 
 }
