@@ -131,7 +131,7 @@ public class JWTManager {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
-                .setId(UUID.randomUUID().toString())
+                .setId(id)
                 .compact();
     }
 }

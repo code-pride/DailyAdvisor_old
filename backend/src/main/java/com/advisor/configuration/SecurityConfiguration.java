@@ -88,30 +88,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 				.cors();
 	}
-
-	@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
-		final CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedHeaders(Collections.singletonList("*"));
-		configuration.setAllowedOrigins(Collections.singletonList("*"));
-		configuration.setAllowedMethods(Collections.singletonList("*"));
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
-
-		return source;
-	}
-
-	@Bean
-	public FilterRegistrationBean corsFilterBean() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("*");
-		source.registerCorsConfiguration("/**", config);
-		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-		bean.setOrder(0);
-		return bean;
-	}
 }
