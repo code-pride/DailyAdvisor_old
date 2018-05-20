@@ -1,5 +1,6 @@
 package com.advisor.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+
+    @Value("${frontend.url.parent}")
+    String frontendUrl;
 
 	@Bean
 	public Docket api() {
@@ -33,10 +37,16 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/login")
 				.allowCredentials(true)
-				.allowedOrigins("http://localhost:8091/");
+				.allowedOrigins(frontendUrl);
 		registry.addMapping("/logout")
 				.allowCredentials(true)
-				.allowedOrigins("http://localhost:8091/");
+				.allowedOrigins(frontendUrl);
+		registry.addMapping("/csrf")
+				.allowCredentials(true)
+				.allowedOrigins(frontendUrl);
+		registry.addMapping("/**")
+                .allowCredentials(false)
+                .allowedOrigins("*");
 	}
 
 }
