@@ -18,11 +18,17 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CompositeFilter;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
@@ -118,7 +124,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         filters.add(new PreLoginFilter("/login/**", jwtManager, frontendUrl + dashboardUrl));
 		filters.add(ssoFilter(facebook(), "/login/facebook"));
 		filters.add(ssoFilter(google(), "/login/google"));
-		filters.add(new JWTAuthorizationFilter(authenticationManager,jwtManager, "/oauth/authorize"));
 
 		JWTAuthenticationFilter loginFilter = new JWTAuthenticationFilter(authenticationManager,jwtManager);
 		loginFilter.setAuthenticationSuccessHandler(handler);
@@ -151,6 +156,20 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 		registration.setOrder(-103);
 		return registration;
 	}
+
+    @Bean
+    public FilterRegistrationBean corsConfigFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin(frontendUrl);
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        source.registerCorsConfiguration("/**", config);
+        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(-100);
+        return bean;
+    }
 
 	@Bean
 	@ConfigurationProperties("google")

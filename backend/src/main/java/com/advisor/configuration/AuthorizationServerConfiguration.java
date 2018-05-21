@@ -51,13 +51,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .inMemory()
                 .withClient("frontendClientId")
                 .secret(bCryptPasswordEncoder.encode("frontendClientSecret"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit", "client_credentials")
                 .autoApprove(true)
                 .redirectUris(frontendUrl + "/")
                 .scopes("read", "write")
                 .accessTokenValiditySeconds(3600)
-                .refreshTokenValiditySeconds(28 * 24 * 3600)
-                .scopes("read");
+                .refreshTokenValiditySeconds(28 * 24 * 3600);
     }
 
     @Override

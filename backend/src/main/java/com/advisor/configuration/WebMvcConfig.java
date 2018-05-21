@@ -16,9 +16,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    @Value("${frontend.url.parent}")
-    String frontendUrl;
-
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
@@ -32,21 +29,4 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/login")
-				.allowCredentials(true)
-				.allowedOrigins(frontendUrl);
-		registry.addMapping("/logout")
-				.allowCredentials(true)
-				.allowedOrigins(frontendUrl);
-		registry.addMapping("/csrf")
-				.allowCredentials(true)
-				.allowedOrigins(frontendUrl);
-		registry.addMapping("/**")
-                .allowCredentials(false)
-                .allowedOrigins("*");
-	}
-
 }
