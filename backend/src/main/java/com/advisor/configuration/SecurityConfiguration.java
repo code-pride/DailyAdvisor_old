@@ -28,6 +28,7 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -49,6 +50,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	@Autowired
+	private JWTManager jwtManager;
+
+    @Autowired
+    private LoginAuthenticationHandler handler;
 
 	@Bean
 	public AuthenticationManager customAuthenticationManager() throws Exception {
@@ -82,10 +89,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 
 				.authorizeRequests()
-				.antMatchers("/oauth/authorize").authenticated()
                 .antMatchers("login/**").authenticated()
 				.antMatchers("/**").permitAll()
 				.and()
+				.addFilterBefore(new JWTAuthorizationFilter(authenticationManager(),jwtManager, handler, "/oauth/authorize"), BasicAuthenticationFilter.class)
 				.cors();
 	}
 }

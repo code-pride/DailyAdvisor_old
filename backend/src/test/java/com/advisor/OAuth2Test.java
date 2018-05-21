@@ -114,7 +114,7 @@ public class OAuth2Test {
         try {
             ResponseEntity<String> response = restTemplate
                     .exchange(
-                            PARENT_URL + "oauth/authorize?redirect_uri=http://google.pl/&client_id=frontendClientId&response_type=token&audience=fdsfdsf&scope=read&state=fsdfsdfsdfsdf",
+                            PARENT_URL + "http://localhost:8091/oauth/authorize?redirect_uri=http://localhost:8080/&client_id=frontendClientId&response_type=token&audience=fdsfdsf&scope=read&state=fsdfsdfsdfsdf",
                             HttpMethod.GET,
                             entity,
                             String.class);
