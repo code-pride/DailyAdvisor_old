@@ -28,10 +28,10 @@ public class RegistrationListener implements
     private EmailService emailService;
 
     @Autowired
-    public SimpleMailMessage mailMessage;
+    private SimpleMailMessage mailMessage;
 
     @Autowired
-    public SimpleMailMessage template;
+    private SimpleMailMessage template;
 
     @Value("${frontend.server.port}")
     private String serverPort;

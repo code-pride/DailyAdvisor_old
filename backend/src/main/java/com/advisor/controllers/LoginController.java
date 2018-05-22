@@ -25,7 +25,7 @@ public class LoginController {
     private UserService userService;
 
     @Autowired
-    public SimpleMailMessage mailMessage;
+    private SimpleMailMessage mailMessage;
 
     @Autowired
     ApplicationEventPublisher eventPublisher;
