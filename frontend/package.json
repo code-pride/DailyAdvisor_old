@@ -11,9 +11,14 @@
     "e2e:open": "vue-cli-service e2e:open"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "qs": "^6.5.1",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.13",
+    "vue-i18n": "^7.6.0",
     "vue-router": "^3.0.1",
+    "vuelidate": "^0.6.2",
+    "vuetify": "^1.0.11",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -31,6 +36,17 @@
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
     "vue-template-compiler": "^2.5.13"
+  },
+  "babel": {
+    "presets": [
+      "@babel/env",
+      [
+        "@babel/preset-stage-2",
+        {
+          "decoratorsLegacy": true
+        }
+      ]
+    ]
   },
   "browserslist": [
     "> 1%",
