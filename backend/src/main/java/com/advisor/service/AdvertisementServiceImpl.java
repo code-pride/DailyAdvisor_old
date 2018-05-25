@@ -19,7 +19,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     private static final String ADVERTISEMENT_NOT_FOUND_MESSAGE_CODE = "exception.entityNotFoundException.advertisement";
 
-    private static final String ADVERTISEMENT_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.coach";
+    private static final String ADVERTISEMENT_EXISTS_MESSAGE_CODE = "exception.entityNotFoundException.advertisement";
 
     @Autowired
     @Qualifier("advertisementRepository")
