@@ -49,6 +49,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	private LoginAuthenticationHandler handler;
 
 	@Autowired
+	private Oauth2LoginAuthenticationHandler oauth2Handler;
+
+	@Autowired
 	private JWTManager jwtManager;
 
     @Value("${frontend.url.parent}")
@@ -144,7 +147,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 				client.getClient().getClientId());
 		tokenServices.setRestTemplate(oAuth2RestTemplate);
 		oAuth2ClientAuthenticationFilter.setTokenServices(tokenServices);
-		oAuth2ClientAuthenticationFilter.setAuthenticationSuccessHandler(handler);
+		oAuth2ClientAuthenticationFilter.setAuthenticationSuccessHandler(oauth2Handler);
 		return oAuth2ClientAuthenticationFilter;
 	}
 

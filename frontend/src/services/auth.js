@@ -12,34 +12,50 @@ const authService = {
         console.log(credentials);
         console.log(document.cookie);
         return new Promise((resolve, reject) => {
+            const xcsrf = authService.getCookie('XSRF-TOKEN');
             console.log(authService.getCookie('XSRF-TOKEN'));
-            const request = axios.create({
-                withCredentials: true,
-                headers: {
-                    'XSRF-TOKEN': authService.getCookie('XSRF-TOKEN'),
-                },
-            });
 
-            request.post(`${apiUrl}/login`, {
-                username: credentials.email,
-                password: credentials.password,
-            }).then(
-                () => {
-                    console.log('SUCCES!');
-                    resolve();
-                },
-                (error) => {
-                    console.log('nie pyklo')
-                    console.log(error);
-                    reject();
-                },
-            );
+            const loginRequest = function() {
+                const request = axios.create({
+                    withCredentials: true,
+                    headers: {
+                        'XSRF-TOKEN': authService.getCookie('XSRF-TOKEN'),
+                    },
+                });
 
-            // if (credentials.email === 'm@m.mm' && credentials.password === '111111') {
-            //     resolve();
-            // } else {
-            //     reject(INCORRECT_CREDENTIALS_ERROR);
-            // }
+                request.post(`${apiUrl}/login`, {
+                    username: credentials.email,
+                    password: credentials.password,
+                }).then(
+                    () => {
+                        console.log('SUCCES!');
+                        resolve();
+                    },
+                    (error) => {
+                        console.log(error);
+                        reject(INCORRECT_CREDENTIALS_ERROR);
+                    },
+                );
+            };
+
+            if(xcsrf != null) {
+                loginRequest();
+            } else {
+                const request = axios.create({
+                    withCredentials: true,
+                });
+    
+                request.get(`${apiUrl}/csrf`).then(
+                    () => {
+                        console.log(document.cookie);
+                        loginRequest();
+                    },
+                    () => {
+                        console.log(document.cookie);
+                        reject();
+                    },
+                );
+            }
         });
     },
     loginWithGoogle() {
@@ -47,13 +63,6 @@ const authService = {
             // lets just see what will happen here
             const request = axios.create({
                 withCredentials: true,
-                // headers: {
-                //     'Access-Control-Allow-Origin': '*',
-                // },
-                // params: {
-                //     id: 37880978,
-                //     updateTime: -1,
-                // },
             });
 
             request.get(`${apiUrl}/csrf`).then(
@@ -71,9 +80,19 @@ const authService = {
     loginWithFacebook() {
         return new Promise((resolve, reject) => {
             // lets just see what will happen here
-            axios.get(`${apiUrl}/login/facebook`).then(
-                () => resolve(),
-                () => reject(FACEBOOK_LOGIN_FAILED),
+            const request = axios.create({
+                withCredentials: true,
+            });
+
+            request.get('http://localhost:8091/oauth/authorize?redirect_uri=http://localhost:8080/&client_id=frontendClientId&response_type=token&audience=fdsfdsf&scope=read&state=fsdfsdfsdfsdf').then(
+                () => {
+                    console.log(document.cookie);
+                    resolve();
+                },
+                () => {
+                    console.log(document.cookie);
+                    reject(FACEBOOK_LOGIN_FAILED);
+                },
             );
         });
     },
@@ -84,7 +103,7 @@ const authService = {
             return parts.pop().split(';').shift();
         }
 
-        return 'spierdalaj';
+        return null;
     },
 };
 
