@@ -40,7 +40,6 @@ public class JWTManager {
 
     private static final String TOKEN_COOKIE_NAME = "_secu";
     private static final String SECRET = "SecretKeyToGenJWTs";
-    private static final long EXPIRATION_TIME = 864_000_0000L; // 100 days
 
     public void jwtLogout(HttpServletRequest req, HttpServletResponse res) {
         Cookie[] cookies = req.getCookies();
@@ -129,7 +128,6 @@ public class JWTManager {
         return Jwts.builder()
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .setId(id)
                 .compact();
