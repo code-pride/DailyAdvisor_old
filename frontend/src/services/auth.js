@@ -8,7 +8,6 @@ const FACEBOOK_LOGIN_FAILED = 'Facebook login failed, as it is not implemented y
 
 const authService = {
     login(credentials) {
-        // temporar solution, as API doesn't work yet
         console.log(credentials);
         console.log(document.cookie);
         return new Promise((resolve, reject) => {
