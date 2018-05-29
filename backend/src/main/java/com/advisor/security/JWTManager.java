@@ -81,6 +81,7 @@ public class JWTManager {
             user = Optional.ofNullable(userService.findUserByEmail(email)).orElseGet(() -> {
                 User lUser = new User();
                 lUser.setEmail(email);
+                lUser.setEnabled(true);
                 try {
                     return userService.create(lUser);
                 } catch (DataRepositoryException e) {
