@@ -38,13 +38,13 @@ const authService = {
                 );
             };
 
-            if(xcsrf != null) {
+            if (xcsrf != null) {
                 loginRequest();
             } else {
                 const request = axios.create({
                     withCredentials: true,
                 });
-    
+
                 request.get(`${apiUrl}/csrf`).then(
                     () => {
                         console.log(document.cookie);
@@ -104,6 +104,18 @@ const authService = {
         }
 
         return null;
+    },
+
+    register(userData) {
+        return axios.post(`${apiUrl}/registration`, userData);
+    },
+
+    registerConfirmation(token) {
+        return axios.post(`${apiUrl}/registrationConfirm`, { token });
+    },
+
+    hello() {
+        return axios.get(`${apiUrl}/hello`);
     },
 };
 

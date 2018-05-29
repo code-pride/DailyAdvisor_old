@@ -74,14 +74,14 @@ export default {
         ],
     }),
     computed: {
-        ...mapGetters([
+        ...mapGetters('authModule', [
             'didAuthenticationErrorOccured',
             'authenticationErrorMessage',
             'isAuthenticated',
         ]),
     },
     methods: {
-        ...mapActions([
+        ...mapActions('authModule', [
             'authenticate',
             'googleAuthenticate',
             'facebookAuthenticate',
