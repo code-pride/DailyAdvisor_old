@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import store from './store';
+import store from './store/store';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import RegistrationConfirm from './views/RegistrationConfirm.vue';

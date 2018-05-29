@@ -1,4 +1,4 @@
-import auth from '../services/auth';
+import authService from '../services/auth';
 import i18n from '../translations/locale-configuration';
 
 
@@ -68,20 +68,20 @@ const mutations = {
 
 const actions = {
     authenticate({ commit }, credentials) {
-        auth.login(credentials).then(
+        authService.login(credentials).then(
             () => commit('AUTHENTICATE'),
             error => commit('ADD_AUTHENTICATION_ERROR', { error }),
         );
     },
     googleAuthenticate({ commit }) {
         // not sure what loginWithGoogle will return yet, so it's just guessing for now
-        auth.loginWithGoogle().then(
+        authService.loginWithGoogle().then(
             () => commit('AUTHENTICATE'),
             error => commit('ADD_AUTHENTICATION_ERROR', { error }),
         );
     },
     facebookAuthenticate({ commit }) {
-        auth.loginWithFacebook().then(
+        authService.loginWithFacebook().then(
             () => commit('authenticate'),
             error => commit('ADD_AUTHENTICATION_ERROR', { error }),
         );
@@ -90,7 +90,7 @@ const actions = {
         commit('CLEAR_AUTHENTICATION_ERRORS');
     },
     register({ commit }, userData) {
-        return auth.register(userData).then(
+        return authService.register(userData).then(
             (data) => {
                 if (data.status === 226) {
                     commit('ADD_REGISTER_ERROR');
@@ -103,7 +103,7 @@ const actions = {
     },
 
     registerConfirmation({ commit }, token) {
-        auth.registerConfirmation(token).then(
+        authService.registerConfirmation(token).then(
             () => commit('ADD_REGISTER_CONFIRMATION_SUCCES'),
             () => commit('ADD_REGISTER_CONFIRMATION_ERROR'),
         );
