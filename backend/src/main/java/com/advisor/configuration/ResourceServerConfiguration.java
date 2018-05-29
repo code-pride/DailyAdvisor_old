@@ -117,6 +117,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 				.antMatchers("/calendar/**").hasAuthority("USER")
 		 		.antMatchers("/message/**").hasAuthority("USER")
 				.antMatchers("/registration").permitAll()
+                .antMatchers("/registrationConfirm").permitAll()
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.and()
 				.cors();
