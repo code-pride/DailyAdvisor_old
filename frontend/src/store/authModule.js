@@ -24,6 +24,7 @@ const getters = {
         return state.isRegistered;
     },
     isAuthenticated(state) {
+        console.log(state.authenticate);
         return state.authenticated;
     },
     didAuthenticationErrorOccured(state) {
@@ -69,7 +70,10 @@ const mutations = {
 const actions = {
     authenticate({ commit }, credentials) {
         authService.login(credentials).then(
-            () => commit('AUTHENTICATE'),
+            () => {
+
+                commit('AUTHENTICATE')
+            },
             error => commit('ADD_AUTHENTICATION_ERROR', { error }),
         );
     },
@@ -99,6 +103,13 @@ const actions = {
                 }
             },
             error => commit('ADD_REGISTER_ERROR', error),
+        );
+    },
+
+    pobierz() {
+        return authService.pobierz().then(
+            data => console.log(data),
+            () => console.log('eject'),
         );
     },
 
