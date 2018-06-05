@@ -8,10 +8,13 @@
 
         <div v-else class="login-card-wrapper">
             <v-card class="card-content">
-                <SocialMediaLogin media="facebook" @click="authenticateWithFacebook()"
+                <!-- <SocialMediaLogin media="facebook" @click="authenticateWithFacebook()"
                 ></SocialMediaLogin>
                 <SocialMediaLogin media="google" @click="authenticateWithGoogle()"
-                ></SocialMediaLogin>
+                ></SocialMediaLogin> -->
+                <button @click="pobierz">pobierz cos tam</button>
+                <SocialMediaLogin media="facebook"></SocialMediaLogin>
+                <SocialMediaLogin media="google"></SocialMediaLogin>
                 <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
                     <v-text-field
                         label="Email"
@@ -40,6 +43,12 @@
                     to="register"
                     >Sign up</v-btn>
             </v-card>
+        </div>
+
+        <div class="iframe">
+            <iframe src="http://localhost:8091/oauth/authorize?redirect_uri=http://localhost:8080/&client_id=frontendClientId&response_type=token&audience=fdsfdsf&scope=read&state=fsdfsdfsdfsdf">
+                asdasdasd
+            </iframe>
         </div>
 
         <v-snackbar
@@ -86,6 +95,7 @@ export default {
             'googleAuthenticate',
             'facebookAuthenticate',
             'clearAuthenticationErrors',
+            'pobierz',
         ]),
         authenticateAndTryReroute(credentials) {
             this.authenticate(credentials).then(() => {

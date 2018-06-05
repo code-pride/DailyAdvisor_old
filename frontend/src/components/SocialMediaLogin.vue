@@ -1,7 +1,7 @@
 <template>
-    <button class="login-btn" v-bind:class="getClass()" @click="$emit('click')">
+    <a v-bind:href="getUrl()" class="login-btn" v-bind:class="getClass()" target="_blank">
         {{getText()}}
-    </button>
+    </a>
 </template>
 
 <script>
@@ -16,6 +16,9 @@ export default {
         },
         getText() {
             return this.media === 'facebook' ? 'Login with Facebook' : 'Login with Google';
+        },
+        getUrl() {
+            return this.media === 'facebook' ? 'localhost:8091/login/facebook' : 'localhost:8091/login/google';
         },
     },
 };

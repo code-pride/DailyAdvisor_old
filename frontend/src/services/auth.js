@@ -1,5 +1,7 @@
 import * as axios from 'axios';
 
+import { getCookie } from '../utils/helpers';
+
 const apiUrl = process.env.VUE_APP_API_LOCAL_URL;
 
 const INCORRECT_CREDENTIALS_ERROR = 'Incorrect email or password.';
@@ -8,17 +10,14 @@ const FACEBOOK_LOGIN_FAILED = 'Facebook login failed, as it is not implemented y
 
 const authService = {
     login(credentials) {
-        console.log(credentials);
-        console.log(document.cookie);
         return new Promise((resolve, reject) => {
-            const xcsrf = authService.getCookie('XSRF-TOKEN');
-            console.log(authService.getCookie('XSRF-TOKEN'));
+            const xcsrf = getCookie('XSRF-TOKEN');
 
             const loginRequest = () => {
                 const request = axios.create({
                     withCredentials: true,
                     headers: {
-                        'XSRF-TOKEN': authService.getCookie('XSRF-TOKEN'),
+                        'XSRF-TOKEN': getCookie('XSRF-TOKEN'),
                     },
                 });
 
@@ -57,6 +56,7 @@ const authService = {
             }
         });
     },
+
     loginWithGoogle() {
         return new Promise((resolve, reject) => {
             // lets just see what will happen here
@@ -64,7 +64,8 @@ const authService = {
                 withCredentials: true,
             });
 
-            request.get(`${apiUrl}/csrf`).then(
+            // request.get(`${apiUrl}/csrf`).then(
+            request.get('http://www.google.pl').then(
                 () => {
                     console.log(document.cookie);
                     resolve();
@@ -76,6 +77,7 @@ const authService = {
             );
         });
     },
+
     loginWithFacebook() {
         return new Promise((resolve, reject) => {
             // lets just see what will happen here
@@ -95,18 +97,18 @@ const authService = {
             );
         });
     },
-    getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) {
-            return parts.pop().split(';').shift();
-        }
-
-        return null;
-    },
 
     register(userData) {
         return axios.post(`${apiUrl}/registration`, userData);
+    },
+
+    pobierz() {
+        const request = axios.create({
+            withCredentials: true,
+            headers: {
+                'Authorization': "Bearer",
+            },
+        });
     },
 
     registerConfirmation(token) {
