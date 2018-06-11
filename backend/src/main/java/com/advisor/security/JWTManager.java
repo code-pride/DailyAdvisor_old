@@ -1,6 +1,7 @@
 package com.advisor.security;
 
 import com.advisor.model.entity.AccessToken;
+import com.advisor.model.entity.Role;
 import com.advisor.model.entity.TokenJWT;
 import com.advisor.model.entity.User;
 import com.advisor.repository.AccessTokenRepository;
@@ -79,14 +80,7 @@ public class JWTManager {
         } else {
             final String email = (String) ((Map) ((OAuth2Authentication) authentication).getUserAuthentication().getDetails()).get("email");
             user = Optional.ofNullable(userService.findUserByEmail(email)).orElseGet(() -> {
-                User lUser = new User();
-                lUser.setEmail(email);
-                lUser.setEnabled(true);
-                try {
-                    return userService.create(lUser);
-                } catch (DataRepositoryException e) {
-                    throw new RuntimeException();
-                }
+                return userService.registerOauth2User(email);
             });
         }
         TokenJWT tokenEntity = new TokenJWT();

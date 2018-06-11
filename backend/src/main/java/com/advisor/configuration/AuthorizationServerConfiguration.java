@@ -2,6 +2,7 @@ package com.advisor.configuration;
 
 import com.advisor.repository.TokenJWTRepository;
 import com.advisor.security.CustomJdbcTokenStore;
+import com.advisor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    UserService userService;
 
     @Value("${frontend.url.parent}")
     String frontendUrl;
@@ -68,6 +72,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Bean
     public TokenStore tokenStore() {
-        return new CustomJdbcTokenStore(dataSource);
+        return new CustomJdbcTokenStore(dataSource, userService);
     }
 }

@@ -101,6 +101,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User registerOauth2User(String email) {
+        User lUser = new User();
+        lUser.setEmail(email);
+        lUser.setEnabled(true);
+        lUser.setActive(true);
+        Role userRole = roleRepository.findByRole(ROLE_USER);
+        //lUser.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+        lUser = repository.save(lUser);
+        lUser.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+        return repository.save(lUser);
+    }
+
+    @Override
     public void registerUser(NewUserRequest newUserRequest, String role) {
         User user = new User(newUserRequest);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -115,7 +128,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserProfileResponse createUserProfileResponseByUser(User user) {
         UserProfile userProfile = userProfileRepository.findByUser(user);
-        return new UserProfileResponse(user, userProfile);
+        return new UserProfileResponse(user, Optional.ofNullable(userProfile).orElseGet(() -> new UserProfile()));
     }
 
     @Override
