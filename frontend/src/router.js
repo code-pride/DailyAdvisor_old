@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from './store/store';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import RegistrationConfirm from './views/RegistrationConfirm.vue';
 import AfterRegistration from './views/AfterRegistration.vue';
 import NotFound from './views/NotFound.vue';
-import About from './views/About.vue';
+import Home from './views/Home.vue';
 
 Vue.use(Router);
 
-export default new Router({
-    mode: 'history',
+const router = new Router({
     routes: [
         {
             path: '/',
@@ -22,9 +22,15 @@ export default new Router({
             component: Login,
         },
         {
-            path: '/about',
-            name: 'about',
-            component: About,
+            path: '/restricted',
+            name: 'restricted',
+            component: Home,
+            meta: { requiresAuthentication: true },
+        },
+        {
+            path: '*',
+            name: 'Default',
+            component: Login,
         },
         {
             path: '/register',
@@ -48,3 +54,16 @@ export default new Router({
         },
     ],
 });
+
+router.beforeEach((to, from, next) => {
+    const pageRequiresAuthentication = to.meta.requiresAuthentication === true;
+    const userIsAuthenticated = store.getters.isAuthenticated;
+
+    if (pageRequiresAuthentication && !userIsAuthenticated) {
+        next('/login');
+    } else {
+        next();
+    }
+});
+
+export default router;

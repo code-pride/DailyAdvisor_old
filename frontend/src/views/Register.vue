@@ -2,6 +2,7 @@
     <div class="background">
         <img class="logo" src="../assets/logo.png">
         <div class="registration-card-wrapper">
+
             <v-card class="card-content">
                 <v-form class="form-wrapper">
                     <v-text-field

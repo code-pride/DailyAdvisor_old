@@ -18,6 +18,8 @@ public interface UserService extends IService<User, UUID> {
 
 	void registerClient(NewUserRequest newUserRequest);
 
+	User registerOauth2User(String email);
+
 	Optional<User> findById(UUID userId);
 
 	void registerCoach(NewUserRequest newUserRequest);

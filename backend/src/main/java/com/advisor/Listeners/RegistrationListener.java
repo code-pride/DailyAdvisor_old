@@ -56,7 +56,7 @@ public class RegistrationListener implements
         } catch (DataRepositoryException e) {
             logger.error("Registration token exists");
         }
-        String text = "http://localhost:" + serverPort + "/registrationConfirm/" + token;
+        String text = "http://localhost:" + serverPort + "/#/registrationConfirm/" + token;
         emailService.sendSimpleMessage(user.getEmail(), VERIFICATION_MAIL_SUBJECT, text);
     }
 

@@ -1,8 +1,20 @@
 <template>
     <div class="background">
         <img src="../assets/logo.png">
-        <div class="login-card-wrapper">
+
+        <div v-if="isAuthenticated" class="already-logged-in-message">
+            <h2>You're already logged in!</h2>
+        </div>
+
+        <div v-else class="login-card-wrapper">
             <v-card class="card-content">
+                <!-- <SocialMediaLogin media="facebook" @click="authenticateWithFacebook()"
+                ></SocialMediaLogin>
+                <SocialMediaLogin media="google" @click="authenticateWithGoogle()"
+                ></SocialMediaLogin> -->
+                <button @click="pobierz">pobierz cos tam</button>
+                <SocialMediaLogin media="facebook"></SocialMediaLogin>
+                <SocialMediaLogin media="google"></SocialMediaLogin>
                 <v-form v-model="valid" ref="form" lazy-validation class="form-wrapper">
                     <v-text-field
                         label="Email"
@@ -18,11 +30,10 @@
                         required
                     ></v-text-field>
                     <v-btn
-                        @click="authenticate({email, password})"
-                        :disabled="!valid"
+                        @click="authenticateAndTryReroute({email, password})"
                         class="sign-in-btn"
                         color="secondary"
-                    >{{ $t("common.login") }}</v-btn>
+                    >Log in</v-btn>
                 </v-form>
                 <v-btn
                     flat
@@ -30,16 +41,35 @@
                     class="sign-up-btn"
                     color="primary"
                     to="register"
-                    >{{ $t("common.signUp") }}</v-btn>
+                    >Sign up</v-btn>
             </v-card>
         </div>
+
+        <div class="iframe">
+            <iframe src="http://localhost:8091/oauth/authorize?redirect_uri=http://localhost:8080/&client_id=frontendClientId&response_type=token&audience=fdsfdsf&scope=read&state=fsdfsdfsdfsdf">
+                asdasdasd
+            </iframe>
+        </div>
+
+        <v-snackbar
+            :timeout="0"
+            :color="'error'"
+            :value="didAuthenticationErrorOccured">
+            {{ authenticationErrorMessage }}
+            <v-btn dark flat @click="clearAuthenticationErrors">Close</v-btn>
+        </v-snackbar>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import router from '../router';
+import SocialMediaLogin from '../components/SocialMediaLogin.vue';
 
 export default {
+    components: {
+        SocialMediaLogin,
+    },
     data: () => ({
         valid: false,
         email: '',
@@ -52,9 +82,47 @@ export default {
             v => !!v || 'Password is required',
         ],
     }),
-
+    computed: {
+        ...mapGetters('authModule', [
+            'didAuthenticationErrorOccured',
+            'authenticationErrorMessage',
+            'isAuthenticated',
+        ]),
+    },
     methods: {
-        ...mapActions('authModule', ['authenticate']),
+        ...mapActions('authModule', [
+            'authenticate',
+            'googleAuthenticate',
+            'facebookAuthenticate',
+            'clearAuthenticationErrors',
+            'pobierz',
+        ]),
+        authenticateAndTryReroute(credentials) {
+            this.authenticate(credentials).then(() => {
+                if (this.isAuthenticated) {
+                    router.push('/restricted');
+                }
+            });
+        },
+        authenticateWithGoogle() {
+            this.googleAuthenticate().then(() => {
+                if (this.isAuthenticated) {
+                    router.push('/restricted');
+                }
+            });
+        },
+        authenticateWithFacebook() {
+            this.facebookAuthenticate();
+        },
+    },
+    watch: {
+        didAuthenticationErrorOccured(val) {
+            if (val === true) {
+                setTimeout(() => {
+                    this.clearAuthenticationErrors();
+                }, 6000);
+            }
+        },
     },
 };
 </script>
@@ -64,6 +132,10 @@ export default {
         width: auto;
         max-height: 100px;
         margin-bottom: 30px;
+    }
+
+    .already-logged-in-message {
+        color: white;
     }
 
     .background {
@@ -77,13 +149,14 @@ export default {
     }
 
     .login-card-wrapper {
+        height: 300px;
         margin: 0 auto;
         max-width: 400px;
         width: 90%;
     }
 
     .card-content {
-        padding: 20px 0;
+        padding-top: 10px;
         display: flex;
         flex: 1 1 0;
         flex-direction: column;

@@ -20,6 +20,18 @@ Vue.use(Vuetify, {
     },
 });
 
+Vue.use(Vuetify, {
+    theme: {
+        primary: '#03A9F4',
+        secondary: '#4E342E',
+        accent: '#64DD17',
+        error: '#f44336',
+        warning: '#ffeb3b',
+        info: '#2196f3',
+        success: '#4caf50',
+    },
+});
+
 new Vue({
     i18n,
     router,

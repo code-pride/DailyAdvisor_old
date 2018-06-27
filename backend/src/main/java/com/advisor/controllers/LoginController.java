@@ -1,5 +1,6 @@
 package com.advisor.controllers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.advisor.Events.OnRegistrationCompleteEvent;
@@ -8,12 +9,20 @@ import com.advisor.model.request.NewUserRequest;
 import com.advisor.model.request.RegistrationConfirmRequest;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.UserService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Date;
 
 @RestController
 public class LoginController {

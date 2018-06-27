@@ -1,11 +1,12 @@
-import auth from '../services/auth';
+import authService from '../services/auth';
 import i18n from '../translations/locale-configuration';
+
 
 const state = {
     registerErrorMessage: '',
     registerConfirmationMessage: '',
     isRegistered: false,
-    isAuthenticated: false,
+    authenticated: false,
     authenticationError: '',
 };
 
@@ -22,11 +23,15 @@ const getters = {
     isRegistered() {
         return state.isRegistered;
     },
-    isAuthenticated() {
-        return state.isAuthenticated;
+    isAuthenticated(state) {
+        console.log(state.authenticate);
+        return state.authenticated;
     },
-    authenticationErrorOccured() {
+    didAuthenticationErrorOccured(state) {
         return state.authenticationError !== '';
+    },
+    authenticationErrorMessage(state) {
+        return state.authenticationError;
     },
 };
 
@@ -52,23 +57,44 @@ const mutations = {
         state.registerErrorMessage = '';
     },
     AUTHENTICATE(state) {
-        state.isAuthenticated = true;
+        state.authenticated = true;
     },
-    ADD_AUTHENTICATION_ERROR(state, error) {
-        state.authenticationError = error.statusText;
+    ADD_AUTHENTICATION_ERROR(state, payload) {
+        state.authenticationError = payload.error;
+    },
+    CLEAR_AUTHENTICATION_ERRORS(state) {
+        state.authenticationError = '';
     },
 };
 
 const actions = {
     authenticate({ commit }, credentials) {
-        auth.login(credentials).then(
+        authService.login(credentials).then(
+            () => {
+
+                commit('AUTHENTICATE')
+            },
+            error => commit('ADD_AUTHENTICATION_ERROR', { error }),
+        );
+    },
+    googleAuthenticate({ commit }) {
+        // not sure what loginWithGoogle will return yet, so it's just guessing for now
+        authService.loginWithGoogle().then(
             () => commit('AUTHENTICATE'),
             error => commit('ADD_AUTHENTICATION_ERROR', { error }),
         );
     },
-
+    facebookAuthenticate({ commit }) {
+        authService.loginWithFacebook().then(
+            () => commit('authenticate'),
+            error => commit('ADD_AUTHENTICATION_ERROR', { error }),
+        );
+    },
+    clearAuthenticationErrors({ commit }) {
+        commit('CLEAR_AUTHENTICATION_ERRORS');
+    },
     register({ commit }, userData) {
-        return auth.register(userData).then(
+        return authService.register(userData).then(
             (data) => {
                 if (data.status === 226) {
                     commit('ADD_REGISTER_ERROR');
@@ -80,8 +106,15 @@ const actions = {
         );
     },
 
+    pobierz() {
+        return authService.pobierz().then(
+            data => console.log(data),
+            () => console.log('eject'),
+        );
+    },
+
     registerConfirmation({ commit }, token) {
-        auth.registerConfirmation(token).then(
+        authService.registerConfirmation(token).then(
             () => commit('ADD_REGISTER_CONFIRMATION_SUCCES'),
             () => commit('ADD_REGISTER_CONFIRMATION_ERROR'),
         );
