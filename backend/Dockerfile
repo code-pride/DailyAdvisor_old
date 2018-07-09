@@ -14,4 +14,4 @@ ARG JAR_FILE=build/libs/DailyAdvisor.jar
 ADD ${JAR_FILE} DailyAdvisor.jar
 
 # Run the jar file 
-ENTRYPOINT ["java","-jar","/DailyAdvisor.jar"]
+ENTRYPOINT ["java","-jar","/DailyAdvisor.jar","--spring.datasource.url=jdbc:postgresql://db:5432/daily_advisor"]
