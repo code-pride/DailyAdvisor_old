@@ -8,6 +8,12 @@ import store, { history } from './store';
 
 // import Main from './pages/Main';
 import Login from './pages/Login';
+import Register from './pages/Register/Register';
+import AfterRegister from './pages/Register/AfterRegister';
+import RegisterConfirm from './pages/Register/RegisterConfirm';
+import About from './pages/About';
+import Main from './pages/Main';
+import NotFound from './pages/NotFound';
 
 import { StyledMainApp } from './styles';
 
@@ -20,7 +26,12 @@ render(
                 <Switch>
                     <Route exact path="/" component={Login} />
                     <Route path="/login" component={Login} />
-                    {/* <Route path="/main" component={Main} /> */}
+                    <Route path="/about" component={About} />
+                    <Route path="/register" component={Register} />
+                    <Route path="/afterRegister" component={AfterRegister} />
+                    <Route path="/registerConfirm/:token" component={RegisterConfirm} />
+                    <Route path="/main" component={Main} />
+                    <Route component={NotFound} />
                 </Switch>
             </StyledMainApp>
         </ConnectedRouter>
