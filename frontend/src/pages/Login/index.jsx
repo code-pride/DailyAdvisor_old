@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Avatar from '../../components/Avatar';
+import logo from '../../assets/logo.png';
+
+import Image from '../../components/Image';
 import Button from '../../components/Button';
-import profilePictureUnknown from '../../assets/unknown.png';
-import loginBackground1 from '../../assets/loginBackground1.jpg';
+
 
 export const StyledContainer = styled.div`
     position: fixed;
@@ -15,9 +16,7 @@ export const StyledContainer = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
-    background-image: url(${loginBackground1});
-    background-size: cover;
-    background-position: center center;
+    background-color: blue;
 `
 export const LoginContainer = styled.div`
     display: flex;
@@ -47,8 +46,8 @@ const Login = () => (
     <StyledContainer>
         <LoginContainer>
             <LoginBox>
-                <StyledMainHeading>RECIPIES</StyledMainHeading>
-                <Avatar src={profilePictureUnknown} alt="Unknown person profile picture" width="150" />
+                <StyledMainHeading>DailyAdvisor</StyledMainHeading>
+                <Image src={logo} alt="Unknown person profile picture" width="150" />
                 <Button url="/main" content="Zaloguj" />
             </LoginBox>
         </LoginContainer>

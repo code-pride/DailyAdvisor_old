@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 import store, { history } from './store';
 
-import Main from './pages/Main';
+// import Main from './pages/Main';
 import Login from './pages/Login';
 
 import { StyledMainApp } from './styles';
@@ -20,7 +20,7 @@ render(
                 <Switch>
                     <Route exact path="/" component={Login} />
                     <Route path="/login" component={Login} />
-                    <Route path="/main" component={Main} />
+                    {/* <Route path="/main" component={Main} /> */}
                 </Switch>
             </StyledMainApp>
         </ConnectedRouter>
