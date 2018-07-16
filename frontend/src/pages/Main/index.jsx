@@ -5,7 +5,6 @@ import { FETCH_RANDOM_USER_REQUESTED } from '../../store/actions/randomUserActio
 
 import Button from '../../components/Button';
 
-
 class Main extends React.Component {
     trySaga = () => {
         this.props.dispatch({ type: FETCH_RANDOM_USER_REQUESTED });
@@ -17,13 +16,15 @@ class Main extends React.Component {
                 <div>Main</div>
                 <Button onClick={this.trySaga} content="try saga" />
             </Fragment>
-        )
+        );
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     userData: state.randomUserReducer.userData,
 });
 
-
-export default connect(mapStateToProps, null)(Main);
+export default connect(
+    mapStateToProps,
+    null,
+)(Main);

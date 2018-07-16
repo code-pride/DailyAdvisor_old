@@ -8,9 +8,7 @@ class Register extends React.Component {
     }
 
     render() {
-        return (
-            <div>Register component</div>
-        )
+        return <div>Register component</div>;
     }
 }
 

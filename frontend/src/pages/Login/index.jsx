@@ -6,7 +6,6 @@ import logo from '../../assets/logo.png';
 import Image from '../../components/Image';
 import Button from '../../components/Button';
 
-
 export const StyledContainer = styled.div`
     position: fixed;
     left: 0;
@@ -17,7 +16,7 @@ export const StyledContainer = styled.div`
     width: 100%;
     height: 100%;
     background-color: blue;
-`
+`;
 export const LoginContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -25,7 +24,7 @@ export const LoginContainer = styled.div`
     padding: 0px 50px;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-`
+`;
 
 export const LoginBox = styled.div`
     display: flex;
@@ -33,14 +32,14 @@ export const LoginBox = styled.div`
     align-items: center;
     height: 350px;
     justify-content: space-around;
-`
+`;
 
 export const StyledMainHeading = styled.h1`
     margin: 0;
     letter-spacing: 5px;
     font-weight: 900;
     color: #fff;
-`
+`;
 
 const Login = () => (
     <StyledContainer>
@@ -52,6 +51,6 @@ const Login = () => (
             </LoginBox>
         </LoginContainer>
     </StyledContainer>
-)
+);
 
 export default Login;

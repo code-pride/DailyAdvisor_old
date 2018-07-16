@@ -36,5 +36,5 @@ render(
             </StyledMainApp>
         </ConnectedRouter>
     </Provider>,
-    target
+    target,
 );
