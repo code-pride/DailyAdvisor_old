@@ -6,7 +6,6 @@ import { ConnectedRouter } from 'react-router-redux';
 
 import store, { history } from './store';
 
-// import Main from './pages/Main';
 import Login from './pages/Login';
 import Register from './pages/Register/Register';
 import AfterRegister from './pages/Register/AfterRegister';
