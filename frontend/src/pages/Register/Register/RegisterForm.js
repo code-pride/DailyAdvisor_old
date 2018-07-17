@@ -1,5 +1,5 @@
 import React from 'react';
-import { withFormik } from 'formik';
+import { withFormik, Field } from 'formik';
 import * as yup from 'yup';
 import { omit as _omit } from 'lodash';
 
@@ -7,79 +7,37 @@ const InnerForm = ({ values, errors, touched, handleChange, handleBlur, handleSu
     <form onSubmit={handleSubmit}>
         <div>
             name:
-            <input
-                type="text"
-                name="name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-            />
+            <Field type="text" name="name" />
             {touched.name && errors.name && errors.name}
         </div>
         <div>
             lastname:
-            <input
-                type="text"
-                name="lastName"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.lastName}
-            />
+            <Field type="text" name="lastName" />
             {touched.lastName && errors.lastName && errors.lastName}
         </div>
         <div>
             email:
-            <input
-                type="email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-            />
+            <Field type="email" name="email" />
             {touched.email && errors.email && errors.email}
         </div>
         <div>
             city:
-            <input
-                type="text"
-                name="city"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.city}
-            />
+            <Field type="text" name="city" />
             {touched.city && errors.city && errors.city}
         </div>
         <div>
             password:
-            <input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-            />
+            <Field type="password" name="password" />
             {touched.password && errors.password && errors.password}
         </div>
         <div>
             repeat password:
-            <input
-                type="password"
-                name="repeatPassword"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.repeatPassword}
-            />
+            <Field type="password" name="repeatPassword" value={values.repeatPassword} />
             {touched.repeatPassword && errors.repeatPassword && errors.repeatPassword}
         </div>
         <div>
             type:
-            <input
-                type="text"
-                name="userType"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.userType}
-            />
+            <Field type="text" name="userType" value={values.userType} />
             {touched.userType && errors.userType && errors.userType}
         </div>
         <button type="submit">Submit</button>
