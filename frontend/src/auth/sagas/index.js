@@ -5,11 +5,9 @@ import { authApi } from '../../services/Auth';
 
 function* registerUser(action) {
     try {
-        const res = yield authApi.registerUser(action.payload);
-        console.log(res);
+        const res = yield call(authApi.registerUser, action.payload);
         if (res.status === 216) {
-            console.log('here');
-            return Promise.reject('Email already registered');
+            throw new Error('Email already in use');
         }
         yield put(actions.registerUserFulfilled());
     } catch (err) {
