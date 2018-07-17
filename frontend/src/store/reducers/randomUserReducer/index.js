@@ -13,39 +13,38 @@ const initialState = {
 
 const randomUserReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_RANDOM_USER_STARTED:
-            {
-                return { ...state,
-                    isLoading: true
-                };
-            }
+        case FETCH_RANDOM_USER_STARTED: {
+            return {
+                ...state,
+                isLoading: true,
+            };
+        }
 
-        case FETCH_RANDOM_USER_SUCCEEDED:
-            {
-                return { ...state,
-                    userData: action.payload
-                };
-            }
+        case FETCH_RANDOM_USER_SUCCEEDED: {
+            return {
+                ...state,
+                userData: action.payload,
+            };
+        }
 
-        case FETCH_RANDOM_USER_FAILED:
-            {
-                return { ...state,
-                    isLoading: false,
-                    error: action.payload
-                };
-            }
+        case FETCH_RANDOM_USER_FAILED: {
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            };
+        }
 
-        case FETCH_RANDOM_USER_FINISHED:
-            {
-                return { ...state,
-                    isLoading: false
-                };
-            }
+        case FETCH_RANDOM_USER_FINISHED: {
+            return {
+                ...state,
+                isLoading: false,
+            };
+        }
 
-        default:
-            {
-                return state;
-            }
+        default: {
+            return state;
+        }
     }
 };
 
