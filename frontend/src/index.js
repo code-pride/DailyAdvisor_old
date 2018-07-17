@@ -16,8 +16,6 @@ import NotFound from './pages/NotFound';
 
 import { StyledMainApp } from './styles';
 
-import './http';
-
 const target = document.querySelector('#root');
 
 render(
