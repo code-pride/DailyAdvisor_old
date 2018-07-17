@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const StyledButton = styled.button `
+export const StyledButton = styled.button`
     font-size: 12px;
     font-weight: 700;
     color: #fff;
-    background-color: #5A5A5A;
+    background-color: #5a5a5a;
     text-align: center;
     display: inline-block;
     position: relative;
@@ -18,9 +18,9 @@ export const StyledButton = styled.button `
     cursor: pointer;
 
     transition: all 0.2s linear 0s;
-    
+
     &:before {
-        content: "+";
+        content: '+';
         font-family: FontAwesome;
         font-size: 15px;
         position: absolute;
@@ -37,10 +37,10 @@ export const StyledButton = styled.button `
 
     &:hover {
         text-indent: -20px;
-        
+
         &:before {
             opacity: 1;
             text-indent: 0px;
         }
     }
-`
+`;
