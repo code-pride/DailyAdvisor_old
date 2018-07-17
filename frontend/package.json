@@ -54,7 +54,7 @@
         "whatwg-fetch": "2.0.3"
     },
     "scripts": {
-        "start": "node scripts/start.js",
+        "start": "node scripts/start.js --host 0.0.0.0 --port 3000",
         "build": "node scripts/build.js",
         "test": "node scripts/test.js --env=jsdom",
         "storybook": "start-storybook -p 6006",
