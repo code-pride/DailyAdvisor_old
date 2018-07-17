@@ -5,7 +5,6 @@ import loginbg from '../../assets/loginbg.png';
 import unknown from '../../assets/unknown.png';
 
 import Image from '../../components/Image';
-import Button from '../../components/Button';
 import LoginForm from './components/LoginForm';
 
 export const SContainer = styled.div`
@@ -50,7 +49,13 @@ export const SMainHeading = styled.h1`
 
 class Login extends React.Component {
     state = {
-        loginFormDisplayed: false,
+        isLoginFormDisplayed: false,
+    };
+
+    toggleLogin = () => {
+        this.setState({
+            isLoginFormDisplayed: !this.state.isLoginFormDisplayed,
+        });
     };
 
     render() {
@@ -59,16 +64,14 @@ class Login extends React.Component {
                 <SLoginContainer>
                     <SLoginBox>
                         <SMainHeading>daily advisor</SMainHeading>
-                        <Image src={unknown} alt="Unknown person profile picture" width="150" />
+                        <Image
+                            src={unknown}
+                            alt="Unknown person profile picture"
+                            width="150"
+                            onClick={this.toggleLogin}
+                        />
 
-                        <LoginForm />
-
-                        <label htmlFor="username">Username</label>
-                        <input id="username" type="text" />
-
-                        <label htmlFor="username">Password</label>
-                        <input id="username" type="text" />
-                        <Button url="/main" content="Zaloguj" />
+                        {this.state.isLoginFormDisplayed ? <LoginForm /> : null}
                     </SLoginBox>
                 </SLoginContainer>
             </SContainer>
