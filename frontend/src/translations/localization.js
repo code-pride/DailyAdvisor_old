@@ -27,7 +27,8 @@ export const messages = {
         userExist: 'User exist',
         yourAccountIsConfirmed: 'Your account is confirmed. You can login now.',
         yourAccountHasBenActivatedEarlier: 'Your account has been activated earlier.',
-        afterRegistrationInfo: 'We have sent you a confirmation message. Click the link and use Daily Advisor!',
+        afterRegistrationInfo:
+            'We have sent you a confirmation message. Click the link and use Daily Advisor!',
     },
     pl: {
         common: {
@@ -53,7 +54,8 @@ export const messages = {
             passwordAreDifferent: 'Hasła się od siebie różnią.',
         },
         userExist: 'Użytkownik z takim adresem email już istnieje.',
-        yourAccountIsConfirmed: 'Twoje konto zostało potwierdzone. Możesz się teraz bezpiecznie zalogować.',
+        yourAccountIsConfirmed:
+            'Twoje konto zostało potwierdzone. Możesz się teraz bezpiecznie zalogować.',
         yourAccountHasBenActivatedEarlier: 'Konto zostało już wcześniej aktywowane.',
         afterRegistrationInfo: `Wysłaliśmy do Ciebie wiadomość z potwierdzeniem rejestracji.
             Kliknij w link i korzystaj z Daily Advisor!`,
