@@ -1,7 +1,15 @@
-import { all, takeLatest, put, fork, call } from 'redux-saga/effects';
+import {
+    all,
+    takeLatest,
+    put,
+    fork,
+    call
+} from 'redux-saga/effects';
 
 import * as actions from '../actions';
-import { authApi } from '../../services/Auth';
+import {
+    authApi
+} from '../../services/Auth';
 
 function* registerUser(action) {
     try {
