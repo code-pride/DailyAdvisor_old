@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import { StyledButton } from './styles';
-import { NavLink } from 'react-router-dom';
 
 const Button = ({ url, content, onClick }) => (
     <Fragment>
