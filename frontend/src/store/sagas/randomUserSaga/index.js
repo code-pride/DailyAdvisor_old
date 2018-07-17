@@ -1,9 +1,4 @@
-import {
-    all,
-    takeLatest,
-    put,
-    call
-} from 'redux-saga/effects';
+import { all, takeLatest, put, call } from 'redux-saga/effects';
 
 import {
     FETCH_RANDOM_USER_REQUESTED,
@@ -13,44 +8,38 @@ import {
     FETCH_RANDOM_USER_FINISHED,
 } from '../../actions/randomUserActions';
 
-import {
-    requestRandomUser
-} from "../../../services/requester";
+import { requestRandomUser } from '../../../services/requester';
 
 function* fetchRandomUser(action) {
     const params = action.payload;
 
     try {
         yield put({
-            type: FETCH_RANDOM_USER_STARTED
+            type: FETCH_RANDOM_USER_STARTED,
         });
 
-        const {
-            data
-        } = yield call(requestRandomUser, params);
+        const { data } = yield call(requestRandomUser, params);
         const user = data.results[0];
 
         yield put({
             type: FETCH_RANDOM_USER_SUCCEEDED,
-            payload: { ...user
-            }
+            payload: {
+                ...user,
+            },
         });
         yield put({
-            type: FETCH_RANDOM_USER_FINISHED
+            type: FETCH_RANDOM_USER_FINISHED,
         });
     } catch (error) {
         yield put({
             type: FETCH_RANDOM_USER_FAILED,
             payload: {
-                error
-            }
+                error,
+            },
         });
     }
 }
 
-
 export default function* getRandomUserSaga() {
-    yield all([
-        takeLatest(FETCH_RANDOM_USER_REQUESTED, fetchRandomUser),
-    ]);
-};
+    yield all([takeLatest(FETCH_RANDOM_USER_REQUESTED, fetchRandomUser)]);
+}
