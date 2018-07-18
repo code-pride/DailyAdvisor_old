@@ -1,19 +1,17 @@
-import createSagaMiddleware from 'redux-saga';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import rootReducer from './reducers';
+import { createEpicMiddleware } from 'redux-observable';
 
-import rootSaga from './sagas';
+import { rootEpic } from './rootEpic';
 
+const epicMiddleware = createEpicMiddleware();
 export const history = createHistory();
-
 const historyMiddleware = routerMiddleware(history);
-const sagaMiddleWare = createSagaMiddleware();
 
 const initialState = {};
 const enhancers = [];
-const middleware = [sagaMiddleWare, historyMiddleware];
+const middleware = [epicMiddleware, historyMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
     const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
@@ -28,8 +26,8 @@ const composedEnhancers = compose(
     ...enhancers,
 );
 
-const store = createStore(rootReducer, initialState, composedEnhancers);
+const store = createStore(() => ({}), initialState, composedEnhancers);
 
-sagaMiddleWare.run(rootSaga);
+epicMiddleware.run(rootEpic);
 
 export default store;
