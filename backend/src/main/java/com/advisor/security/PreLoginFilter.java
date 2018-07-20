@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
 import javax.servlet.FilterChain;
@@ -37,6 +38,7 @@ public class PreLoginFilter extends AbstractAuthenticationProcessingFilter {
                                             HttpServletResponse response, FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
         if (authResult instanceof AnonymousAuthenticationToken) {
+            SecurityContextHolder.getContext().setAuthentication(null);
             chain.doFilter(request, response);
             return;
         }

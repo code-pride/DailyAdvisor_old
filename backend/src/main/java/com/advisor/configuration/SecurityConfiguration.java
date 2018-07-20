@@ -111,6 +111,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/afterLogin").permitAll()
                 .antMatchers("/hello").permitAll()
+                .antMatchers("/login/google").permitAll()
+                .antMatchers("/login/facebook").permitAll()
                 .antMatchers("/getUserProfile/**").hasAuthority("USER")
                 .antMatchers("/updateUserProfile").hasAuthority("USER")
                 .antMatchers("/advertisement/**").hasAuthority("USER")
@@ -142,7 +144,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private Filter filterChain() throws Exception {
         List<Filter> filters = new ArrayList<Filter>();
         filters.add(new PreLoginFilter("/login/**", jwtManager, frontendUrl + dashboardUrl));
-        filters.add(new JWTAuthorizationFilter(jwtManager,"/**"));
+        filters.add(new JWTAuthorizationFilter(jwtManager, new NegatedRequestMatcher(
+                new OrRequestMatcher(
+                        new AntPathRequestMatcher("/login/facebook"),
+                        new AntPathRequestMatcher("/login/google")
+                )
+        )));
         filters.add(ssoFilter(facebook(), "/login/facebook"));
         filters.add(ssoFilter(google(), "/login/google"));
 

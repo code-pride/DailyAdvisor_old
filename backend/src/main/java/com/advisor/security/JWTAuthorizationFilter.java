@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,8 +22,9 @@ public class JWTAuthorizationFilter extends AbstractAuthenticationProcessingFilt
 
     private JWTManager jwtManager;
 
-    public JWTAuthorizationFilter(JWTManager jwtManager, String defaultFilterProcessesUrl) {
-        super(defaultFilterProcessesUrl);
+    public JWTAuthorizationFilter(JWTManager jwtManager, RequestMatcher matcher) {
+        super("/");
+        this.setRequiresAuthenticationRequestMatcher(matcher);
         this.jwtManager = jwtManager;
     }
 
