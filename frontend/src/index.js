@@ -30,6 +30,7 @@ render(
                     <Route path="/afterRegister" component={AfterRegister} />
                     <Route path="/registerConfirm/:token" component={RegisterConfirm} />
                     <Route path="/main" component={Main} />
+
                     <Route component={NotFound} />
                 </Switch>
             </StyledMainApp>
