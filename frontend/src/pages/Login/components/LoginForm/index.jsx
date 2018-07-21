@@ -1,26 +1,35 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Form, Field, withFormik } from 'formik';
+import * as yup from 'yup';
 
-import Button from '../../../../components/Button';
+const InnerForm = ({ handleSubmit }) => (
+    <Form>
+        <div>
+            <Field type="text" name="username" />
+        </div>
 
-class LoginForm extends React.Component {
-    state = {
-        username: '',
-        password: '',
-    };
+        <div>
+            <Field type="password" name="password" />
+        </div>
+        <button type="submit">Zaloguj</button>
+    </Form>
+);
 
-    render() {
-        return (
-            <Fragment>
-                <label htmlFor="username">Username</label>
-                <input id="username" value={this.state.username} type="text" />
+const schema = yup.object().shape({
+    username: yup
+        .string()
+        .email()
+        .required(),
+    password: yup.string().required(),
+});
 
-                <label htmlFor="username">Password</label>
-                <input id="password" value={this.state.password} type="password" />
-
-                <Button url="/main" content="Zaloguj" />
-            </Fragment>
-        );
-    }
-}
-
-export default LoginForm;
+export const LoginForm = withFormik({
+    mapPropsToValues: () => ({
+        username: 'm@m.mm',
+        password: '111111',
+    }),
+    validationSchema: schema,
+    handleSubmit: (values, { props }) => {
+        props.onSubmit(values);
+    },
+})(InnerForm);
