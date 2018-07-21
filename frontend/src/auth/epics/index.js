@@ -1,9 +1,5 @@
 import { combineEpics, ofType } from 'redux-observable';
-import { switchMap, map, mergeMap } from 'rxjs/operators';
-// import store from '../../store';
-// import { push } from 'react-router';
-
-import { browserHistory } from 'react-router';
+import { switchMap, map } from 'rxjs/operators';
 
 import * as actions from '../actions';
 import { authApi } from '../api';
