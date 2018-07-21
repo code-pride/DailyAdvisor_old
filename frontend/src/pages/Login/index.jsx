@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import unknown from '../../assets/unknown.png';
 import { loginUser } from '../../auth/actions';
+import { isLoggedInSelector } from '../../auth/selectors';
 
 import Image from '../../components/Image';
 import { LoginForm } from './components/LoginForm';
@@ -22,6 +24,10 @@ class Login extends React.Component {
     };
 
     render() {
+        if (this.props.isLoggedIn === true) {
+            return <Redirect to="/main" />;
+        }
+
         return (
             <S.Container>
                 <S.LoginContainer>
@@ -45,7 +51,13 @@ class Login extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        isLoggedIn: isLoggedInSelector(state),
+    };
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     { loginUser },
 )(Login);

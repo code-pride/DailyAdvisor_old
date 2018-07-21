@@ -1,5 +1,9 @@
 import { combineEpics, ofType } from 'redux-observable';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, mergeMap } from 'rxjs/operators';
+// import store from '../../store';
+// import { push } from 'react-router';
+
+import { browserHistory } from 'react-router';
 
 import * as actions from '../actions';
 import { authApi } from '../api';
@@ -22,38 +26,30 @@ export function authEpicFactory() {
     const loginUserEpic = actions$ =>
         actions$.pipe(
             ofType(actions.LOGIN_USER),
-            map(action => {
-                console.dir(action);
-                return actions.getCsrf(action.payload);
-            }),
+            map(action => actions.getCsrf(action.payload)),
         );
 
-    const csrf = actions$ =>
+    const csrfEpic = actions$ =>
         actions$.pipe(
             ofType(actions.GET_CSRF),
-            switchMap(action => {
-                console.log('csrf...');
-                console.dir(action);
-
-                return authApi
+            switchMap(action =>
+                authApi
                     .getCsrf(action.payload)
                     .then(() => actions.getCsrfFulfilled(action.payload))
-                    .catch(actions.getCsrfRejected);
-            }),
+                    .catch(actions.getCsrfRejected),
+            ),
         );
 
-    const csrfFullfilled = actions$ =>
+    const csrfFullfilledEpic = actions$ =>
         actions$.pipe(
             ofType(actions.GET_CSRF_FULFILLED),
-            switchMap(action => {
-                console.log('csrffulfilled...');
-                console.dir(action);
-                return authApi
+            switchMap(action =>
+                authApi
                     .loginUser(action.payload)
                     .then(actions.loginUserFulfilled)
-                    .catch(actions.loginUserRejected);
-            }),
+                    .catch(actions.loginUserRejected),
+            ),
         );
 
-    return combineEpics(csrf, csrfFullfilled, registerUserEpic, loginUserEpic);
+    return combineEpics(csrfEpic, csrfFullfilledEpic, registerUserEpic, loginUserEpic);
 }
