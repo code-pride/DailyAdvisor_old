@@ -87,8 +87,8 @@ public class JWTManager {
         response.addCookie(createTokenCookie(user.getEmail(), authorities, tokenEntity.getTokenId().toString()));
     }
 
-    public UsernamePasswordAuthenticationToken authenticateJwt(HttpServletRequest req, HttpServletResponse res) {
-        Cookie[] cookies = req.getCookies();
+    public UsernamePasswordAuthenticationToken authenticateJwt(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
         if(cookies == null) {
             return null;
         }
@@ -107,7 +107,7 @@ public class JWTManager {
             String user = jws.getBody().getSubject();
             if (user != null
                     && tokenJWTRepository.existsById(UUID.fromString(jws.getBody().getId()))) {
-                        res.addCookie(jwtCookie.get());
+                        response.addCookie(jwtCookie.get());
                         List<GrantedAuthority> authorities = new ArrayList<>();
                         for(String role : roles) {
                             if((boolean)jws.getBody().get(role)) {
