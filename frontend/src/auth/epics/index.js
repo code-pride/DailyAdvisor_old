@@ -3,6 +3,7 @@ import { switchMap, map, mapTo } from 'rxjs/operators';
 
 import * as actions from '../actions';
 import { authApi } from '../api';
+import { getCookie } from '../../utils/cookie';
 
 export function authEpicFactory() {
     const registerUserEpic = action$ =>
@@ -41,9 +42,12 @@ export function authEpicFactory() {
             ofType(actions.GET_CSRF_FULFILLED),
             switchMap(action =>
                 authApi
-                    .loginUser(action.payload)
+                    .loginUser({ username: 'm@m.mm', password: '111111' })
                     .then(actions.loginUserFulfilled)
-                    .catch(actions.loginUserRejected),
+                    .catch(response => {
+                        console.dir(response);
+                        return actions.loginUserRejected(response);
+                    }),
             ),
         );
 
