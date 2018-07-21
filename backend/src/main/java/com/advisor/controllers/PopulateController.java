@@ -8,6 +8,7 @@ import com.advisor.model.request.NewUserRequest;
 import com.advisor.repository.CoachTypeRepository;
 import com.advisor.repository.RecurringTypeRepository;
 import com.advisor.repository.RoleRepository;
+import com.advisor.repository.UserRepository;
 import com.advisor.service.AdvertisementService;
 import com.advisor.service.Exceptions.DataRepositoryException;
 import com.advisor.service.Exceptions.EntityNotFoundException;
@@ -50,8 +51,11 @@ public class PopulateController {
     @Qualifier("coachTypeRepository")
     private CoachTypeRepository coachTypeRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping(value = { "/populate" }, method = RequestMethod.GET)
-    public ResponseEntity populate()
+    public ResponseEntity populate() throws Exception
     {
         //save roles
         List<Role> roles = new ArrayList<>();
@@ -86,6 +90,8 @@ public class PopulateController {
         NewUserRequest newUserRequest = new NewUserRequest(email, "Marek", "Makowski", "Katowice", "111111", "client");
         userService.registerClient(newUserRequest);
         User user = userService.findUserByEmail(email);
+        user.setActive(true);
+        user = userRepository.save(user);
 
         //adv1
         AdvertisementRequest advertisementRequest = new AdvertisementRequest("Genialne moje ogloszenie", "bodybuilding");
@@ -98,6 +104,8 @@ public class PopulateController {
 
         //User2
         User user2 = userService.findUserByEmail(email);
+        user2.setActive(true);
+        user2 = userRepository.save(user2);
 
         //Meeting1
         try {
