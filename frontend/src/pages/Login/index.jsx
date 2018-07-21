@@ -6,6 +6,7 @@ import { loginUser } from '../../auth/actions';
 
 import Image from '../../components/Image';
 import { LoginForm } from './components/LoginForm';
+import SocialLogin from '../../components/SocialLogin';
 
 import * as S from './styled';
 
@@ -26,6 +27,7 @@ class Login extends React.Component {
                 <S.LoginContainer>
                     <S.LoginBox>
                         <S.MainHeading>daily advisor</S.MainHeading>
+                        <SocialLogin url="http://localhost:8091/login/google" mediaType="google" />
                         <Image
                             src={unknown}
                             alt="Unknown person profile picture"
