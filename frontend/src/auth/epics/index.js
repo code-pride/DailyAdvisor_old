@@ -2,7 +2,7 @@ import { combineEpics, ofType } from 'redux-observable';
 import { switchMap, map } from 'rxjs/operators';
 
 import * as actions from '../actions';
-import { authApi } from '../../services/Auth';
+import { authApi } from '../api';
 
 export function authEpicFactory() {
     const registerUserEpic = action$ =>
