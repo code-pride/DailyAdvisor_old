@@ -21,8 +21,10 @@ export const Days = styled.div`
 export const Day = styled.div`
     height: 50px;
     width: ${dayWidth}px;
-    border-right: 1px solid black;
+
+    background: ${props => (props.isTraining ? 'red' : 'white')}
+
+    border: 1px solid black;
     border-top: ${props => (props.topEdge ? '1px solid black' : 'none')};
     border-left: ${props => (props.leftEdge ? '1px solid black' : 'none')};
-    border-bottom: 1px solid black;
 `;

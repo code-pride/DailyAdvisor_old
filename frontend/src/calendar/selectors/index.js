@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import _range from 'lodash/range';
 
+import { data } from '../data';
+
 export const yearSelector = createSelector(
     state => state.calendar.month,
     month =>
@@ -11,8 +13,9 @@ export const yearSelector = createSelector(
 );
 
 export const daysSelector = createSelector(
+    yearSelector,
     state => state.calendar.month,
-    month => {
+    (year, month) => {
         const startOfMonth = moment()
             .month(month)
             .startOf('month')
@@ -23,12 +26,14 @@ export const daysSelector = createSelector(
             .endOf('month')
             .dayOfYear();
 
-        return _range(startOfMonth, endOfMonth + 1).map(day =>
-            moment()
+        return _range(startOfMonth, endOfMonth + 1).map(day => ({
+            name: moment()
                 .month(month)
                 .dayOfYear(day)
                 .format('D dddd'),
-        );
+            unique: `${year}${day}`,
+            day,
+        }));
     },
 );
 
@@ -39,3 +44,9 @@ export const monthNameSelector = createSelector(
             .month(month)
             .format('MMMM'),
 );
+
+export const trainingDaysSelector = data.trainings.map(training => {
+    const year = moment(training.event.startDate).year();
+    const day = moment(training.event.startDate).dayOfYear();
+    return `${year}${day}`;
+});
