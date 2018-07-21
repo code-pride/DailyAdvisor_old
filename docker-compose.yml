@@ -1,0 +1,33 @@
+version: '3'
+services:
+    db:
+        image: postgres
+        restart: always
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=daily_advisor
+
+    backend:
+        container_name: API
+        volumes:
+            - ./backend:/backend
+        build: 
+            context: .
+            dockerfile: ./backend/dev.Dockerfile
+        ports:
+            - "8091:8091"
+        depends_on:
+            - db
+
+    frontend:
+        container_name: CLIENT
+        volumes:
+            - ./frontend:/frontend
+        build: 
+            context: .
+            dockerfile: ./frontend/dev.Dockerfile
+        ports:
+            - "3000:3000"
