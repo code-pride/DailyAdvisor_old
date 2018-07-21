@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as S from './styled';
-import { daysSelector, monthNameSelector, yearSelector } from './selectors';
+import { daysSelector, monthNameSelector, yearSelector, trainingDaysSelector } from './selectors';
 import { incrementMonth, decrementMonth } from './actions';
 
 class Calendar extends React.Component {
@@ -18,8 +18,13 @@ class Calendar extends React.Component {
                 </S.Month>
                 <S.Days>
                     {this.props.days.map((day, i) => (
-                        <S.Day leftEdge={i % 7 === 0} topEdge={i <= 6} key={day}>
-                            {day}
+                        <S.Day
+                            isTraining={this.props.trainingDays.includes(day.unique)}
+                            leftEdge={i % 7 === 0}
+                            topEdge={i <= 6}
+                            key={day.name}
+                        >
+                            {day.name}
                         </S.Day>
                     ))}
                 </S.Days>
@@ -33,6 +38,7 @@ function mapStateToProps(state) {
         year: yearSelector(state),
         days: daysSelector(state),
         monthName: monthNameSelector(state),
+        trainingDays: trainingDaysSelector,
         month: state.calendar.month,
     };
 }
