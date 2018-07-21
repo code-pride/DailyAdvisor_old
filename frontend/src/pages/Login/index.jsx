@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import unknown from '../../assets/unknown.png';
+import { loginUser } from '../../auth/actions';
 
 import Image from '../../components/Image';
-import LoginForm from './components/LoginForm';
+import { LoginForm } from './components/LoginForm';
 
 import * as S from './styled';
 
@@ -31,7 +33,9 @@ class Login extends React.Component {
                             onClick={this.toggleLogin}
                         />
 
-                        {this.state.isLoginFormDisplayed ? <LoginForm /> : null}
+                        {this.state.isLoginFormDisplayed ? (
+                            <LoginForm onSubmit={this.props.loginUser} />
+                        ) : null}
                     </S.LoginBox>
                 </S.LoginContainer>
             </S.Container>
@@ -39,4 +43,7 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default connect(
+    null,
+    { loginUser },
+)(Login);
