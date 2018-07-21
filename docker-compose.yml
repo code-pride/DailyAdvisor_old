@@ -31,4 +31,3 @@ services:
             dockerfile: ./frontend/dev.Dockerfile
         ports:
             - "3000:3000"
-            - "9876:9876"

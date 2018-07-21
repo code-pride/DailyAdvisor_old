@@ -7,14 +7,4 @@ ADD /backend /backend
 
 VOLUME ["/backend"]
 
-
-RUN ["sh", "gradlew", "clean"]
-RUN ["sh", "gradlew", "build"]
-RUN ["sh", "gradlew", "bootJar"]
-
-RUN ls
-
-
-
-ENTRYPOINT [ "java", "-jar", "build/libs/DailyAdvisor.jar" ]
-
+ENTRYPOINT [ "sh", "./updateAndRun.sh" ]
