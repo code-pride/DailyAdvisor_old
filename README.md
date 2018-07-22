@@ -8,68 +8,34 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-You need to set up your development environment before you can do anything.
+You need [Docker][1] and _docker-compose_ to run application in development mode
 
-#### Frontend
+### Development
 
-* Install [Node.js® and npm][1] if they are not already on your machine.
-
-#### Backend
-
-* Install Java V1.8.0_161
-* Install PostgreSQL V10.3
-
-### Installing
-
-#### Frontend
-
-* Go to projects' frontend directory and install all dependencies
+First enter repo root folder and run
 
 ```
-$ cd DailyAdvisor/frontend
-$ npm install
+$ docker-compose build
 ```
 
-* Start the application
+then run
 
 ```
-$ npm run start
+$ docker-compose up
 ```
 
-Your app will be opened on [http://localhost:3000][2]
+Be sure that you have port `8091`, `3000`, `5432` available on your host machine.
 
-#### Backend
+Then to populate database with initial data you need to make HTTP GET request on:
 
-##### Database
-
-Creation:
 ```
-$ sudo -u postgres psql -c 'create database daily_advisor;'
-```
-Login to database
-```
-$ sudo -u postgres psql postgres
-```
-Grant privilages
-```
-$ grant all privileges on database daily_advisor to postgres;
+http://localhost:8091/populate
 ```
 
-##### Configuration of PostgreSQL server
+The application now is ready on:
 
-In backend\src\main\resources\application.properties check:
 ```
-server.port = 8091
-spring.datasource.url =jdbc:postgresql://localhost:5432/daily_advisor
-spring.datasource.username =postgres
-spring.datasource.password =postgres
-```
-##### Server
-In backend root folder launch commands:
-```
-$ ./gradlew clean
-$ ./gradlew build
-$ ./gradlew bootJar
+http://localhost:3000
 ```
 
 ## Running the tests
@@ -95,50 +61,29 @@ npm run test
 ### Backend tests
 
 In backend root folder launch commands:
+
 ```
 $ ./gradlew testClasses
 ```
 
-## Deployment
-
-#### Frontend
-
-To build frontend run:
-
-```
-npm run build
-```
-
-This command will create highly optimized version of frontend. You can open it with any http server i.e. [http-server][3]:
-
-```
-$ cd dist
-$ http-server ./
-```
-
-#### Backend
-##### Run server
-In backend/build/lib/ run commands
-```
-$ java -jar DailyAdvisor.java
-```
-
 ## Authors
 
-* **[Bartek][4]**
-* **[benq95][5]**
-* **[makowskimarek][6]**
-* **[Marcin Krawczyk][7]**
+- **[Bartek][5]**
+- **[benq95][6]**
+- **[makowskimarek][7]**
+- **[Marcin Krawczyk][8]**
+- **[Tomasz Ferens][9]**
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-
-[1]: https://nodejs.org/en/
-[2]: http://localhost:3000
-[3]: https://github.com/indexzero/http-server
-[4]: https://github.com/BartoszBaczek
-[5]: https://github.com/benq95
-[6]: https://github.com/makowskimarek
-[7]: https://github.com/marckraw
+[1]: https://www.docker.com/
+[2]: https://nodejs.org/en/
+[3]: http://localhost:3000
+[4]: https://github.com/indexzero/http-server
+[5]: https://github.com/BartoszBaczek
+[6]: https://github.com/benq95
+[7]: https://github.com/makowskimarek
+[8]: https://github.com/marckraw
+[9]: https://github.com/tomaszferens
