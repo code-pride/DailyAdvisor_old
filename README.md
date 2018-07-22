@@ -30,13 +30,13 @@ $ cd DailyAdvisor/frontend
 $ npm install
 ```
 
-* Serve the application
+* Start the application
 
 ```
-$ npm run serve
+$ npm run start
 ```
 
-Your app will be opened on [http://localhost:8080][2]
+Your app will be opened on [http://localhost:3000][2]
 
 #### Backend
 
@@ -136,7 +136,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 
 [1]: https://nodejs.org/en/
-[2]: http://localhost:8080
+[2]: http://localhost:3000
 [3]: https://github.com/indexzero/http-server
 [4]: https://github.com/BartoszBaczek
 [5]: https://github.com/benq95

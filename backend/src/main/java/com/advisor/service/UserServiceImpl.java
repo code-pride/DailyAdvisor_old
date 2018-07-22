@@ -157,4 +157,16 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public User registerOauth2User(String email) {
+        User lUser = new User();
+        lUser.setEmail(email);
+        lUser.setEnabled(true);
+        lUser.setActive(true);
+        Role userRole = roleRepository.findByRole(ROLE_USER);
+        lUser = repository.save(lUser);
+        lUser.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+        return repository.save(lUser);
+    }
+
 }
