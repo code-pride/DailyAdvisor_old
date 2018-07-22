@@ -99,7 +99,9 @@ node_modules
 /frontend/*.log
 /frontend/src/client.min.js
 
+.env
 .env.local
+.env.development
 .env.development.local
 .env.test.local
 .env.production.local
