@@ -1,0 +1,15 @@
+{
+    "root": true,
+    "extends": [
+        "plugin:vue/essential",
+        "@vue/airbnb"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "no-param-reassign": 0,
+        "no-shadow": 0
+    }
+}
