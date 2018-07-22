@@ -10,4 +10,4 @@ If you are using Visual Studio Code, install **Prettier** extension, than add th
 "editor.formatOnSave": true,
 ```
 
-Write without hesitation, and thinking about code indentation or so, **Prettier** will handle it for you.
+Write without hesitation, and thinking about code indentation or so, **Prettier** will handle it for you. Yeah!
