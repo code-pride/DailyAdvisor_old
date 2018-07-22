@@ -2,16 +2,20 @@ import React from 'react';
 import { Form, Field, withFormik } from 'formik';
 import * as yup from 'yup';
 
-const InnerForm = ({ handleSubmit }) => (
+import Button from '../../../../components/Button';
+
+const InnerForm = ({ touched, errors }) => (
     <Form>
         <div>
             <Field type="text" name="username" />
+            {touched.username && errors.username && errors.username}
         </div>
 
         <div>
             <Field type="password" name="password" />
+            {touched.password && errors.password && errors.password}
         </div>
-        <button type="submit">Zaloguj</button>
+        <Button type="submit" value="Zaloguj" />
     </Form>
 );
 
@@ -25,8 +29,8 @@ const schema = yup.object().shape({
 
 export const LoginForm = withFormik({
     mapPropsToValues: () => ({
-        username: 'm@m.mm',
-        password: '111111',
+        username: '',
+        password: '',
     }),
     validationSchema: schema,
     handleSubmit: (values, { props }) => {
