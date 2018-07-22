@@ -9,6 +9,7 @@ services:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=daily_advisor
+        container_name: POSTGRES
 
     backend:
         container_name: API

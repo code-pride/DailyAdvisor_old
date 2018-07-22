@@ -7,4 +7,4 @@ ADD /backend /backend
 
 VOLUME ["/backend"]
 
-ENTRYPOINT [ "sh", "./updateAndRun.sh" ]
+ENTRYPOINT [ "sh", "./updateAndRunDevelopment.sh" ]

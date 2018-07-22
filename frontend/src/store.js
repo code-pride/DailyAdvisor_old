@@ -3,6 +3,7 @@ import { routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import { createEpicMiddleware } from 'redux-observable';
 
+import { rootReducer } from './rootReducer';
 import { rootEpic } from './rootEpic';
 
 const epicMiddleware = createEpicMiddleware();
@@ -26,7 +27,7 @@ const composedEnhancers = compose(
     ...enhancers,
 );
 
-const store = createStore(() => ({}), initialState, composedEnhancers);
+const store = createStore(rootReducer, initialState, composedEnhancers);
 
 epicMiddleware.run(rootEpic);
 

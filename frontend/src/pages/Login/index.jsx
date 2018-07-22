@@ -1,56 +1,63 @@
 import React from 'react';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-import logo from '../../assets/logo.png';
+import unknown from '../../assets/unknown.png';
+import { loginUser } from '../../auth/actions';
+import { isLoggedInSelector } from '../../auth/selectors';
 
 import Image from '../../components/Image';
-import Button from '../../components/Button';
+import { LoginForm } from './components/LoginForm';
+import SocialLogin from '../../components/SocialLogin';
 
-export const StyledContainer = styled.div`
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    background-color: blue;
-`;
-export const LoginContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0px 50px;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-`;
+import * as S from './styled';
 
-export const LoginBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 350px;
-    justify-content: space-around;
-`;
+class Login extends React.Component {
+    state = {
+        isLoginFormDisplayed: false,
+    };
 
-export const StyledMainHeading = styled.h1`
-    margin: 0;
-    letter-spacing: 5px;
-    font-weight: 900;
-    color: #fff;
-`;
+    toggleLogin = () => {
+        this.setState({
+            isLoginFormDisplayed: !this.state.isLoginFormDisplayed,
+        });
+    };
 
-const Login = () => (
-    <StyledContainer>
-        <LoginContainer>
-            <LoginBox>
-                <StyledMainHeading>DailyAdvisor</StyledMainHeading>
-                <Image src={logo} alt="Unknown person profile picture" width="150" />
-                <Button url="/main" content="Zaloguj" />
-            </LoginBox>
-        </LoginContainer>
-    </StyledContainer>
-);
+    render() {
+        if (this.props.isLoggedIn === true) {
+            return <Redirect to="/main" />;
+        }
 
-export default Login;
+        return (
+            <S.Container>
+                <S.LoginContainer>
+                    <S.LoginBox>
+                        <S.MainHeading>daily advisor</S.MainHeading>
+                        <SocialLogin url="http://localhost:8091/login/google" mediaType="google" />
+                        <Image
+                            src={unknown}
+                            alt="Unknown person profile picture"
+                            width="150"
+                            onClick={this.toggleLogin}
+                        />
+
+                        {this.state.isLoginFormDisplayed ? (
+                            <LoginForm onSubmit={this.props.loginUser} />
+                        ) : null}
+                    </S.LoginBox>
+                </S.LoginContainer>
+            </S.Container>
+        );
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        isLoggedIn: isLoggedInSelector(state),
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    { loginUser },
+)(Login);

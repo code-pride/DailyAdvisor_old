@@ -31,11 +31,11 @@ public class Oauth2LoginAuthenticationHandler implements AuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         jwtManager.jwtLogin(request,response,authentication);
-        response.sendRedirect(frontendUrl + "/#" + dashboardUrl);
+        response.sendRedirect(frontendUrl + dashboardUrl);
     }
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        response.sendRedirect(frontendUrl + "/#" + loginUrl);
+        response.sendRedirect(frontendUrl + loginUrl);
     }
 }

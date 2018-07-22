@@ -3,7 +3,7 @@ import { withFormik, Field } from 'formik';
 import * as yup from 'yup';
 import { omit as _omit } from 'lodash';
 
-const InnerForm = ({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+const InnerForm = ({ values, errors, touched, handleSubmit }) => (
     <form onSubmit={handleSubmit}>
         <div>
             name:
