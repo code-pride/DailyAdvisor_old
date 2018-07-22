@@ -3,9 +3,11 @@ import { NavLink } from 'react-router-dom';
 
 import * as S from './styled';
 
-const Button = ({ url, content, onClick }) => (
+const Button = ({ url, content, onClick, value, type }) => (
     <Fragment>
-        {url ? (
+        {type === 'submit' ? (
+            <S.Button type={type}>{value}</S.Button>
+        ) : url ? (
             <NavLink to={url}>
                 <S.Button>{content}</S.Button>
             </NavLink>

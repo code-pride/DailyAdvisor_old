@@ -3,6 +3,7 @@ import { switchMap } from 'rxjs/operators';
 
 import * as actions from '../actions';
 import { userApi } from '../api';
+import { getCookie } from '../../utils/cookie';
 
 export function userDataEpicFactory() {
     const getUserDataEpic = action$ =>
@@ -13,6 +14,10 @@ export function userDataEpicFactory() {
                     .getUserProfile()
                     .then(data => {
                         console.dir(data);
+
+                        const ciastko = getCookie('_secu');
+
+                        console.log(ciastko);
 
                         return actions.getUserDataFulfilled(data);
                     })
