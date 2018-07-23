@@ -74,10 +74,6 @@ $ ./gradlew testClasses
 - **[Marcin Krawczyk][8]**
 - **[Tomasz Ferens][9]**
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
 [1]: https://www.docker.com/
 [2]: https://nodejs.org/en/
 [3]: http://localhost:3000
